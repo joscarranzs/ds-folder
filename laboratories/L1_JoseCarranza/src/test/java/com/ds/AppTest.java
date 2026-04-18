@@ -5,15 +5,15 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple App.
+ * Prueba unitaria simple para la clase App.
  */
 public class AppTest 
     extends TestCase
 {
     /**
-     * Create the test case
+     * Crea la prueba con el nombre especificado.
      *
-     * @param testName name of the test case
+     * @param testName nombre del caso de prueba
      */
     public AppTest( String testName )
     {
@@ -21,7 +21,9 @@ public class AppTest
     }
 
     /**
-     * @return the suite of tests being tested
+     * Devuelve el conjunto de pruebas que deben ejecutarse.
+     *
+     * @return suite de pruebas para esta clase
      */
     public static Test suite()
     {
@@ -29,7 +31,7 @@ public class AppTest
     }
 
     /**
-     * Rigourous Test :-)
+     * Prueba de ejemplo que siempre pasa.
      */
     public void testApp()
     {
