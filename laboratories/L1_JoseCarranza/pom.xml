@@ -74,7 +74,7 @@
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.8</version>
         <configuration>
-          <mainClass>com.ds.BinaryTree</mainClass>
+          <mainClass>com.ds.application.ui.Resources.BinaryTree</mainClass>
         </configuration>
       </plugin>
 

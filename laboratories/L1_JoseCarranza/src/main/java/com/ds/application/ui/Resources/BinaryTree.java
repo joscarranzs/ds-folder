@@ -80,7 +80,7 @@ public class BinaryTree extends Application {
 
         scene.getStylesheets().add(
                 getClass()
-                        .getResource("/com/ds/styles.css")
+                        .getResource("/com/ds/application/ui/Resources/Styles.css")
                         .toExternalForm()
         );
 
