@@ -1,0 +1,5 @@
+# Ignorar salidas de compilación Maven
+/laboratories/**/target/
+
+# Ignorar clases compiladas y artefactos generados
+**/target/
