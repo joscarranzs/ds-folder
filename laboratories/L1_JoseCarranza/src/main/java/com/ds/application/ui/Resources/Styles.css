@@ -1,0 +1,275 @@
+/* =====================================================
+   styles.css  –  Binary Tree Visualizer
+   Tema: blanco limpio, nodos cuadrados, azul marino
+   ===================================================== */
+
+.root-pane {
+    -fx-background-color: #f8fafc;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
+}
+
+/* ====================================================
+   TOP BAR  –  solo el titulo centrado
+   ==================================================== */
+.top-bar {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.top-title {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* ====================================================
+   SIDEBAR
+   ==================================================== */
+.sidebar {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 1 0 0;
+}
+
+.logo-title {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.logo-sub {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 11px;
+}
+
+.sidebar-divider {
+    -fx-background-color: #f1f5f9;
+}
+
+/* Etiqueta de seccion */
+.sidebar-section {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 16 20 6 20;
+}
+
+/* Boton normal */
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #475569;
+    -fx-font-size: 13px;
+    -fx-padding: 11 16 11 20;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-alignment: CENTER_LEFT;
+}
+.sidebar-btn:hover {
+    -fx-background-color: #f8fafc;
+    -fx-text-fill: #1d4ed8;
+}
+
+/* Boton activo con borde izquierdo azul */
+.sidebar-btn-active {
+    -fx-background-color: #eff6ff;
+    -fx-text-fill: #1d4ed8;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 11 16 11 16;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+    -fx-border-color: transparent transparent transparent #1d4ed8;
+    -fx-border-width: 0 0 0 3;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Boton Insert (accion principal) */
+.sidebar-btn-primary {
+    -fx-background-color: #eff6ff;
+    -fx-text-fill: #1d4ed8;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 11 16 11 16;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+    -fx-border-color: transparent transparent transparent #1d4ed8;
+    -fx-border-width: 0 0 0 3;
+    -fx-alignment: CENTER_LEFT;
+}
+.sidebar-btn-primary:hover {
+    -fx-background-color: #dbeafe;
+}
+
+/* Boton New Tree al fondo */
+.btn-nuevo {
+    -fx-background-color: #0f172a;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 14 0 14 0;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+.btn-nuevo:hover {
+    -fx-background-color: #1e293b;
+}
+
+/* ====================================================
+   CENTER CANVAS
+   ==================================================== */
+.center-area {
+    -fx-background-color: #f8fafc;
+}
+
+.tree-scroll {
+    -fx-background: #f8fafc;
+    -fx-background-color: #f8fafc;
+    -fx-border-color: transparent;
+}
+.tree-scroll > .viewport {
+    -fx-background-color: #f8fafc;
+}
+.tree-scroll .scroll-bar:vertical .thumb,
+.tree-scroll .scroll-bar:horizontal .thumb {
+    -fx-background-color: #cbd5e1;
+    -fx-background-radius: 4;
+}
+.tree-scroll .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.tree-canvas {
+    -fx-background-color: #f8fafc;
+}
+
+.empty-label {
+    -fx-text-fill: #cbd5e1;
+    -fx-font-size: 15px;
+}
+
+/* ====================================================
+   NODOS  –  cuadrados con esquinas redondeadas
+   ==================================================== */
+
+/* Nodo raiz: azul marino oscuro */
+.node-root {
+    -fx-background-color: #0f172a;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.22), 12, 0, 0, 4);
+}
+
+/* Nodo interno: blanco con borde */
+.node-internal {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 12;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 2);
+}
+
+/* Nodo hoja: gris claro */
+.node-leaf {
+    -fx-background-color: #e2e8f0;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);
+}
+
+/* Etiqueta ROOT sobre el nodo raiz */
+.node-tag-root {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+/* Etiqueta LEAF bajo el nodo hoja */
+.node-tag-leaf {
+    -fx-text-fill: #22c55e;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+/* ====================================================
+   RIGHT PANEL  –  Node Inspector
+   ==================================================== */
+.right-panel {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 0 0 1;
+}
+
+.inspector-title {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.info-icon {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 14px;
+}
+
+.panel-divider {
+    -fx-background-color: #f1f5f9;
+}
+
+.insp-row {
+    -fx-background-color: white;
+}
+.insp-row:hover {
+    -fx-background-color: #f8fafc;
+}
+
+.insp-label {
+    -fx-text-fill: #64748b;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.insp-value {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Chip para child nodes: [30, 70] */
+.insp-chip {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #475569;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 10 3 10;
+    -fx-background-radius: 6;
+}
+
+/* ====================================================
+   BOTTOM BAR  –  leyenda + estadisticas
+   ==================================================== */
+.bottom-bar {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1 0 0 0;
+}
+
+.legend-label {
+    -fx-text-fill: #475569;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* Titulo de estadistica: "TREE DEPTH:" */
+.stat-bar-title {
+    -fx-text-fill: #64748b;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* Valor de estadistica: "3" */
+.stat-bar-value {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
