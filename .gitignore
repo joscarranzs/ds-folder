@@ -5,3 +5,9 @@
 **/target/
 # Ignore Eclipse project settings
 **/.settings/
+# Ignore IDE project files
+*.classpath
+*.project
+**/.vscode/
+**/.idea/
+*.iml
