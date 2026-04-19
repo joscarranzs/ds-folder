@@ -71,7 +71,7 @@
     -fx-text-fill: #1d4ed8;
 }
 
-/* Boton activo con borde izquierdo azul */
+/* Active button with left accent border */
 .sidebar-btn-active {
     -fx-background-color: #eff6ff;
     -fx-text-fill: #1d4ed8;
@@ -85,7 +85,7 @@
     -fx-alignment: CENTER_LEFT;
 }
 
-/* Boton Insert (accion principal) */
+/* Insert button (primary action) */
 .sidebar-btn-primary {
     -fx-background-color: #eff6ff;
     -fx-text-fill: #1d4ed8;
@@ -102,8 +102,8 @@
     -fx-background-color: #dbeafe;
 }
 
-/* Boton New Tree al fondo */
-.btn-nuevo {
+/* New Tree button at the bottom */
+.btn-new {
     -fx-background-color: #0f172a;
     -fx-text-fill: white;
     -fx-font-size: 14px;
@@ -113,7 +113,7 @@
     -fx-cursor: hand;
     -fx-border-color: transparent;
 }
-.btn-nuevo:hover {
+.btn-new:hover {
     -fx-background-color: #1e293b;
 }
 
@@ -151,17 +151,17 @@
 }
 
 /* ====================================================
-   NODOS  –  cuadrados con esquinas redondeadas
+   NODES – rounded square nodes
    ==================================================== */
 
-/* Nodo raiz: azul marino oscuro */
+/* Root node: dark navy blue */
 .node-root {
     -fx-background-color: #0f172a;
     -fx-background-radius: 12;
     -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.22), 12, 0, 0, 4);
 }
 
-/* Nodo interno: blanco con borde */
+/* Internal node: white with border */
 .node-internal {
     -fx-background-color: white;
     -fx-background-radius: 12;
@@ -171,21 +171,21 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 2);
 }
 
-/* Nodo hoja: gris claro */
+/* Leaf node: light gray */
 .node-leaf {
     -fx-background-color: #e2e8f0;
     -fx-background-radius: 12;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);
 }
 
-/* Etiqueta ROOT sobre el nodo raiz */
+/* ROOT label above the root node */
 .node-tag-root {
     -fx-text-fill: #94a3b8;
     -fx-font-size: 10px;
     -fx-font-weight: bold;
 }
 
-/* Etiqueta LEAF bajo el nodo hoja */
+/* LEAF label below the leaf node */
 .node-tag-leaf {
     -fx-text-fill: #22c55e;
     -fx-font-size: 10px;

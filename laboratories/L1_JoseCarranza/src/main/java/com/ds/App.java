@@ -1,16 +1,17 @@
 package com.ds;
 
+import com.ds.application.core.view.BinaryTree;
+
 /**
- * Clase principal del laboratorio que inicia la aplicación desde la línea de comandos.
- * Contiene el punto de entrada `main` para ejecutar el programa.
+ * Application entry point used by Maven and the executable jar.
  */
 public class App {
   /**
-   * Punto de entrada de la aplicación.
+   * Launches the JavaFX binary tree visualizer.
    *
-   * @param args argumentos de línea de comandos
+   * @param args command-line arguments
    */
   public static void main(String[] args) {
-    System.out.println("Hello World!");
+    BinaryTree.main(args);
   }
 }

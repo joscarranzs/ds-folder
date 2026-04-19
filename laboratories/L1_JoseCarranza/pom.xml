@@ -10,9 +10,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>18</maven.compiler.source>
-    <maven.compiler.target>18</maven.compiler.target>
-        <!-- JavaFX 21 = version LTS, funciona bien -->
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
     <javafx.version>21.0.2</javafx.version>
   </properties>
 
@@ -68,13 +67,13 @@
           </archive>
         </configuration>
       </plugin>
-            <!-- Plugin para correr JavaFX con: mvn javafx:run -->
+      <!-- JavaFX runner for Maven: mvn javafx:run -->
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.8</version>
         <configuration>
-          <mainClass>com.ds.application.ui.Resources.BinaryTree</mainClass>
+          <mainClass>com.ds.App</mainClass>
         </configuration>
       </plugin>
 
