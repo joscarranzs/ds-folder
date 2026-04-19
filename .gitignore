@@ -1,5 +1,13 @@
-# Ignorar salidas de compilación Maven
+# Ignore Maven build output
 /laboratories/**/target/
 
-# Ignorar clases compiladas y artefactos generados
+# Ignore compiled classes and generated artifacts
 **/target/
+
+# Ignore IDE and editor metadata
+**/.settings/
+*.classpath
+*.project
+**/.vscode/
+**/.idea/
+*.iml

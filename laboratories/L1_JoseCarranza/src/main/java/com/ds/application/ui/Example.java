@@ -1,11 +1,11 @@
 package com.ds.application.ui;
 
 /**
- * Representa la capa de interfaz de usuario del laboratorio.
- * Contiene la lógica para presentar el árbol binario de búsqueda al usuario.
+ * Represents the UI layer for the laboratory.
+ * Contains the logic to present the binary search tree to the user.
  */
 public class Example {
-  /**
-   * Es la parte visual del programa, aquí se desarrolla la interfaz gráfica del árbol binario de búsqueda.
-   */
+  public static void main(String[] args) {
+    System.out.println("This is an example class in the UI package.");
+  }
 }
