@@ -10,15 +10,13 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>18</maven.compiler.source>
-    <maven.compiler.target>18</maven.compiler.target>
-        <!-- JavaFX 21 = version LTS, funciona bien -->
-    <javafx.version>21.0.2</javafx.version>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
   </properties>
 
     <dependencies>
 
-    <!-- JUnit - no se toca -->
+    <!-- Test dependency for unit verification -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -26,25 +24,11 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- JavaFX Controls: botones, labels, textfields, etc. -->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-
-    <!-- JavaFX FXML-->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-
   </dependencies>
 
   <build>
     <plugins>
-       <!-- Compiler - actualizado a Java 21 -->
+       <!-- Compiler settings for Java 21 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -54,7 +38,7 @@
           <target>21</target>
         </configuration>
       </plugin>
-      <!-- JAR - no se toca -->
+      <!-- JAR packaging configuration -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -66,15 +50,6 @@
               <mainClass>com.ds.App</mainClass>
             </manifest>
           </archive>
-        </configuration>
-      </plugin>
-            <!-- Plugin para correr JavaFX con: mvn javafx:run -->
-      <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
-        <configuration>
-          <mainClass>com.ds.application.ui.Resources.BinaryTree</mainClass>
         </configuration>
       </plugin>
 
