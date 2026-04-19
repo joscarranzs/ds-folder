@@ -3,3 +3,5 @@
 
 # Ignorar clases compiladas y artefactos generados
 **/target/
+# Ignore Eclipse project settings
+**/.settings/
