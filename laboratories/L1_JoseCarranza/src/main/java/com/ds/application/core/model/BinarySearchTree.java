@@ -4,20 +4,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Binary search tree implementation containing the core tree behavior.
+ * Implementación de un árbol binario de búsqueda (BST).
+ *
+ * <p>Esta clase mantiene la raíz del árbol y proporciona operaciones para
+ * insertar, buscar, recorrer y calcular métricas del árbol.</p>
  */
 public class BinarySearchTree {
 
     private TreeNode root;
 
+    /**
+     * Devuelve la raíz del árbol.
+     *
+     * @return nodo raíz o {@code null} si el árbol está vacío
+     */
     public TreeNode getRoot() {
         return root;
     }
 
+    /**
+     * Indica si el árbol está vacío.
+     *
+     * @return {@code true} cuando no existe raíz, {@code false} en caso contrario
+     */
     public boolean isEmpty() {
         return root == null;
     }
 
+    /**
+     * Inserta un valor entero en el árbol.
+     *
+     * <p>La inserción respeta las reglas del árbol binario de búsqueda:
+     * valores menores a la raíz van a la izquierda y valores mayores a la derecha.
+     * Los valores duplicados no se agregan.</p>
+     *
+     * @param value valor que se desea insertar
+     */
     public void insert(int value) {
         root = insertNode(root, value);
     }
@@ -36,6 +58,12 @@ public class BinarySearchTree {
         return current;
     }
 
+    /**
+     * Busca un nodo por su valor.
+     *
+     * @param value valor a buscar
+     * @return el nodo encontrado o {@code null} si no existe
+     */
     public TreeNode search(int value) {
         return searchNode(root, value);
     }
@@ -54,6 +82,11 @@ public class BinarySearchTree {
                 : searchNode(current.getRight(), value);
     }
 
+    /**
+     * Calcula la profundidad máxima del árbol.
+     *
+     * @return altura del árbol en número de niveles, donde un árbol vacío es -1
+     */
     public int depth() {
         return height(root);
     }
@@ -69,6 +102,11 @@ public class BinarySearchTree {
         );
     }
 
+    /**
+     * Cuenta el número total de nodos en el árbol.
+     *
+     * @return número de nodos almacenados
+     */
     public int size() {
         return countNodes(root);
     }
@@ -81,6 +119,11 @@ public class BinarySearchTree {
         return 1 + countNodes(current.getLeft()) + countNodes(current.getRight());
     }
 
+    /**
+     * Suma los valores de todos los nodos del árbol.
+     *
+     * @return suma de valores de los nodos
+     */
     public int sumValues() {
         return sumValues(root);
     }
@@ -95,6 +138,11 @@ public class BinarySearchTree {
                 + sumValues(current.getRight());
     }
 
+    /**
+     * Calcula el promedio de los valores almacenados en el árbol.
+     *
+     * @return promedio aritmético de los valores, o 0 si el árbol está vacío
+     */
     public double averageValue() {
         if (root == null) {
             return 0;
@@ -103,6 +151,11 @@ public class BinarySearchTree {
         return (double) sumValues() / size();
     }
 
+    /**
+     * Devuelve los valores de los nodos que tienen al menos un hijo.
+     *
+     * @return lista de valores de nodos padres
+     */
     public List<Integer> parentValues() {
         List<Integer> values = new ArrayList<>();
         collectParents(root, values);
@@ -122,6 +175,11 @@ public class BinarySearchTree {
         collectParents(current.getRight(), values);
     }
 
+    /**
+     * Devuelve los valores de los nodos hoja.
+     *
+     * @return lista de valores de nodos sin hijos
+     */
     public List<Integer> leafValues() {
         List<Integer> values = new ArrayList<>();
         collectLeaves(root, values);
@@ -141,6 +199,12 @@ public class BinarySearchTree {
         collectLeaves(current.getRight(), values);
     }
 
+    /**
+     * Obtiene el nivel de un nodo dentro del árbol.
+     *
+     * @param node nodo del cual se solicita el nivel
+     * @return nivel del nodo, donde la raíz es 0; devuelve -1 si no se encuentra
+     */
     public int level(TreeNode node) {
         return findLevel(root, node, 0);
     }
@@ -160,6 +224,9 @@ public class BinarySearchTree {
                 : findLevel(current.getRight(), target, depth + 1);
     }
 
+    /**
+     * Elimina todos los nodos del árbol.
+     */
     public void reset() {
         root = null;
     }

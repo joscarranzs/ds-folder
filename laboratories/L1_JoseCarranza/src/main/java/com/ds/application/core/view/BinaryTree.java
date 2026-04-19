@@ -26,7 +26,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * Main UI entry point for the binary tree visualizer.
+ * Interfaz gráfica principal del visualizador de árbol binario.
+ *
+ * <p>Esta clase construye la ventana JavaFX, organiza los paneles de acción,
+ * muestra el árbol en un lienzo y actualiza el panel de inspección y las métricas.
+ * La interacción de usuario se delega al {@link TreeController}.</p>
  */
 public class BinaryTree extends Application {
 
@@ -76,6 +80,11 @@ public class BinaryTree extends Application {
         stage.show();
     }
 
+    /**
+     * Construye la barra superior de la ventana con el título principal.
+     *
+     * @return contenedor horizontal con el encabezado de la aplicación
+     */
     private HBox buildTopBar() {
         HBox bar = new HBox();
         bar.getStyleClass().add("top-bar");
@@ -89,6 +98,11 @@ public class BinaryTree extends Application {
         return bar;
     }
 
+    /**
+     * Construye el panel lateral izquierdo con acciones, operaciones y opciones de vista.
+     *
+     * @return contenedor vertical que agrupa botones y secciones de navegación
+     */
     private VBox buildSidebar() {
         VBox sidebar = new VBox(0);
         sidebar.getStyleClass().add("sidebar");
@@ -139,6 +153,11 @@ public class BinaryTree extends Application {
         return sidebar;
     }
 
+    /**
+     * Construye el área central donde se dibuja el árbol binario.
+     *
+     * @return contenedor que incluye el lienzo y el scroll vertical/horizontal
+     */
     private StackPane buildCenter() {
         treeCanvas = new Pane();
         treeCanvas.getStyleClass().add("tree-canvas");
@@ -158,6 +177,11 @@ public class BinaryTree extends Application {
         return center;
     }
 
+    /**
+     * Construye el panel inspector derecho con detalles del nodo seleccionado.
+     *
+     * @return contenedor vertical con indicadores de valor, grado, nivel y hijos
+     */
     private VBox buildInspectorPanel() {
         VBox panel = new VBox(0);
         panel.getStyleClass().add("right-panel");
@@ -197,6 +221,11 @@ public class BinaryTree extends Application {
         return panel;
     }
 
+    /**
+     * Construye la barra inferior con métricas del árbol y leyendas de nodo.
+     *
+     * @return contenedor horizontal con estadísticas y elementos de leyenda
+     */
     private HBox buildBottomBar() {
         HBox bar = new HBox(20);
         bar.getStyleClass().add("bottom-bar");
@@ -225,6 +254,13 @@ public class BinaryTree extends Application {
         return bar;
     }
 
+    /**
+     * Restablece la vista a su estado inicial.
+     *
+     * <p>Esta acción limpia el lienzo, muestra el mensaje de árbol vacío,
+     * reinicia el panel de inspección y selecciona la representación de árbol.
+     * Se utiliza cuando el usuario crea un árbol nuevo.</p>
+     */
     public void resetView() {
         clearCanvas();
         showEmptyState();
@@ -233,19 +269,36 @@ public class BinaryTree extends Application {
         setRepresentationActive(true);
     }
 
+    /**
+     * Limpia todos los elementos gráficos dibujados en el lienzo del árbol.
+     */
     public void clearCanvas() {
         treeCanvas.getChildren().clear();
     }
 
+    /**
+     * Muestra el estado vacío cuando el árbol no tiene nodos.
+     */
     public void showEmptyState() {
         emptyLabel.setVisible(true);
         treeCanvas.getChildren().setAll(emptyLabel);
     }
 
+    /**
+     * Oculta el mensaje que indica que el árbol está vacío.
+     */
     public void hideEmptyState() {
         emptyLabel.setVisible(false);
     }
 
+    /**
+     * Actualiza el panel de inspección con los datos del nodo seleccionado.
+     *
+     * @param key valor del nodo
+     * @param degree grado del nodo (cantidad de hijos)
+     * @param level nivel del nodo dentro del árbol
+     * @param childNodes valores de los hijos directos o "none" si no tiene
+     */
     public void setInspector(String key, String degree, String level, String childNodes) {
         lblKeyValue.setText(key);
         lblDegree.setText(degree);
@@ -253,6 +306,15 @@ public class BinaryTree extends Application {
         lblChildNodes.setText(childNodes);
     }
 
+    /**
+     * Actualiza las métricas que se muestran en la barra inferior.
+     *
+     * @param depth profundidad del árbol
+     * @param lci suma de los valores del árbol
+     * @param lcim promedio de los valores del árbol
+     * @param parents lista de valores de nodos padres
+     * @param leaves lista de valores de nodos hoja
+     */
     public void setStats(int depth, String lci, String lcim, String parents, String leaves) {
         lblDepthBar.setText(String.valueOf(depth));
         lblLCIBar.setText(lci);
@@ -261,11 +323,21 @@ public class BinaryTree extends Application {
         lblLeavesBar.setText(leaves);
     }
 
+    /**
+     * Marca qué pestaña de representación está activa.
+     *
+     * @param treeView {@code true} si la vista es árbol, {@code false} si es tabla enlazada
+     */
     public void setRepresentationActive(boolean treeView) {
         btnTabTree.getStyleClass().setAll(treeView ? "sidebar-btn-active" : "sidebar-btn");
         btnTabList.getStyleClass().setAll(treeView ? "sidebar-btn" : "sidebar-btn-active");
     }
 
+    /**
+     * Dibuja el árbol completo en el lienzo a partir de la raíz proporcionada.
+     *
+     * @param root nodo raíz del árbol que se desea visualizar
+     */
     public void drawTree(TreeNode root) {
         clearCanvas();
 
@@ -280,6 +352,16 @@ public class BinaryTree extends Application {
         drawNode(root, width / 2, 70, width / 4, 100, true);
     }
 
+    /**
+     * Dibuja un nodo y sus hijos recursivamente en el lienzo.
+     *
+     * @param node nodo actual a dibujar
+     * @param x coordenada horizontal del centro del nodo
+     * @param y coordenada vertical del centro del nodo
+     * @param offset distancia horizontal entre niveles
+     * @param gapY distancia vertical entre niveles
+     * @param rootNode indica si el nodo actual es la raíz
+     */
     private void drawNode(TreeNode node, double x, double y, double offset, double gapY, boolean rootNode) {
         if (node == null) {
             return;
@@ -331,6 +413,15 @@ public class BinaryTree extends Application {
         treeCanvas.getChildren().add(nodeView);
     }
 
+    /**
+     * Crea una línea de conexión entre dos nodos del árbol.
+     *
+     * @param x1 coordenada x de inicio
+     * @param y1 coordenada y de inicio
+     * @param x2 coordenada x de fin
+     * @param y2 coordenada y de fin
+     * @return línea que conecta dos nodos hijos
+     */
     private Line drawLine(double x1, double y1, double x2, double y2) {
         Line line = new Line(x1, y1, x2, y2);
         line.setStroke(Color.web("#cbd5e1"));
@@ -338,6 +429,11 @@ public class BinaryTree extends Application {
         return line;
     }
 
+    /**
+     * Crea una línea divisoria horizontal para separar secciones de la barra lateral.
+     *
+     * @return panel que actúa como divisor visual
+     */
     private Pane createDivider() {
         Pane divider = new Pane();
         divider.getStyleClass().add("sidebar-divider");
@@ -345,12 +441,26 @@ public class BinaryTree extends Application {
         return divider;
     }
 
+    /**
+     * Genera una etiqueta de sección para la barra lateral.
+     *
+     * @param text texto que se mostrará como encabezado de sección
+     * @return etiqueta con estilo de sección
+     */
     private Label sectionLabel(String text) {
         Label label = new Label(text);
         label.getStyleClass().add("sidebar-section");
         return label;
     }
 
+    /**
+     * Crea un botón estándar de segunda prioridad para la barra lateral.
+     *
+     * @param text etiqueta del botón
+     * @param icon icono textual del botón
+     * @param action manejador de evento al pulsar el botón
+     * @return botón configurado con estilo secundario
+     */
     private Button secondaryButton(String text, String icon, javafx.event.EventHandler<javafx.event.ActionEvent> action) {
         Button button = new Button(icon + "   " + text);
         button.getStyleClass().add("sidebar-btn");
@@ -360,6 +470,14 @@ public class BinaryTree extends Application {
         return button;
     }
 
+    /**
+     * Crea un botón activo para marcar la vista de árbol seleccionada.
+     *
+     * @param text etiqueta del botón
+     * @param icon icono textual del botón
+     * @param action manejador de evento al pulsar el botón
+     * @return botón configurado con estilo de activación
+     */
     private Button activeButton(String text, String icon, javafx.event.EventHandler<javafx.event.ActionEvent> action) {
         Button button = new Button(icon + "   " + text);
         button.getStyleClass().add("sidebar-btn-active");
@@ -369,6 +487,14 @@ public class BinaryTree extends Application {
         return button;
     }
 
+    /**
+     * Crea un botón principal con estilo destacado en la barra lateral.
+     *
+     * @param text etiqueta del botón
+     * @param icon icono textual del botón
+     * @param action manejador de evento al pulsar el botón
+     * @return botón con estilo primario
+     */
     private Button primaryButton(String text, String icon, javafx.event.EventHandler<javafx.event.ActionEvent> action) {
         Button button = new Button(icon + "   " + text);
         button.getStyleClass().add("sidebar-btn-primary");
@@ -378,6 +504,13 @@ public class BinaryTree extends Application {
         return button;
     }
 
+    /**
+     * Construye una fila de datos para el panel inspector.
+     *
+     * @param title etiqueta de la fila
+     * @param value control que muestra el valor correspondiente
+     * @return fila horizontal con título y valor alineados
+     */
     private HBox inspectorRow(String title, Node value) {
         HBox row = new HBox();
         row.getStyleClass().add("insp-row");
@@ -394,18 +527,37 @@ public class BinaryTree extends Application {
         return row;
     }
 
+    /**
+     * Crea una etiqueta de valor usada en el panel inspector.
+     *
+     * @param value texto inicial que mostrará la etiqueta
+     * @return etiqueta con estilo de valor simple
+     */
     private Label inspectorValueLabel(String value) {
         Label label = new Label(value);
         label.getStyleClass().add("insp-value");
         return label;
     }
 
+    /**
+     * Crea una etiqueta tipo chip usada para mostrar valores de hijos.
+     *
+     * @param value texto inicial que mostrará el chip
+     * @return etiqueta con estilo de chip
+     */
     private Label inspectorChipLabel(String value) {
         Label label = new Label(value);
         label.getStyleClass().add("insp-chip");
         return label;
     }
 
+    /**
+     * Crea un elemento de leyenda que muestra un punto de color y texto.
+     *
+     * @param text descripción del elemento de leyenda
+     * @param color color de relleno del punto
+     * @return fila horizontal con icono y etiqueta
+     */
     private HBox legendItem(String text, String color) {
         HBox item = new HBox(8);
         item.setAlignment(Pos.CENTER_LEFT);
@@ -422,12 +574,25 @@ public class BinaryTree extends Application {
         return item;
     }
 
+    /**
+     * Crea una etiqueta numérica usada en la barra de estadísticas.
+     *
+     * @param value texto inicial que mostrará la etiqueta
+     * @return etiqueta con estilo de valor estadístico
+     */
     private Label statLabel(String value) {
         Label label = new Label(value);
         label.getStyleClass().add("stat-bar-value");
         return label;
     }
 
+    /**
+     * Construye un elemento de estadística con título y valor.
+     *
+     * @param title texto de la métrica
+     * @param valueLabel etiqueta que muestra el valor de la métrica
+     * @return fila horizontal con título y valor
+     */
     private HBox statItem(String title, Label valueLabel) {
         HBox item = new HBox(4);
         item.setAlignment(Pos.CENTER_LEFT);
@@ -439,6 +604,12 @@ public class BinaryTree extends Application {
         return item;
     }
 
+    /**
+     * Centra el texto de estado vacío dentro del área de dibujo.
+     *
+     * <p>Este método enlaza las propiedades de posición de la etiqueta con las
+     * dimensiones del lienzo para mantenerla siempre centrada.</p>
+     */
     private void bindCenterLabel() {
         emptyLabel.layoutXProperty().bind(
                 treeCanvas.widthProperty().subtract(emptyLabel.widthProperty()).divide(2)
@@ -448,6 +619,11 @@ public class BinaryTree extends Application {
         );
     }
 
+    /**
+     * Método principal que arranca la aplicación JavaFX.
+     *
+     * @param args argumentos de línea de comandos que se pasan a JavaFX
+     */
     public static void main(String[] args) {
         launch(args);
     }
