@@ -123,15 +123,7 @@ public class BinaryTree extends Application {
 
         sidebar.getChildren().add(sectionLabel("ACTIONS"));
         sidebar.getChildren().add(primaryButton("Insert", "+", e -> controller.handleInsertNode()));
-        sidebar.getChildren().add(secondaryButton("Search", "?", e -> controller.handleSearch()));
         sidebar.getChildren().add(secondaryButton("Reset", "↺", e -> controller.handleNewTree()));
-        sidebar.getChildren().add(createDivider());
-
-        sidebar.getChildren().add(sectionLabel("OPERATIONS"));
-        sidebar.getChildren().add(secondaryButton("Identify parent nodes", "⇈", e -> controller.handleParentNodes()));
-        sidebar.getChildren().add(secondaryButton("Identify leaf nodes", "⇊", e -> controller.handleLeafNodes()));
-        sidebar.getChildren().add(secondaryButton("Calculate LCI", "Σ", e -> controller.handleLCI()));
-        sidebar.getChildren().add(secondaryButton("Calculate LCIM", "⊞", e -> controller.handleLCIM()));
         sidebar.getChildren().add(createDivider());
 
         sidebar.getChildren().add(sectionLabel("REPRESENTATIONS"));
@@ -143,13 +135,6 @@ public class BinaryTree extends Application {
         VBox.setVgrow(filler, Priority.ALWAYS);
         sidebar.getChildren().add(filler);
 
-        Button btnNew = new Button("New Tree");
-        btnNew.getStyleClass().add("btn-new");
-        btnNew.setMaxWidth(Double.MAX_VALUE);
-        btnNew.setOnAction(e -> controller.handleNewTree());
-        VBox.setMargin(btnNew, new Insets(0, 16, 16, 16));
-
-        sidebar.getChildren().add(btnNew);
         return sidebar;
     }
 
@@ -310,8 +295,8 @@ public class BinaryTree extends Application {
      * Actualiza las métricas que se muestran en la barra inferior.
      *
      * @param depth profundidad del árbol
-     * @param lci suma de los valores del árbol
-     * @param lcim promedio de los valores del árbol
+     * @param lci longitud de camino interno del árbol
+     * @param lcim longitud de camino interno medio del árbol
      * @param parents lista de valores de nodos padres
      * @param leaves lista de valores de nodos hoja
      */

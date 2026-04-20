@@ -85,10 +85,10 @@ public class BinarySearchTree {
     /**
      * Calcula la profundidad máxima del árbol.
      *
-     * @return altura del árbol en número de niveles, donde un árbol vacío es -1
+     * @return número de niveles del árbol, donde un árbol vacío es 0
      */
     public int depth() {
-        return height(root);
+        return root == null ? 0 : height(root) + 1;
     }
 
     private int height(TreeNode current) {
@@ -152,6 +152,67 @@ public class BinarySearchTree {
     }
 
     /**
+     * Calcula la longitud de camino interno del árbol.
+     *
+     * <p>Es la suma de los niveles (1-based) de todos los nodos internos
+     * (nodos con al menos un hijo).</p>
+     *
+     * @return suma de los niveles de los nodos internos
+     */
+    public int internalPathLength() {
+        return internalPathLength(root, 1);
+    }
+
+    private int internalPathLength(TreeNode current, int level) {
+        if (current == null) {
+            return 0;
+        }
+
+        int total = 0;
+        if (current.getLeft() != null || current.getRight() != null) {
+            total += level;
+        }
+
+        total += internalPathLength(current.getLeft(), level + 1);
+        total += internalPathLength(current.getRight(), level + 1);
+        return total;
+    }
+
+    /**
+     * Devuelve el número de nodos internos del árbol.
+     *
+     * @return cantidad de nodos con al menos un hijo
+     */
+    public int internalNodeCount() {
+        return countInternalNodes(root);
+    }
+
+    private int countInternalNodes(TreeNode current) {
+        if (current == null) {
+            return 0;
+        }
+
+        int count = (current.getLeft() != null || current.getRight() != null) ? 1 : 0;
+        return count + countInternalNodes(current.getLeft()) + countInternalNodes(current.getRight());
+    }
+
+    /**
+     * Calcula la longitud de camino interno medio del árbol.
+     *
+     * <p>Es el promedio de los niveles de los nodos internos.</p>
+     *
+     * @return promedio de la longitud de camino interno, o 0 si no hay nodos internos
+     */
+    public double meanInternalPathLength() {
+        int internalCount = internalNodeCount();
+        if (internalCount == 0) {
+            return 0;
+        }
+
+        return (double) internalPathLength() / internalCount;
+    }
+
+    /**
      * Devuelve los valores de los nodos que tienen al menos un hijo.
      *
      * @return lista de valores de nodos padres
@@ -203,10 +264,10 @@ public class BinarySearchTree {
      * Obtiene el nivel de un nodo dentro del árbol.
      *
      * @param node nodo del cual se solicita el nivel
-     * @return nivel del nodo, donde la raíz es 0; devuelve -1 si no se encuentra
+     * @return nivel del nodo, donde la raíz es 1; devuelve -1 si no se encuentra
      */
     public int level(TreeNode node) {
-        return findLevel(root, node, 0);
+        return findLevel(root, node, 1);
     }
 
     private int findLevel(TreeNode current, TreeNode target, int depth) {

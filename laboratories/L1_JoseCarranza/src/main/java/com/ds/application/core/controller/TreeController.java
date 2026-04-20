@@ -161,8 +161,8 @@ public class TreeController {
         }
 
         int depth = model.depth();
-        int lci = model.sumValues();
-        double lcim = model.averageValue();
+        int lci = model.internalPathLength();
+        double lcim = model.meanInternalPathLength();
         List<Integer> parents = model.parentValues();
         List<Integer> leaves = model.leafValues();
 
@@ -188,7 +188,7 @@ public class TreeController {
 
         int degree = (node.getLeft() != null ? 1 : 0) + (node.getRight() != null ? 1 : 0);
         int level = model.level(node);
-        String levelText = level == 0 ? "0 (Root)" : String.valueOf(level);
+        String levelText = level == -1 ? "—" : String.valueOf(level);
 
         String childNodes = modelChildrenText(node);
 
