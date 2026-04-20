@@ -17,7 +17,7 @@
 
     <dependencies>
 
-    <!-- JUnit - no se toca -->
+    <!-- Test dependency for unit verification -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -25,25 +25,11 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- JavaFX Controls: botones, labels, textfields, etc. -->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-
-    <!-- JavaFX FXML-->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-
   </dependencies>
 
   <build>
     <plugins>
-       <!-- Compiler - actualizado a Java 21 -->
+       <!-- Compiler settings for Java 21 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -53,7 +39,7 @@
           <target>21</target>
         </configuration>
       </plugin>
-      <!-- JAR - no se toca -->
+      <!-- JAR packaging configuration -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
