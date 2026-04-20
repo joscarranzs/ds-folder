@@ -57,3 +57,54 @@ Este repositorio se utiliza para organizar y subir todos los proyectos, tareas y
   ```bash
   git branch -d feat/nombre-descriptivo
   ```
+
+## Funcionamiento del código del laboratorio L1_JoseCarranza
+
+Este repositorio contiene un proyecto Maven en `laboratories/L1_JoseCarranza` que implementa un visualizador de árbol binario con una interfaz JavaFX.
+
+### Estructura principal
+
+- `src/main/java/com/ds/App.java`
+  - Clase de entrada (`main`).
+  - Inicia la aplicación JavaFX delegando en `BinaryTree`.
+- `src/main/java/com/ds/application/core/view/BinaryTree.java`
+  - Construye la interfaz de usuario completa.
+  - Crea la barra lateral, el lienzo central, el panel inspector y la barra inferior de estadísticas.
+  - Dibuja dos representaciones:
+    - `drawTree(...)`: muestra el árbol binario con nodos y conexiones.
+    - `drawLinkedList(...)`: muestra una vista en tabla enlazada con columnas `LEFT`, `INFO` y `RIGHT`.
+  - Controla la presentación activa entre árbol y tabla.
+- `src/main/java/com/ds/application/core/controller/TreeController.java`
+  - Controlador MVC que maneja la interacción entre modelo y vista.
+  - Inserta nuevos nodos, actualiza el inspector, y refresca las métricas.
+  - Cambia la representación activa según la selección del usuario.
+- `src/main/java/com/ds/application/core/model/BinarySearchTree.java`
+  - Implementa el árbol binario de búsqueda.
+  - Provee inserción, búsqueda y cálculo de métricas.
+  - Calcula:
+    - profundidad del árbol (`depth()`)
+    - longitud de camino interno (`internalPathLength()`)
+    - longitud de camino interno medio (`meanInternalPathLength()`)
+    - nodos padres y hojas.
+- `src/main/java/com/ds/application/core/model/TreeNode.java`
+  - Representa cada nodo del árbol.
+  - Guarda valor y referencias a hijos izquierdo y derecho.
+
+### Flujo de ejecución
+
+1. `App.main(...)` arranca JavaFX.
+2. `BinaryTree.start(...)` construye la ventana y crea el controlador.
+3. `TreeController` opera sobre el modelo `BinarySearchTree` y actualiza la vista.
+4. Al insertar un valor, el árbol se redibuja y se recalculan las métricas.
+5. Al cambiar a `Linked List Table`, la vista muestra una tabla ordenada en preorden con índices 1-based para los nodos.
+
+### Cómo exponerlo
+
+- Explica la separación MVC:
+  - La vista contiene todos los elementos gráficos.
+  - El controlador gestiona eventos y recibe datos del modelo.
+  - El modelo mantiene la estructura de datos y los cálculos.
+- Muestra que la aplicación soporta dos vistas del mismo árbol:
+  - visualización gráfica en árbol
+  - visualización tipo tabla enlazada
+- Describe cómo se calculan las métricas de árbol internas y cómo se actualizan automáticamente.
