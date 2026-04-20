@@ -24,6 +24,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interfaz gráfica principal del visualizador de árbol binario.
@@ -52,6 +54,7 @@ public class BinaryTree extends Application {
 
     private Button btnTabTree;
     private Button btnTabList;
+    private boolean treeViewActive = true;
 
     @Override
     public void start(Stage stage) {
@@ -314,8 +317,22 @@ public class BinaryTree extends Application {
      * @param treeView {@code true} si la vista es árbol, {@code false} si es tabla enlazada
      */
     public void setRepresentationActive(boolean treeView) {
+        treeViewActive = treeView;
         btnTabTree.getStyleClass().setAll(treeView ? "sidebar-btn-active" : "sidebar-btn");
         btnTabList.getStyleClass().setAll(treeView ? "sidebar-btn" : "sidebar-btn-active");
+    }
+
+    /**
+     * Dibuja la representación activa actual del árbol.
+     *
+     * @param root nodo raíz del árbol que se desea visualizar
+     */
+    public void drawCurrentRepresentation(TreeNode root) {
+        if (treeViewActive) {
+            drawTree(root);
+        } else {
+            drawLinkedList(root);
+        }
     }
 
     /**
@@ -335,6 +352,101 @@ public class BinaryTree extends Application {
         double width = Math.max(treeCanvas.getWidth(), 900);
 
         drawNode(root, width / 2, 70, width / 4, 100, true);
+    }
+
+    /**
+     * Dibuja una representación de lista enlazada en forma de tabla.
+     *
+     * @param root nodo raíz del árbol que se desea representar
+     */
+    public void drawLinkedList(TreeNode root) {
+        clearCanvas();
+
+        if (root == null) {
+            showEmptyState();
+            return;
+        }
+
+        hideEmptyState();
+        List<TreeNode> nodes = new ArrayList<>();
+        collectPreOrder(root, nodes);
+
+        double canvasWidth = Math.max(treeCanvas.getWidth(), 920);
+        double rowWidth = Math.min(820, canvasWidth - 80);
+        double rowHeight = 78;
+        double startX = 40;
+        double startY = 40;
+
+        for (int i = 0; i < nodes.size(); i++) {
+            TreeNode node = nodes.get(i);
+            HBox row = createLinkedListRow(node, nodes, rowWidth, rowHeight);
+            row.setLayoutX(startX);
+            row.setLayoutY(startY + i * (rowHeight + 18));
+            treeCanvas.getChildren().add(row);
+        }
+
+        treeCanvas.setPrefHeight(startY + nodes.size() * (rowHeight + 18) + 40);
+    }
+
+    private void collectPreOrder(TreeNode node, List<TreeNode> nodes) {
+        if (node == null) {
+            return;
+        }
+
+        nodes.add(node);
+        collectPreOrder(node.getLeft(), nodes);
+        collectPreOrder(node.getRight(), nodes);
+    }
+
+    private HBox createLinkedListRow(TreeNode node, List<TreeNode> allNodes, double width, double height) {
+        HBox row = new HBox();
+        row.setSpacing(0);
+        row.setPrefSize(width, height);
+        row.getStyleClass().add("linked-row");
+        row.setOnMouseClicked(e -> controller.handleNodeClick(node));
+        row.setCursor(javafx.scene.Cursor.HAND);
+
+        VBox leftCell = createLinkedListCell("LEFT", node.getLeft(), true, allNodes);
+        VBox infoCell = createLinkedListCell("INFO", node, true, allNodes);
+        VBox rightCell = createLinkedListCell("RIGHT", node.getRight(), false, allNodes);
+
+        HBox.setHgrow(leftCell, Priority.ALWAYS);
+        HBox.setHgrow(infoCell, Priority.ALWAYS);
+        HBox.setHgrow(rightCell, Priority.ALWAYS);
+
+        leftCell.setPrefWidth(width / 3);
+        infoCell.setPrefWidth(width / 3);
+        rightCell.setPrefWidth(width / 3);
+
+        row.getChildren().addAll(leftCell, infoCell, rightCell);
+        return row;
+    }
+
+    private VBox createLinkedListCell(String labelText, TreeNode node, boolean withDivider, List<TreeNode> allNodes) {
+        VBox cell = new VBox(6);
+        cell.getStyleClass().add("linked-cell");
+        cell.setPadding(new Insets(10, 14, 10, 14));
+        if (withDivider) {
+            cell.setStyle("-fx-border-color: transparent #e2e8f0 transparent transparent; -fx-border-width: 0 1 0 0;");
+        }
+
+        Label label = new Label(labelText);
+        label.getStyleClass().add("linked-cell-label");
+
+        Label content;
+        if ("INFO".equals(labelText)) {
+            content = new Label(String.valueOf(node.getValue()));
+            content.getStyleClass().add("linked-cell-info");
+        } else {
+            String pointer = node != null
+                    ? String.valueOf(allNodes.indexOf(node) + 1)
+                    : "null";
+            content = new Label(pointer);
+            content.getStyleClass().add("linked-cell-pointer");
+        }
+
+        cell.getChildren().addAll(label, content);
+        return cell;
     }
 
     /**

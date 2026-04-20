@@ -48,7 +48,7 @@ public class TreeController {
             try {
                 int value = Integer.parseInt(input.trim());
                 model.insert(value);
-                view.drawTree(model.getRoot());
+                view.drawCurrentRepresentation(model.getRoot());
                 updateInspector(model.search(value));
                 updateStats();
             } catch (NumberFormatException ignored) {
@@ -129,6 +129,7 @@ public class TreeController {
      */
     public void handleSequential() {
         view.setRepresentationActive(true);
+        view.drawCurrentRepresentation(model.getRoot());
         updateStats();
     }
 
@@ -137,6 +138,7 @@ public class TreeController {
      */
     public void handleLinkedList() {
         view.setRepresentationActive(false);
+        view.drawCurrentRepresentation(model.getRoot());
         updateStats();
     }
 

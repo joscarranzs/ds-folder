@@ -193,6 +193,41 @@
 }
 
 /* ====================================================
+   LINKED LIST TABLE REPRESENTATION
+   ==================================================== */
+.linked-row {
+    -fx-background-color: white;
+    -fx-border-color: #cbd5e1;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);
+}
+
+.linked-cell {
+    -fx-background-color: transparent;
+}
+
+.linked-cell-label {
+    -fx-text-fill: #64748b;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 4 0;
+}
+
+.linked-cell-info {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.linked-cell-pointer {
+    -fx-text-fill: #334155;
+    -fx-font-size: 12px;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* ====================================================
    RIGHT PANEL  –  Node Inspector
    ==================================================== */
 .right-panel {
