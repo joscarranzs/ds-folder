@@ -117,10 +117,7 @@ public class BinaryTree extends Application {
         Label logoTitle = new Label("TREE VISUALIZER");
         logoTitle.getStyleClass().add("logo-title");
 
-        Label logoSub = new Label("V1.0 Technical Preview");
-        logoSub.getStyleClass().add("logo-sub");
-
-        logo.getChildren().addAll(logoTitle, logoSub);
+        logo.getChildren().add(logoTitle);
         sidebar.getChildren().add(logo);
         sidebar.getChildren().add(createDivider());
 
@@ -158,7 +155,7 @@ public class BinaryTree extends Application {
         ScrollPane scroll = new ScrollPane(treeCanvas);
         scroll.getStyleClass().add("tree-scroll");
         scroll.setFitToWidth(true);
-        scroll.setFitToHeight(true);
+        scroll.setFitToHeight(false);
 
         StackPane center = new StackPane(scroll);
         center.getStyleClass().add("center-area");
@@ -350,8 +347,20 @@ public class BinaryTree extends Application {
 
         hideEmptyState();
         double width = Math.max(treeCanvas.getWidth(), 900);
+        int depth = treeDepth(root);
+        double canvasHeight = 70 + (depth - 1) * 100 + 58 + 40;
+
+        treeCanvas.setPrefWidth(width);
+        treeCanvas.setPrefHeight(Math.max(canvasHeight, 620));
 
         drawNode(root, width / 2, 70, width / 4, 100, true);
+    }
+
+    private int treeDepth(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + Math.max(treeDepth(node.getLeft()), treeDepth(node.getRight()));
     }
 
     /**
@@ -379,12 +388,13 @@ public class BinaryTree extends Application {
 
         for (int i = 0; i < nodes.size(); i++) {
             TreeNode node = nodes.get(i);
-            HBox row = createLinkedListRow(node, nodes, rowWidth, rowHeight);
+            HBox row = createLinkedListRow(node, nodes, rowWidth, rowHeight, i + 1);
             row.setLayoutX(startX);
             row.setLayoutY(startY + i * (rowHeight + 18));
             treeCanvas.getChildren().add(row);
         }
 
+        treeCanvas.setPrefWidth(Math.max(rowWidth + 80, treeCanvas.getWidth()));
         treeCanvas.setPrefHeight(startY + nodes.size() * (rowHeight + 18) + 40);
     }
 
@@ -398,7 +408,7 @@ public class BinaryTree extends Application {
         collectPreOrder(node.getRight(), nodes);
     }
 
-    private HBox createLinkedListRow(TreeNode node, List<TreeNode> allNodes, double width, double height) {
+    private HBox createLinkedListRow(TreeNode node, List<TreeNode> allNodes, double width, double height, int index) {
         HBox row = new HBox();
         row.setSpacing(0);
         row.setPrefSize(width, height);
@@ -406,20 +416,43 @@ public class BinaryTree extends Application {
         row.setOnMouseClicked(e -> controller.handleNodeClick(node));
         row.setCursor(javafx.scene.Cursor.HAND);
 
+        double indexWidth = 56;
+        double cellWidth = (width - indexWidth) / 3;
+
+        VBox indexCell = createIndexCell(index, true);
         VBox leftCell = createLinkedListCell("LEFT", node.getLeft(), true, allNodes);
         VBox infoCell = createLinkedListCell("INFO", node, true, allNodes);
         VBox rightCell = createLinkedListCell("RIGHT", node.getRight(), false, allNodes);
 
+        HBox.setHgrow(indexCell, Priority.NEVER);
         HBox.setHgrow(leftCell, Priority.ALWAYS);
         HBox.setHgrow(infoCell, Priority.ALWAYS);
         HBox.setHgrow(rightCell, Priority.ALWAYS);
 
-        leftCell.setPrefWidth(width / 3);
-        infoCell.setPrefWidth(width / 3);
-        rightCell.setPrefWidth(width / 3);
+        indexCell.setPrefWidth(indexWidth);
+        leftCell.setPrefWidth(cellWidth);
+        infoCell.setPrefWidth(cellWidth);
+        rightCell.setPrefWidth(cellWidth);
 
-        row.getChildren().addAll(leftCell, infoCell, rightCell);
+        row.getChildren().addAll(indexCell, leftCell, infoCell, rightCell);
         return row;
+    }
+
+    private VBox createIndexCell(int index, boolean withDivider) {
+        VBox cell = new VBox(6);
+        cell.getStyleClass().add("linked-index-cell");
+        cell.setPadding(new Insets(10, 10, 10, 10));
+        if (withDivider) {
+            cell.setStyle("-fx-border-color: transparent #e2e8f0 transparent transparent; -fx-border-width: 0 1 0 0;");
+        }
+
+        Label label = new Label("#");
+        label.getStyleClass().add("linked-index-label");
+        Label value = new Label(String.valueOf(index));
+        value.getStyleClass().add("linked-index-value");
+
+        cell.getChildren().addAll(label, value);
+        return cell;
     }
 
     private VBox createLinkedListCell(String labelText, TreeNode node, boolean withDivider, List<TreeNode> allNodes) {

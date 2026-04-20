@@ -204,6 +204,21 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);
 }
 
+.linked-index-cell {
+    -fx-background-color: #f8fafc;
+}
+
+.linked-index-label {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 10px;
+}
+
+.linked-index-value {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
 .linked-cell {
     -fx-background-color: transparent;
 }
