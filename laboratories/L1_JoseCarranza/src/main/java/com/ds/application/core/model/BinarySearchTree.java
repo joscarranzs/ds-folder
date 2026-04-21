@@ -57,6 +57,50 @@ public class BinarySearchTree {
 
         return current;
     }
+    /*
+    Se elimina el nodo segun su caso
+    */
+   public void delete(int value) {
+    root = deleteRecursive(root, value);
+}
+private TreeNode findMin(TreeNode node) {
+    while (node.getLeft() != null) {
+        node = node.getLeft();
+    }
+    return node;
+}
+private TreeNode deleteRecursive(TreeNode node, int value) {
+    if (node == null) return null;
+
+    if (value < node.getValue()) {
+        node.setLeft(deleteRecursive(node.getLeft(), value));
+    } else if (value > node.getValue()) {
+        node.setRight(deleteRecursive(node.getRight(), value));
+    } else {
+        //Segun EL NODO
+
+        // Caso 1: hoja
+        if (node.getLeft() == null && node.getRight() == null) {
+            return null;
+        }
+
+        // Caso 2: un hijo
+        if (node.getLeft() == null) {
+            return node.getRight();
+        }
+
+        if (node.getRight() == null) {
+            return node.getLeft();
+        }
+
+        // Caso 3: dos hijos
+        TreeNode minNode = findMin(node.getRight());
+        node.setValue(minNode.getValue());
+        node.setRight(deleteRecursive(node.getRight(), minNode.getValue()));
+    }
+    return node;
+}
+
 
     /**
      * Busca un nodo por su valor.
@@ -81,6 +125,25 @@ public class BinarySearchTree {
                 ? searchNode(current.getLeft(), value)
                 : searchNode(current.getRight(), value);
     }
+    //Muestra el recorrido del nodo buscado visualmente
+    public List<TreeNode> searchWithPath(int value) {
+    List<TreeNode> path = new ArrayList<>();
+    TreeNode current = root;
+
+    while (current != null) {
+        path.add(current);
+
+        if (value == current.getValue()) {
+            return path;
+        } else if (value < current.getValue()) {
+            current = current.getLeft();
+        } else {
+            current = current.getRight();
+        }
+    }
+
+    return path; // recorrido aunque no lo encuentre
+}
 
     /**
      * Calcula la profundidad máxima del árbol.

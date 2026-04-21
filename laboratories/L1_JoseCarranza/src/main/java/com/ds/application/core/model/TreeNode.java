@@ -30,6 +30,15 @@ public class TreeNode {
     }
 
     /**
+     * Establece el valor del nodo.
+     *
+     * @param value nuevo valor entero del nodo
+     */
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    /**
      * Devuelve el hijo izquierdo del nodo.
      *
      * @return nodo izquierdo o {@code null} si no existe

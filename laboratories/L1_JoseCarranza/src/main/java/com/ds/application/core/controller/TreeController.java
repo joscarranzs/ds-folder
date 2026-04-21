@@ -1,11 +1,12 @@
 package com.ds.application.core.controller;
 
+import java.util.List;
+
 import com.ds.application.core.model.BinarySearchTree;
 import com.ds.application.core.model.TreeNode;
 import com.ds.application.core.view.BinaryTree;
-import javafx.scene.control.TextInputDialog;
 
-import java.util.List;
+import javafx.scene.control.TextInputDialog;
 
 /**
  * Controlador principal de la aplicación de árbol binario.
@@ -18,6 +19,7 @@ public class TreeController {
 
     private final BinaryTree view;
     private final BinarySearchTree model;
+    private TreeNode selectedNode;
 
     /**
      * Crea un controlador asociado a una vista específica.
@@ -27,9 +29,36 @@ public class TreeController {
     public TreeController(BinaryTree view) {
         this.view = view;
         this.model = new BinarySearchTree();
+        this.selectedNode = null;
 
         view.setInspector("—", "—", "—", "—");
         view.setStats(0, "—", "—", "—", "—");
+    }
+/*
+        * Elimina un nodo con el valor especificado y actualiza la vista.
+        *
+        * <p>Si el valor existe en el árbol, se elimina el nodo correspondiente,
+        * se redibuja la estructura y se actualizan las estadísticas.</p>
+*/
+    public void onDelete(int value) {
+        model.delete(value);
+        this.selectedNode = null;
+        view.drawCurrentRepresentation(model.getRoot());
+        updateInspector(null);
+        updateStats();
+    }
+
+    /**
+     * Elimina el nodo actualmente seleccionado y actualiza la vista.
+     */
+    public void handleDeleteNode() {
+        if (selectedNode != null) {
+            model.delete(selectedNode.getValue());
+            this.selectedNode = null;
+            view.drawCurrentRepresentation(model.getRoot());
+            updateInspector( null);
+            updateStats();
+        }
     }
 
     /**
@@ -76,10 +105,13 @@ public class TreeController {
             try {
                 int value = Integer.parseInt(input.trim());
                 TreeNode node = model.search(value);
+                List<TreeNode> path = model.searchWithPath(value);
+                boolean found = node != null;
+                view.animateSearch(path, found);
                 if (node != null) {
                     updateInspector(node);
                 } else {
-                    view.setInspector("Not found", "—", "—", "—");
+                    view.setInspector("ERROR...DATA Not found", "—", "—", "—");
                 }
             } catch (NumberFormatException ignored) {
             }
@@ -91,6 +123,7 @@ public class TreeController {
      */
     public void handleNewTree() {
         model.reset();
+        this.selectedNode = null;
         view.resetView();
     }
 
@@ -160,6 +193,7 @@ public class TreeController {
      * @param node nodo seleccionado por el usuario
      */
     public void handleNodeClick(TreeNode node) {
+        this.selectedNode = node;
         updateInspector(node);
     }
 

@@ -1,7 +1,16 @@
 package com.ds.application.core.view;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+
 import com.ds.application.core.controller.TreeController;
 import com.ds.application.core.model.TreeNode;
+
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,10 +33,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import javafx.util.Duration;
 
 /**
  * Interfaz gráfica principal del visualizador de árbol binario.
@@ -105,7 +111,68 @@ public class BinaryTree extends Application {
         bar.getChildren().add(title);
         return bar;
     }
+    /*
+    Animacion de busqueda: El controlador debe implementar un método handleSearch() que 
+    solicite un valor al usuario, busque el nodo en el árbol, 
+    y llame a view.animateSearch(path, found) 
+    donde path es la lista de nodos recorridos y found es un booleano que indica si se encontró el nodo. 
+    La vista debe resaltar cada nodo en path secuencialmente (por ejemplo, cambiando su color) y 
+    luego mostrar un mensaje si el nodo no se encuentra.
+    */
+   private Map<TreeNode, Node> visualNodes = new HashMap<>();
+   public void animateSearch(List<TreeNode> path, boolean found) {
+    if (path == null || path.isEmpty()) return;
 
+    Color highlightColor = found ? Color.GREEN : Color.RED;
+    for (TreeNode node : path) {
+        Node visualNode = visualNodes.get(node); 
+        if (visualNode != null) {
+            FadeTransition fade = new FadeTransition(Duration.millis(500), visualNode);
+            fade.setFromValue(1.0);
+            fade.setToValue(0.5);
+            fade.setCycleCount(2);
+            fade.setAutoReverse(true);
+            visualNode.setStyle("-fx-background-color: " + toRgbString(highlightColor) + ";");
+            fade.play();
+        }
+    }
+}
+private Map<TreeNode, StackPane> nodeMap = new HashMap<>();
+public void highlightNode(TreeNode node, String color) {
+    StackPane nodeView = nodeMap.get(node);
+    if (nodeView != null) {
+        nodeView.setStyle("-fx-background-color: " + color + "; -fx-background-radius: 50;");
+    }
+}
+/*
+Se agrego colores para la animacion del recorrido */
+private String toRgbString(Color color) {
+    return String.format("rgb(%d,%d,%d)", 
+        (int)(color.getRed()*255), 
+        (int)(color.getGreen()*255), 
+        (int)(color.getBlue()*255));
+}
+public void animateSearch(List<TreeNode> path, TreeNode found) {
+    new Thread(() -> {
+        try {
+            for (TreeNode node : path) {
+                javafx.application.Platform.runLater(() -> {
+                    highlightNode(node, "#facc15"); // amarillo
+                });
+                Thread.sleep(500);
+            }
+
+            javafx.application.Platform.runLater(() -> {
+                if (found != null) {
+                    highlightNode(found, "#22c55e"); // verde
+                } else {
+                    showNodeNotFound(path.get(path.size() - 1).getValue());
+                }
+            });
+
+        } catch (InterruptedException ignored) {}
+    }).start();
+}
     /**
      * Construye el panel lateral izquierdo con acciones, operaciones y opciones de vista.
      *
@@ -133,6 +200,7 @@ public class BinaryTree extends Application {
         // resaltar el recorrido hasta encontrarlo, y llamar showNodeNotFound(value) si no existe
         Button btnSearch = secondaryButton("Search", "⌕", null);
         //btnSearch.setOnAction(e -> controller.handleSearchNode());
+        btnSearch.setOnAction(e -> controller.handleSearch());
         sidebar.getChildren().add(btnSearch);
         sidebar.getChildren().add(secondaryButton("Reset", "↺", e -> controller.handleNewTree()));
         sidebar.getChildren().add(createDivider());
@@ -218,7 +286,7 @@ public class BinaryTree extends Application {
         btnDelete.getStyleClass().add("sidebar-btn-delete");
         btnDelete.setMaxWidth(Double.MAX_VALUE);
         btnDelete.setAlignment(Pos.CENTER_LEFT);
-        //btnDelete.setOnAction(e -> controller.handleDeleteNode());
+        btnDelete.setOnAction(e -> controller.handleDeleteNode());
         panel.getChildren().add(btnDelete);
 
         Region filler = new Region();
