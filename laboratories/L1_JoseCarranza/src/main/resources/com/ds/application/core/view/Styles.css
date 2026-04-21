@@ -1,16 +1,11 @@
-/* =====================================================
-   styles.css  –  Binary Tree Visualizer
-   Tema: blanco limpio, nodos cuadrados, azul marino
-   ===================================================== */
+
 
 .root-pane {
     -fx-background-color: #f8fafc;
     -fx-font-family: "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
 }
 
-/* ====================================================
-   TOP BAR  –  solo el titulo centrado
-   ==================================================== */
+
 .top-bar {
     -fx-background-color: white;
     -fx-border-color: #e2e8f0;
@@ -23,9 +18,7 @@
     -fx-font-weight: bold;
 }
 
-/* ====================================================
-   SIDEBAR
-   ==================================================== */
+
 .sidebar {
     -fx-background-color: white;
     -fx-border-color: #e2e8f0;
@@ -47,7 +40,7 @@
     -fx-background-color: #f1f5f9;
 }
 
-/* Etiqueta de seccion */
+
 .sidebar-section {
     -fx-text-fill: #94a3b8;
     -fx-font-size: 12px;
@@ -55,7 +48,7 @@
     -fx-padding: 16 20 6 20;
 }
 
-/* Boton normal */
+
 .sidebar-btn {
     -fx-background-color: transparent;
     -fx-text-fill: #475569;
@@ -74,7 +67,7 @@
     -fx-text-fill: #1d4ed8;
 }
 
-/* Active button with left accent border */
+
 .sidebar-btn-active {
     -fx-background-color: #eff6ff;
     -fx-text-fill: #1d4ed8;
@@ -88,7 +81,7 @@
     -fx-alignment: CENTER_LEFT;
 }
 
-/* Insert button (primary action) */
+
 .sidebar-btn-primary {
     -fx-background-color: #eff6ff;
     -fx-text-fill: #1d4ed8;
@@ -105,7 +98,7 @@
     -fx-background-color: #dbeafe;
 }
 
-/* New Tree button at the bottom */
+
 .btn-new {
     -fx-background-color: #0f172a;
     -fx-text-fill: white;
@@ -120,9 +113,7 @@
     -fx-background-color: #1e293b;
 }
 
-/* ====================================================
-   CENTER CANVAS
-   ==================================================== */
+
 .center-area {
     -fx-background-color: #f8fafc;
 }
@@ -153,18 +144,16 @@
     -fx-font-size: 15px;
 }
 
-/* ====================================================
-   NODES – rounded square nodes
-   ==================================================== */
 
-/* Root node: dark navy blue */
+
+
 .node-root {
     -fx-background-color: #0f172a;
     -fx-background-radius: 999;
     -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.22), 12, 0, 0, 4);
 }
 
-/* Internal node: white with border */
+
 .node-internal {
     -fx-background-color: white;
     -fx-background-radius: 999;
@@ -174,21 +163,21 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 2);
 }
 
-/* Leaf node: light gray */
+
 .node-leaf {
     -fx-background-color: #e2e8f0;
     -fx-background-radius: 999;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);
 }
 
-/* ROOT label above the root node */
+
 .node-tag-root {
     -fx-text-fill: #94a3b8;
     -fx-font-size: 10px;
     -fx-font-weight: bold;
 }
 
-/* LEAF label below the leaf node */
+
 .node-tag-leaf {
     -fx-text-fill: #22c55e;
     -fx-font-size: 10px;
@@ -215,9 +204,7 @@
     -fx-border-insets: 0;
 }
 
-/* ====================================================
-   LINKED LIST TABLE REPRESENTATION
-   ==================================================== */
+
 .linked-row {
     -fx-background-color: white;
     -fx-border-color: #cbd5e1;
@@ -265,9 +252,7 @@
     -fx-font-family: "Courier New", monospace;
 }
 
-/* ====================================================
-   NODES BY LEVEL REPRESENTATION
-   ==================================================== */
+
 .level-row {
     -fx-alignment: center-left;
     -fx-spacing: 16;
@@ -290,9 +275,7 @@
     -fx-font-weight: bold;
 }
 
-/* ====================================================
-   RIGHT PANEL  –  Node Inspector
-   ==================================================== */
+
 .right-panel {
     -fx-background-color: white;
     -fx-border-color: #e2e8f0;
@@ -333,7 +316,7 @@
     -fx-font-weight: bold;
 }
 
-/* Chip para child nodes: [30, 70] */
+
 .insp-chip {
     -fx-background-color: #f1f5f9;
     -fx-text-fill: #475569;
@@ -343,7 +326,7 @@
     -fx-background-radius: 8;
 }
 
-/* Delete button inside inspector panel */
+
 .sidebar-btn-delete {
     -fx-background-color: #fff1f2;
     -fx-text-fill: #e11d48;
@@ -359,9 +342,7 @@
     -fx-background-color: #ffe4e6;
 }
 
-/* ====================================================
-   BOTTOM BAR  –  leyenda + estadisticas
-   ==================================================== */
+
 .bottom-bar {
     -fx-background-color: white;
     -fx-border-color: #e2e8f0;
@@ -375,23 +356,21 @@
     -fx-font-weight: bold;
 }
 
-/* Titulo de estadistica: "TREE DEPTH:" */
+
 .stat-bar-title {
     -fx-text-fill: #64748b;
     -fx-font-size: 13px;
     -fx-font-weight: bold;
 }
 
-/* Valor de estadistica: "3" */
+
 .stat-bar-value {
     -fx-text-fill: #0f172a;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
-/* ====================================================
-   WELCOME SCREEN
-   ==================================================== */
+
 .welcome-card {
     -fx-background-color: white;
     -fx-border-color: #e2e8f0;

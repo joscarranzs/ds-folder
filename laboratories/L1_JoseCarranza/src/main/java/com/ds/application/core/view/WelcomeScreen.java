@@ -42,7 +42,7 @@ public class WelcomeScreen {
         );
         card.setMaxWidth(440);
 
-        // ── Box superior: logos + LAB#1 + título ──
+        
         VBox topBox = new VBox(10);
         topBox.setPadding(new Insets(20, 24, 18, 24));
 
@@ -79,12 +79,12 @@ public class WelcomeScreen {
         logosRow.getChildren().addAll(logoLeft, centerText, logoRight);
         topBox.getChildren().add(logosRow);
 
-        // ── Divider ──
+        
         Pane divider1 = new Pane();
         divider1.setStyle("-fx-background-color: #e2e8f0;");
         divider1.setPrefHeight(1);
 
-        // ── Box inferior: info ──
+        
         VBox bottomBox = new VBox(10);
         bottomBox.setPadding(new Insets(18, 24, 20, 24));
 
