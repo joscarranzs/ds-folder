@@ -10,7 +10,6 @@ import java.util.Queue;
 import com.ds.application.core.controller.TreeController;
 import com.ds.application.core.model.TreeNode;
 
-import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -33,7 +32,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  * Interfaz gráfica principal del visualizador de árbol binario.
@@ -119,30 +117,46 @@ public class BinaryTree extends Application {
     La vista debe resaltar cada nodo en path secuencialmente (por ejemplo, cambiando su color) y 
     luego mostrar un mensaje si el nodo no se encuentra.
     */
-   private Map<TreeNode, Node> visualNodes = new HashMap<>();
-   public void animateSearch(List<TreeNode> path, boolean found) {
+   private Map<TreeNode, StackPane>  nodeMap = new HashMap<>();
+public void animateSearch(List<TreeNode> path, boolean found) {
     if (path == null || path.isEmpty()) return;
 
     Color highlightColor = found ? Color.GREEN : Color.RED;
-    for (TreeNode node : path) {
-        Node visualNode = visualNodes.get(node); 
-        if (visualNode != null) {
-            FadeTransition fade = new FadeTransition(Duration.millis(500), visualNode);
-            fade.setFromValue(1.0);
-            fade.setToValue(0.5);
-            fade.setCycleCount(2);
-            fade.setAutoReverse(true);
-            visualNode.setStyle("-fx-background-color: " + toRgbString(highlightColor) + ";");
-            fade.play();
-        }
-    }
-}
-private Map<TreeNode, StackPane> nodeMap = new HashMap<>();
-public void highlightNode(TreeNode node, String color) {
-    StackPane nodeView = nodeMap.get(node);
-    if (nodeView != null) {
-        nodeView.setStyle("-fx-background-color: " + color + "; -fx-background-radius: 50;");
-    }
+
+    new Thread(() -> {
+        try {
+            // resaltar recorrido
+            for (TreeNode node : path) {
+                Node visualNode = nodeMap.get(node);
+
+                if (visualNode != null) {
+                    javafx.application.Platform.runLater(() -> {
+                        visualNode.setStyle(
+                            "-fx-background-color: " + toRgbString(highlightColor) + ";" +
+                            "-fx-background-radius: 50;"
+                        );
+                    });
+                }
+
+                Thread.sleep(400); // velocidad del recorrido
+            }
+
+            // mantener color 5 segundos
+            Thread.sleep(5000);
+
+            // quitar color (reset visual)
+            for (TreeNode node : path) {
+                Node visualNode = nodeMap.get(node);
+
+                if (visualNode != null) {
+                    javafx.application.Platform.runLater(() -> {
+                        visualNode.setStyle(""); 
+                    });
+                }
+            }
+
+        } catch (InterruptedException ignored) {}
+    }).start();
 }
 /*
 Se agrego colores para la animacion del recorrido */
@@ -151,27 +165,6 @@ private String toRgbString(Color color) {
         (int)(color.getRed()*255), 
         (int)(color.getGreen()*255), 
         (int)(color.getBlue()*255));
-}
-public void animateSearch(List<TreeNode> path, TreeNode found) {
-    new Thread(() -> {
-        try {
-            for (TreeNode node : path) {
-                javafx.application.Platform.runLater(() -> {
-                    highlightNode(node, "#facc15"); // amarillo
-                });
-                Thread.sleep(500);
-            }
-
-            javafx.application.Platform.runLater(() -> {
-                if (found != null) {
-                    highlightNode(found, "#22c55e"); // verde
-                } else {
-                    showNodeNotFound(path.get(path.size() - 1).getValue());
-                }
-            });
-
-        } catch (InterruptedException ignored) {}
-    }).start();
 }
     /**
      * Construye el panel lateral izquierdo con acciones, operaciones y opciones de vista.
@@ -743,6 +736,7 @@ public void animateSearch(List<TreeNode> path, TreeNode found) {
         }
 
         StackPane nodeView = new StackPane();
+        nodeMap.put(node, nodeView);
         nodeView.setPrefSize(size, size);
         nodeView.setLayoutX(x - size / 2);
         nodeView.setLayoutY(y - size / 2);

@@ -320,6 +320,22 @@
     -fx-background-radius: 8;
 }
 
+/* Delete button inside inspector panel */
+.sidebar-btn-delete {
+    -fx-background-color: #fff1f2;
+    -fx-text-fill: #e11d48;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 14 20 14 20;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-alignment: CENTER_LEFT;
+}
+.sidebar-btn-delete:hover {
+    -fx-background-color: #ffe4e6;
+}
+
 /* ====================================================
    BOTTOM BAR  –  leyenda + estadisticas
    ==================================================== */
@@ -347,4 +363,91 @@
     -fx-text-fill: #0f172a;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
+}
+
+/* ====================================================
+   WELCOME SCREEN
+   ==================================================== */
+.welcome-card {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 20, 0, 0, 4);
+    -fx-max-width: 560px;
+}
+
+.welcome-header {
+    -fx-padding: 28 32 24 32;
+}
+
+.welcome-uni-small {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.welcome-uni-name {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.welcome-logo-box {
+    -fx-background-color: #0f172a;
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 14 12 14;
+    -fx-background-radius: 10;
+}
+
+.welcome-body {
+    -fx-padding: 28 32 32 32;
+}
+
+.welcome-lab-tag {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.welcome-main-title {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+.welcome-info-card {
+    -fx-background-color: #f8fafc;
+    -fx-padding: 12 16 12 16;
+    -fx-background-radius: 10;
+}
+
+.welcome-info-label {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.welcome-info-value {
+    -fx-text-fill: #334155;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.welcome-btn-start {
+    -fx-background-color: #0f172a;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 14 0 14 0;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.welcome-btn-start:hover {
+    -fx-background-color: #1e293b;
 }
