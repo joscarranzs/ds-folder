@@ -95,6 +95,18 @@ public class TreeController {
     }
 
     /**
+     * Maneja la vista de nodos por nivel seleccionada.
+     */
+    public void handleNodesByLevel() {
+        if (model.isEmpty()) {
+            return;
+        }
+
+        view.setLevelRepresentationActive();
+        view.drawNodesByLevel(model.getRoot());
+    }
+
+    /**
      * Actualiza las estadísticas del árbol cuando se selecciona identificar
      * los nodos padres.
      */
