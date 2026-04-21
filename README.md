@@ -108,3 +108,24 @@ Este repositorio contiene un proyecto Maven en `laboratories/L1_JoseCarranza` qu
   - visualización gráfica en árbol
   - visualización tipo tabla enlazada
 - Describe cómo se calculan las métricas de árbol internas y cómo se actualizan automáticamente.
+
+### Cómo ejecutar el proyecto
+
+Para ejecutar el laboratorio desde Maven y que JavaFX se cargue correctamente:
+
+```bash
+cd laboratories/L1_JoseCarranza
+mvn javafx:run
+```
+
+Esta configuración detecta el sistema operativo y carga la dependencia de JavaFX correcta. Si usas otro sistema operativo y aparece un error, puedes forzar la plataforma con:
+
+```bash
+mvn javafx:run -Djavafx.platform=linux
+```
+```bash
+mvn javafx:run -Djavafx.platform=mac
+```
+```bash
+mvn javafx:run -Djavafx.platform=win32
+```
