@@ -160,16 +160,16 @@
 /* Root node: dark navy blue */
 .node-root {
     -fx-background-color: #0f172a;
-    -fx-background-radius: 12;
+    -fx-background-radius: 999;
     -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.22), 12, 0, 0, 4);
 }
 
 /* Internal node: white with border */
 .node-internal {
     -fx-background-color: white;
-    -fx-background-radius: 12;
+    -fx-background-radius: 999;
     -fx-border-color: #e2e8f0;
-    -fx-border-radius: 12;
+    -fx-border-radius: 999;
     -fx-border-width: 2;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 2);
 }
@@ -177,7 +177,7 @@
 /* Leaf node: light gray */
 .node-leaf {
     -fx-background-color: #e2e8f0;
-    -fx-background-radius: 12;
+    -fx-background-radius: 999;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);
 }
 
@@ -193,6 +193,26 @@
     -fx-text-fill: #22c55e;
     -fx-font-size: 10px;
     -fx-font-weight: bold;
+}
+
+.search-miss {
+    -fx-background-color: #fee2e2;
+    -fx-background-radius: 50;
+    -fx-border-color: #fecaca;
+    -fx-border-radius: 50;
+    -fx-border-width: 2;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+}
+
+.search-hit {
+    -fx-background-color: #dcfce7;
+    -fx-background-radius: 50;
+    -fx-border-color: #86efac;
+    -fx-border-radius: 50;
+    -fx-border-width: 2;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
 }
 
 /* ====================================================
@@ -346,6 +366,7 @@
     -fx-background-color: white;
     -fx-border-color: #e2e8f0;
     -fx-border-width: 1 0 0 0;
+    -fx-padding: 16 24;
 }
 
 .legend-label {
@@ -357,14 +378,14 @@
 /* Titulo de estadistica: "TREE DEPTH:" */
 .stat-bar-title {
     -fx-text-fill: #64748b;
-    -fx-font-size: 12px;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
 }
 
 /* Valor de estadistica: "3" */
 .stat-bar-value {
     -fx-text-fill: #0f172a;
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 

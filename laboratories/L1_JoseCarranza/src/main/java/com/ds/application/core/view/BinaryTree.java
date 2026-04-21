@@ -119,55 +119,53 @@ public class BinaryTree extends Application {
     La vista debe resaltar cada nodo en path secuencialmente (por ejemplo, cambiando su color) y 
     luego mostrar un mensaje si el nodo no se encuentra.
     */
-   private Map<TreeNode, StackPane>  nodeMap = new HashMap<>();
-public void animateSearch(List<TreeNode> path, boolean found) {
-    if (path == null || path.isEmpty()) return;
+    private Map<TreeNode, StackPane> nodeMap = new HashMap<>();
 
-    Color highlightColor = found ? Color.GREEN : Color.RED;
+    public void animateSearch(List<TreeNode> path, boolean found) {
+        if (path == null || path.isEmpty()) return;
 
-    new Thread(() -> {
-        try {
-            // resaltar recorrido
-            for (TreeNode node : path) {
-                Node visualNode = nodeMap.get(node);
+        String missClass = "search-miss";
+        String hitClass = "search-hit";
 
-                if (visualNode != null) {
-                    javafx.application.Platform.runLater(() -> {
-                        visualNode.setStyle(
-                            "-fx-background-color: " + toRgbString(highlightColor) + ";" +
-                            "-fx-background-radius: 50;"
-                        );
-                    });
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < path.size(); i++) {
+                    TreeNode node = path.get(i);
+                    Node visualNode = nodeMap.get(node);
+                    boolean isLast = i == path.size() - 1;
+                    boolean isHit = found && isLast;
+
+                    if (visualNode != null) {
+                        javafx.application.Platform.runLater(() -> {
+                            visualNode.getStyleClass().removeAll(hitClass, missClass);
+                            visualNode.getStyleClass().add(isHit ? hitClass : missClass);
+                        });
+                    }
+
+                    Thread.sleep(500);
+
+                    if (visualNode != null && !isHit) {
+                        javafx.application.Platform.runLater(() -> {
+                            visualNode.getStyleClass().remove(missClass);
+                        });
+                    }
                 }
 
-                Thread.sleep(500); // velocidad del recorrido
-            }
-
-            // mantener color 1 segundo
-            Thread.sleep(1000);
-
-            // quitar color (reset visual)
-            for (TreeNode node : path) {
-                Node visualNode = nodeMap.get(node);
-
-                if (visualNode != null) {
+                if (!path.isEmpty()) {
+                    Thread.sleep(1000);
                     javafx.application.Platform.runLater(() -> {
-                        visualNode.setStyle(""); 
+                        for (TreeNode node : path) {
+                            Node visualNode = nodeMap.get(node);
+                            if (visualNode != null) {
+                                visualNode.getStyleClass().removeAll(hitClass, missClass);
+                            }
+                        }
                     });
                 }
+            } catch (InterruptedException ignored) {
             }
-
-        } catch (InterruptedException ignored) {}
-    }).start();
-}
-/*
-Se agrego colores para la animacion del recorrido */
-private String toRgbString(Color color) {
-    return String.format("rgb(%d,%d,%d)", 
-        (int)(color.getRed()*255), 
-        (int)(color.getGreen()*255), 
-        (int)(color.getBlue()*255));
-}
+        }).start();
+    }
     /**
      * Construye el panel lateral izquierdo con acciones, operaciones y opciones de vista.
      *
@@ -277,7 +275,10 @@ private String toRgbString(Color color) {
 
         // TODO [Controller]: Conectar este botón a controller.handleDeleteNode()
         // El controller debe eliminar el nodo actualmente seleccionado y llamar drawTree() + setStats() para actualizar la vista
-        Button btnDelete = new Button("✕   Delete Node");
+        Button btnDelete = new Button("DELETE NODE");
+        btnDelete.setGraphic(createIcon("fas-times-circle", Color.web("#e11d48")));
+        btnDelete.setGraphicTextGap(12);
+        btnDelete.setContentDisplay(ContentDisplay.LEFT);
         btnDelete.getStyleClass().add("sidebar-btn-delete");
         btnDelete.setMaxWidth(Double.MAX_VALUE);
         btnDelete.setAlignment(Pos.CENTER_LEFT);
@@ -724,8 +725,9 @@ private String toRgbString(Color color) {
         if (rootNode) {
             Label rootTag = new Label("ROOT");
             rootTag.getStyleClass().add("node-tag-root");
-            rootTag.setLayoutX(x - size / 2);
-            rootTag.setLayoutY(y - 22);
+            rootTag.setLayoutX(x + size / 2 + 8);
+            rootTag.setLayoutY(y - 10);
+            rootTag.setStyle("-fx-background-color: rgba(255,255,255,0.9); -fx-padding: 2 6 2 6; -fx-background-radius: 8;");
             treeCanvas.getChildren().add(rootTag);
         }
 
