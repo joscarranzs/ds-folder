@@ -66,6 +66,9 @@
     -fx-border-color: transparent;
     -fx-alignment: CENTER_LEFT;
 }
+.button-icon {
+    -fx-padding: 0 10 0 0;
+}
 .sidebar-btn:hover {
     -fx-background-color: #f8fafc;
     -fx-text-fill: #1d4ed8;

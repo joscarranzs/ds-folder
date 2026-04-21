@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -32,6 +33,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 /**
  * Interfaz gráfica principal del visualizador de árbol binario.
@@ -187,21 +189,21 @@ private String toRgbString(Color color) {
         sidebar.getChildren().add(createDivider());
 
         sidebar.getChildren().add(sectionLabel("ACTIONS"));
-        sidebar.getChildren().add(primaryButton("Insert", "+", e -> controller.handleInsertNode()));
+        sidebar.getChildren().add(primaryButton("Insert", "fas-plus", e -> controller.handleInsertNode()));
         // TODO [Controller]: Implementar handleSearchNode() en TreeController
         // Debe pedir un valor al usuario (similar a handleInsertNode), buscar el nodo en el árbol,
         // resaltar el recorrido hasta encontrarlo, y llamar showNodeNotFound(value) si no existe
-        Button btnSearch = secondaryButton("Search", "⌕", null);
+        Button btnSearch = secondaryButton("Search", "fas-search", null);
         //btnSearch.setOnAction(e -> controller.handleSearchNode());
         btnSearch.setOnAction(e -> controller.handleSearch());
         sidebar.getChildren().add(btnSearch);
-        sidebar.getChildren().add(secondaryButton("Reset", "↺", e -> controller.handleNewTree()));
+        sidebar.getChildren().add(secondaryButton("Reset", "fas-undo", e -> controller.handleNewTree()));
         sidebar.getChildren().add(createDivider());
 
         sidebar.getChildren().add(sectionLabel("REPRESENTATIONS"));
-        btnTabTree = activeButton("Binary Tree", "⛶", e -> controller.handleSequential());
-        btnTabList = secondaryButton("Linked List Table", "▦", e -> controller.handleLinkedList());
-        btnTabLevel = secondaryButton("Nodes by Level", "⌕", e -> controller.handleNodesByLevel());
+        btnTabTree = activeButton("Binary Tree", "fas-sitemap", e -> controller.handleSequential());
+        btnTabList = secondaryButton("Linked List Table", "fas-table", e -> controller.handleLinkedList());
+        btnTabLevel = secondaryButton("Nodes by Level", "fas-layer-group", e -> controller.handleNodesByLevel());
 
         sidebar.getChildren().addAll(btnTabTree, btnTabList, btnTabLevel);
 
@@ -801,8 +803,19 @@ private String toRgbString(Color color) {
      * @param action manejador de evento al pulsar el botón
      * @return botón configurado con estilo secundario
      */
+    private FontIcon createIcon(String literal, Color color) {
+        FontIcon icon = new FontIcon(literal);
+        icon.setIconSize(20);
+        icon.setIconColor(color);
+        icon.getStyleClass().add("button-icon");
+        return icon;
+    }
+
     private Button secondaryButton(String text, String icon, javafx.event.EventHandler<javafx.event.ActionEvent> action) {
-        Button button = new Button(icon + "   " + text);
+        Button button = new Button(text);
+        button.setGraphic(createIcon(icon, Color.web("#475569")));
+        button.setGraphicTextGap(12);
+        button.setContentDisplay(ContentDisplay.LEFT);
         button.getStyleClass().add("sidebar-btn");
         button.setMaxWidth(Double.MAX_VALUE);
         button.setAlignment(Pos.CENTER_LEFT);
@@ -819,7 +832,10 @@ private String toRgbString(Color color) {
      * @return botón configurado con estilo de activación
      */
     private Button activeButton(String text, String icon, javafx.event.EventHandler<javafx.event.ActionEvent> action) {
-        Button button = new Button(icon + "   " + text);
+        Button button = new Button(text);
+        button.setGraphic(createIcon(icon, Color.web("#1d4ed8")));
+        button.setGraphicTextGap(12);
+        button.setContentDisplay(ContentDisplay.LEFT);
         button.getStyleClass().add("sidebar-btn-active");
         button.setMaxWidth(Double.MAX_VALUE);
         button.setAlignment(Pos.CENTER_LEFT);
@@ -836,7 +852,10 @@ private String toRgbString(Color color) {
      * @return botón con estilo primario
      */
     private Button primaryButton(String text, String icon, javafx.event.EventHandler<javafx.event.ActionEvent> action) {
-        Button button = new Button(icon + "   " + text);
+        Button button = new Button(text);
+        button.setGraphic(createIcon(icon, Color.web("#1d4ed8")));
+        button.setGraphicTextGap(12);
+        button.setContentDisplay(ContentDisplay.LEFT);
         button.getStyleClass().add("sidebar-btn-primary");
         button.setMaxWidth(Double.MAX_VALUE);
         button.setAlignment(Pos.CENTER_LEFT);
@@ -980,8 +999,9 @@ private String toRgbString(Color color) {
         "-fx-background-radius: 12;"
     );
 
-    Label icon = new Label("✕");
-    icon.setStyle("-fx-text-fill: #e11d48; -fx-font-size: 22px; -fx-font-weight: bold;");
+    FontIcon icon = new FontIcon("fas-times-circle");
+    icon.setIconSize(28);
+    icon.setIconColor(Color.web("#e11d48"));
 
     Label msg = new Label("Node " + value + " not found in the tree.");
     msg.setStyle("-fx-text-fill: #0f172a; -fx-font-size: 14px; -fx-font-weight: bold;");
