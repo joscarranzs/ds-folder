@@ -128,6 +128,12 @@ public class BinaryTree extends Application {
 
         sidebar.getChildren().add(sectionLabel("ACTIONS"));
         sidebar.getChildren().add(primaryButton("Insert", "+", e -> controller.handleInsertNode()));
+        // TODO [Controller]: Implementar handleSearchNode() en TreeController
+        // Debe pedir un valor al usuario (similar a handleInsertNode), buscar el nodo en el árbol,
+        // resaltar el recorrido hasta encontrarlo, y llamar showNodeNotFound(value) si no existe
+        Button btnSearch = secondaryButton("Search", "⌕", null);
+        //btnSearch.setOnAction(e -> controller.handleSearchNode());
+        sidebar.getChildren().add(btnSearch);
         sidebar.getChildren().add(secondaryButton("Reset", "↺", e -> controller.handleNewTree()));
         sidebar.getChildren().add(createDivider());
 
@@ -205,6 +211,15 @@ public class BinaryTree extends Application {
         panel.getChildren().add(createDivider());
         panel.getChildren().add(inspectorRow("CHILD NODES", lblChildNodes));
         panel.getChildren().add(createDivider());
+
+        // TODO [Controller]: Conectar este botón a controller.handleDeleteNode()
+        // El controller debe eliminar el nodo actualmente seleccionado y llamar drawTree() + setStats() para actualizar la vista
+        Button btnDelete = new Button("✕   Delete Node");
+        btnDelete.getStyleClass().add("sidebar-btn-delete");
+        btnDelete.setMaxWidth(Double.MAX_VALUE);
+        btnDelete.setAlignment(Pos.CENTER_LEFT);
+        //btnDelete.setOnAction(e -> controller.handleDeleteNode());
+        panel.getChildren().add(btnDelete);
 
         Region filler = new Region();
         VBox.setVgrow(filler, Priority.ALWAYS);
@@ -881,6 +896,55 @@ public class BinaryTree extends Application {
                 treeCanvas.heightProperty().subtract(emptyLabel.heightProperty()).divide(2)
         );
     }
+
+    /**
+     * Muestra un popup indicando que el nodo buscado no existe en el árbol.
+    *
+    * @param value valor buscado que no fue encontrado
+    */
+    public void showNodeNotFound(int value) {
+    Stage popup = new Stage();
+    popup.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+    popup.setResizable(false);
+    popup.setTitle("");
+
+    VBox box = new VBox(12);
+    box.setAlignment(Pos.CENTER);
+    box.setPadding(new Insets(24, 32, 24, 32));
+    box.setStyle(
+        "-fx-background-color: white;" +
+        "-fx-border-color: #e2e8f0;" +
+        "-fx-border-radius: 12;" +
+        "-fx-background-radius: 12;"
+    );
+
+    Label icon = new Label("✕");
+    icon.setStyle("-fx-text-fill: #e11d48; -fx-font-size: 22px; -fx-font-weight: bold;");
+
+    Label msg = new Label("Node " + value + " not found in the tree.");
+    msg.setStyle("-fx-text-fill: #0f172a; -fx-font-size: 14px; -fx-font-weight: bold;");
+
+    Button btnClose = new Button("OK");
+    btnClose.setStyle(
+        "-fx-background-color: #0f172a;" +
+        "-fx-text-fill: white;" +
+        "-fx-font-size: 13px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-padding: 8 32 8 32;" +
+        "-fx-background-radius: 8;" +
+        "-fx-cursor: hand;"
+    );
+    btnClose.setOnAction(e -> popup.close());
+
+    box.getChildren().addAll(icon, msg, btnClose);
+
+    Scene scene = new Scene(box, 320, 150);
+    scene.getStylesheets().add(
+        getClass().getResource("/com/ds/application/core/view/Styles.css").toExternalForm()
+    );
+    popup.setScene(scene);
+    popup.showAndWait();
+}
 
     /**
      * Método principal que arranca la aplicación JavaFX.
