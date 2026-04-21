@@ -25,7 +25,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Interfaz gráfica principal del visualizador de árbol binario.
@@ -54,7 +56,10 @@ public class BinaryTree extends Application {
 
     private Button btnTabTree;
     private Button btnTabList;
+    private Button btnTabLevel;
     private boolean treeViewActive = true;
+
+    private static final String DEFAULT_EMPTY_TEXT = "Empty tree · Insert a root node to begin";
 
     @Override
     public void start(Stage stage) {
@@ -129,7 +134,9 @@ public class BinaryTree extends Application {
         sidebar.getChildren().add(sectionLabel("REPRESENTATIONS"));
         btnTabTree = activeButton("Binary Tree", "⛶", e -> controller.handleSequential());
         btnTabList = secondaryButton("Linked List Table", "▦", e -> controller.handleLinkedList());
-        sidebar.getChildren().addAll(btnTabTree, btnTabList);
+        btnTabLevel = secondaryButton("Nodes by Level", "⌕", e -> controller.handleNodesByLevel());
+
+        sidebar.getChildren().addAll(btnTabTree, btnTabList, btnTabLevel);
 
         Region filler = new Region();
         VBox.setVgrow(filler, Priority.ALWAYS);
@@ -265,6 +272,11 @@ public class BinaryTree extends Application {
      * Muestra el estado vacío cuando el árbol no tiene nodos.
      */
     public void showEmptyState() {
+        showEmptyState(DEFAULT_EMPTY_TEXT);
+    }
+
+    public void showEmptyState(String message) {
+        emptyLabel.setText(message);
         emptyLabel.setVisible(true);
         treeCanvas.getChildren().setAll(emptyLabel);
     }
@@ -317,6 +329,22 @@ public class BinaryTree extends Application {
         treeViewActive = treeView;
         btnTabTree.getStyleClass().setAll(treeView ? "sidebar-btn-active" : "sidebar-btn");
         btnTabList.getStyleClass().setAll(treeView ? "sidebar-btn" : "sidebar-btn-active");
+        btnTabLevel.getStyleClass().setAll("sidebar-btn");
+    }
+
+    /**
+     * Actualiza las opciones de nivel disponibles para la vista por nivel.
+     *
+     * @param maxLevel nivel máximo del árbol
+     */
+    /**
+     * Marca la vista de nodos por nivel como activa.
+     */
+    public void setLevelRepresentationActive() {
+        treeViewActive = true;
+        btnTabTree.getStyleClass().setAll("sidebar-btn");
+        btnTabList.getStyleClass().setAll("sidebar-btn");
+        btnTabLevel.getStyleClass().setAll("sidebar-btn-active");
     }
 
     /**
@@ -396,6 +424,111 @@ public class BinaryTree extends Application {
 
         treeCanvas.setPrefWidth(Math.max(rowWidth + 80, treeCanvas.getWidth()));
         treeCanvas.setPrefHeight(startY + nodes.size() * (rowHeight + 18) + 40);
+    }
+
+    /**
+     * Dibuja solamente los nodos que están en el nivel seleccionado.
+     *
+     * @param root nodo raíz del árbol
+     * @param level nivel que se desea mostrar
+     */
+    public void drawNodesByLevel(TreeNode root) {
+        clearCanvas();
+
+        if (root == null) {
+            showEmptyState();
+            return;
+        }
+
+        List<List<TreeNode>> levels = collectNodesByLevel(root);
+        if (levels.isEmpty()) {
+            showEmptyState("No nodes found in the tree");
+            return;
+        }
+
+        hideEmptyState();
+        double startX = 40;
+        double startY = 40;
+        double rowSpacing = 90;
+        double nodeDiameter = 52;
+
+        for (int i = 0; i < levels.size(); i++) {
+            List<TreeNode> levelNodes = levels.get(i);
+            HBox row = new HBox(20);
+            row.getStyleClass().add("level-row");
+            row.setAlignment(Pos.CENTER_LEFT);
+
+            Label levelLabel = new Label("Level " + (i + 1));
+            levelLabel.getStyleClass().add("level-row-label");
+            row.getChildren().add(levelLabel);
+
+            HBox nodesBox = new HBox(10);
+            nodesBox.setAlignment(Pos.CENTER_LEFT);
+
+            for (TreeNode node : levelNodes) {
+                nodesBox.getChildren().add(createLevelNode(node, nodeDiameter));
+            }
+
+            row.getChildren().add(nodesBox);
+            row.setLayoutX(startX);
+            row.setLayoutY(startY + i * rowSpacing);
+            treeCanvas.getChildren().add(row);
+        }
+
+        treeCanvas.setPrefWidth(Math.max(900, startX + 760));
+        treeCanvas.setPrefHeight(startY + levels.size() * rowSpacing + 40);
+    }
+
+    private List<List<TreeNode>> collectNodesByLevel(TreeNode root) {
+        List<List<TreeNode>> levels = new ArrayList<>();
+        if (root == null) {
+            return levels;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<TreeNode> currentLevel = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node == null) {
+                    continue;
+                }
+                currentLevel.add(node);
+                if (node.getLeft() != null) {
+                    queue.add(node.getLeft());
+                }
+                if (node.getRight() != null) {
+                    queue.add(node.getRight());
+                }
+            }
+            levels.add(currentLevel);
+        }
+
+        return levels;
+    }
+
+    private StackPane createLevelNode(TreeNode node, double size) {
+        boolean leaf = node.isLeaf();
+        Circle circle = new Circle(size / 2);
+        circle.getStyleClass().add("level-node-circle");
+        circle.setFill(leaf ? Color.web("#e2e8f0") : Color.WHITE);
+        circle.setStroke(Color.web("#cbd5e1"));
+        circle.setStrokeWidth(1.8);
+
+        Text text = new Text(String.valueOf(node.getValue()));
+        text.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+        text.getStyleClass().add("level-node-text");
+
+        StackPane nodeView = new StackPane(circle, text);
+        nodeView.setPrefSize(size, size);
+        nodeView.setMinSize(size, size);
+        nodeView.setMaxSize(size, size);
+        nodeView.setOnMouseClicked(e -> controller.handleNodeClick(node));
+        nodeView.setStyle("-fx-cursor: hand;");
+        return nodeView;
     }
 
     private void collectPreOrder(TreeNode node, List<TreeNode> nodes) {
