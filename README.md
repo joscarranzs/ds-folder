@@ -109,6 +109,17 @@ Este repositorio contiene un proyecto Maven en `laboratories/L1_JoseCarranza` qu
   - visualización tipo tabla enlazada
 - Describe cómo se calculan las métricas de árbol internas y cómo se actualizan automáticamente.
 
+### Cómo exponerlo
+
+- Explica la separación MVC:
+  - La vista contiene todos los elementos gráficos.
+  - El controlador gestiona eventos y recibe datos del modelo.
+  - El modelo mantiene la estructura de datos y los cálculos.
+- Muestra que la aplicación soporta dos vistas del mismo árbol:
+  - visualización gráfica en árbol
+  - visualización tipo tabla enlazada
+- Describe cómo se calculan las métricas de árbol internas y cómo se actualizan automáticamente.
+
 ### Cómo ejecutar el proyecto
 
 Para ejecutar el laboratorio desde Maven y que JavaFX se cargue correctamente:
