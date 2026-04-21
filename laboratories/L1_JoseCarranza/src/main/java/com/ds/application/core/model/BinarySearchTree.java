@@ -261,6 +261,32 @@ public class BinarySearchTree {
     }
 
     /**
+     * Devuelve los nodos que se encuentran en un nivel específico.
+     *
+     * @param level nivel del árbol (1-based)
+     * @return lista de nodos en el nivel indicado
+     */
+    public List<TreeNode> nodesAtLevel(int level) {
+        List<TreeNode> nodes = new ArrayList<>();
+        collectNodesAtLevel(root, 1, level, nodes);
+        return nodes;
+    }
+
+    private void collectNodesAtLevel(TreeNode current, int currentLevel, int targetLevel, List<TreeNode> nodes) {
+        if (current == null) {
+            return;
+        }
+
+        if (currentLevel == targetLevel) {
+            nodes.add(current);
+            return;
+        }
+
+        collectNodesAtLevel(current.getLeft(), currentLevel + 1, targetLevel, nodes);
+        collectNodesAtLevel(current.getRight(), currentLevel + 1, targetLevel, nodes);
+    }
+
+    /**
      * Obtiene el nivel de un nodo dentro del árbol.
      *
      * @param node nodo del cual se solicita el nivel

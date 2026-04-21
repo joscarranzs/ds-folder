@@ -50,7 +50,7 @@
 /* Etiqueta de seccion */
 .sidebar-section {
     -fx-text-fill: #94a3b8;
-    -fx-font-size: 10px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-padding: 16 20 6 20;
 }
@@ -59,8 +59,8 @@
 .sidebar-btn {
     -fx-background-color: transparent;
     -fx-text-fill: #475569;
-    -fx-font-size: 13px;
-    -fx-padding: 11 16 11 20;
+    -fx-font-size: 17px;
+    -fx-padding: 14 20 14 24;
     -fx-background-radius: 0;
     -fx-cursor: hand;
     -fx-border-color: transparent;
@@ -75,9 +75,9 @@
 .sidebar-btn-active {
     -fx-background-color: #eff6ff;
     -fx-text-fill: #1d4ed8;
-    -fx-font-size: 13px;
+    -fx-font-size: 17px;
     -fx-font-weight: bold;
-    -fx-padding: 11 16 11 16;
+    -fx-padding: 14 20 14 20;
     -fx-background-radius: 0;
     -fx-cursor: hand;
     -fx-border-color: transparent transparent transparent #1d4ed8;
@@ -89,9 +89,9 @@
 .sidebar-btn-primary {
     -fx-background-color: #eff6ff;
     -fx-text-fill: #1d4ed8;
-    -fx-font-size: 13px;
+    -fx-font-size: 17px;
     -fx-font-weight: bold;
-    -fx-padding: 11 16 11 16;
+    -fx-padding: 14 20 14 20;
     -fx-background-radius: 0;
     -fx-cursor: hand;
     -fx-border-color: transparent transparent transparent #1d4ed8;
@@ -243,6 +243,31 @@
 }
 
 /* ====================================================
+   NODES BY LEVEL REPRESENTATION
+   ==================================================== */
+.level-row {
+    -fx-alignment: center-left;
+    -fx-spacing: 16;
+}
+
+.level-row-label {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-min-width: 80px;
+}
+
+.level-node-circle {
+    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.1), 8, 0, 0, 2);
+}
+
+.level-node-text {
+    -fx-fill: #0f172a;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* ====================================================
    RIGHT PANEL  –  Node Inspector
    ==================================================== */
 .right-panel {
@@ -275,13 +300,13 @@
 
 .insp-label {
     -fx-text-fill: #64748b;
-    -fx-font-size: 12px;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
 }
 
 .insp-value {
     -fx-text-fill: #0f172a;
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
@@ -289,10 +314,10 @@
 .insp-chip {
     -fx-background-color: #f1f5f9;
     -fx-text-fill: #475569;
-    -fx-font-size: 12px;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-padding: 3 10 3 10;
-    -fx-background-radius: 6;
+    -fx-padding: 4 12 4 12;
+    -fx-background-radius: 8;
 }
 
 /* ====================================================
@@ -306,20 +331,20 @@
 
 .legend-label {
     -fx-text-fill: #475569;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 
 /* Titulo de estadistica: "TREE DEPTH:" */
 .stat-bar-title {
     -fx-text-fill: #64748b;
-    -fx-font-size: 11px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
 /* Valor de estadistica: "3" */
 .stat-bar-value {
     -fx-text-fill: #0f172a;
-    -fx-font-size: 11px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
