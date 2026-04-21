@@ -83,7 +83,7 @@
         </os>
       </activation>
       <properties>
-        <javafx.platform>win32</javafx.platform>
+        <javafx.platform>win</javafx.platform>
       </properties>
     </profile>
     <profile>
