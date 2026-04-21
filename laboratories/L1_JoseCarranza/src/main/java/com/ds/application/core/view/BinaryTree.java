@@ -138,11 +138,11 @@ public void animateSearch(List<TreeNode> path, boolean found) {
                     });
                 }
 
-                Thread.sleep(400); // velocidad del recorrido
+                Thread.sleep(500); // velocidad del recorrido
             }
 
-            // mantener color 5 segundos
-            Thread.sleep(5000);
+            // mantener color 1 segundo
+            Thread.sleep(1000);
 
             // quitar color (reset visual)
             for (TreeNode node : path) {
