@@ -22,6 +22,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+/**
+ * Implementación principal de vista JavaFX que presenta operaciones y visualización del árbol binario.
+ *
+ * <p>Esta clase construye la interfaz completa de la aplicación, incluyendo las acciones de la barra lateral,
+ * el canvas del árbol, el panel inspector y la barra de estadísticas.</p>
+ */
 public class BinaryTree extends Application {
 
     private TreeController controller;
@@ -33,6 +39,11 @@ public class BinaryTree extends Application {
     private Button btnTabList;
     private Button btnTabLevel;
 
+    /**
+     * Inicializa el escenario principal de la aplicación y construye la interfaz del visualizador de árbol binario.
+     *
+     * @param stage el escenario primario de JavaFX proporcionado por el runtime
+     */
     @Override
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
@@ -136,32 +147,73 @@ public class BinaryTree extends Application {
         return (HBox) statsBar.getRoot();
     }
 
+    /**
+     * Resets the entire view to its initial empty state and clears any previous selection.
+     */
     public void resetView() {
         treeCanvas.resetView();
         setInspector("—", "—", "—", "—");
         setStats(0, "—", "—", "—", "—");
     }
 
+    /**
+     * Draws the current tree representation according to the active display mode.
+     *
+     * @param root the root node of the tree to render
+     */
     public void drawCurrentRepresentation(TreeNode root) {
         treeCanvas.drawCurrentRepresentation(root);
     }
 
+    /**
+     * Draws the tree as a level-by-level representation in the canvas.
+     *
+     * @param root the root node of the tree to represent
+     */
     public void drawNodesByLevel(TreeNode root) {
         treeCanvas.drawNodesByLevel(root);
     }
 
+    /**
+     * Animates the search path on the canvas and highlights whether the target was found.
+     *
+     * @param path the nodes traversed during the search
+     * @param found true if the target value was found, false otherwise
+     */
     public void animateSearch(List<TreeNode> path, boolean found) {
         treeCanvas.animateSearch(path, found);
     }
 
+    /**
+     * Updates the values displayed in the inspector panel for the selected node.
+     *
+     * @param key the node key value
+     * @param degree the node degree text
+     * @param level the node level text
+     * @param childNodes the child nodes description
+     */
     public void setInspector(String key, String degree, String level, String childNodes) {
         inspectorPanel.setInspector(key, degree, level, childNodes);
     }
 
+    /**
+     * Updates the stats bar to reflect the current tree metrics.
+     *
+     * @param depth the tree depth
+     * @param lci the internal path length text
+     * @param lcim the mean internal path length text
+     * @param parents the parent node values text
+     * @param leaves the leaf node values text
+     */
     public void setStats(int depth, String lci, String lcim, String parents, String leaves) {
         statsBar.setStats(depth, lci, lcim, parents, leaves);
     }
 
+    /**
+     * Activates tree or linked-list representation mode in the UI.
+     *
+     * @param treeView true to show the binary tree, false to show the linked list table
+     */
     public void setRepresentationActive(boolean treeView) {
         treeCanvas.setRepresentationActive(treeView);
         btnTabTree.getStyleClass().setAll(treeView ? "sidebar-btn-active" : "sidebar-btn");
@@ -169,6 +221,9 @@ public class BinaryTree extends Application {
         btnTabLevel.getStyleClass().setAll("sidebar-btn");
     }
 
+    /**
+     * Activates the nodes-by-level representation in the UI.
+     */
     public void setLevelRepresentationActive() {
         treeCanvas.setLevelRepresentationActive();
         btnTabTree.getStyleClass().setAll("sidebar-btn");
@@ -233,6 +288,11 @@ public class BinaryTree extends Application {
         return divider;
     }
 
+    /**
+     * Starts the JavaFX application for the tree visualizer.
+     *
+     * @param args command line arguments passed to the Java runtime
+     */
     public static void main(String[] args) {
         launch(args);
     }

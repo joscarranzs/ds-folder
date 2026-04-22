@@ -28,6 +28,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+/**
+ * Responsable de renderizar el árbol binario en múltiples representaciones visuales.
+ *
+ * <p>El canvas soporta vista de árbol jerárquica, vista lineal en estilo lista enlazada
+ * y una representación por niveles, mientras gestiona las animaciones de selección de nodo.</p>
+ */
 public class TreeCanvas {
 
     private final Pane treeCanvas = new Pane();
@@ -45,10 +51,20 @@ public class TreeCanvas {
         treeCanvas.getChildren().add(emptyLabel);
     }
 
+    /**
+     * Establece el callback que se invoca cuando se hace clic en un nodo del canvas.
+     *
+     * @param nodeClickHandler el callback que recibe el nodo clicado
+     */
     public void setNodeClickHandler(java.util.function.Consumer<TreeNode> nodeClickHandler) {
         this.nodeClickHandler = nodeClickHandler;
     }
 
+    /**
+     * Devuelve el contenedor de vista JavaFX que aloja el canvas de dibujo del árbol.
+     *
+     * @return el nodo padre que contiene la vista de canvas desplazable
+     */
     public Parent getView() {
         ScrollPane scroll = new ScrollPane(treeCanvas);
         scroll.getStyleClass().add("tree-scroll");
@@ -60,39 +76,69 @@ public class TreeCanvas {
         return center;
     }
 
+    /**
+     * Borra el canvas actual y muestra el marcador de árbol vacío.
+     */
     public void resetView() {
         clearCanvas();
         showEmptyState();
         setRepresentationActive(true);
     }
 
+    /**
+     * Elimina todos los nodos y líneas dibujables del canvas.
+     */
     public void clearCanvas() {
         treeCanvas.getChildren().clear();
         nodeMap.clear();
     }
 
+    /**
+     * Muestra el mensaje predeterminado de árbol vacío cuando no hay nodos.
+     */
     public void showEmptyState() {
         showEmptyState(DEFAULT_EMPTY_TEXT);
     }
 
+    /**
+     * Muestra un mensaje de marcador de posición personalizado cuando el árbol está vacío.
+     *
+     * @param message el mensaje mostrado en el estado vacío
+     */
     public void showEmptyState(String message) {
         emptyLabel.setText(message);
         emptyLabel.setVisible(true);
         treeCanvas.getChildren().setAll(emptyLabel);
     }
 
+    /**
+     * Oculta el marcador de estado vacío para que el canvas muestre contenido real del árbol.
+     */
     public void hideEmptyState() {
         emptyLabel.setVisible(false);
     }
 
+    /**
+     * Ajusta el modo activo de representación entre árbol y lista enlazada.
+     *
+     * @param treeView true para representación de árbol, false para lista enlazada
+     */
     public void setRepresentationActive(boolean treeView) {
         treeViewActive = treeView;
     }
 
+    /**
+     * Activa el modo de vista por niveles.
+     */
     public void setLevelRepresentationActive() {
         treeViewActive = true;
     }
 
+    /**
+     * Draws the tree using the currently active representation mode.
+     *
+     * @param root the root node of the tree to render
+     */
     public void drawCurrentRepresentation(TreeNode root) {
         if (treeViewActive) {
             drawTree(root);
@@ -101,6 +147,11 @@ public class TreeCanvas {
         }
     }
 
+    /**
+     * Dibuja la disposición jerárquica del árbol binario en el canvas.
+     *
+     * @param root la raíz del árbol a renderizar
+     */
     public void drawTree(TreeNode root) {
         clearCanvas();
 
@@ -127,6 +178,11 @@ public class TreeCanvas {
         return 1 + Math.max(treeDepth(node.getLeft()), treeDepth(node.getRight()));
     }
 
+    /**
+     * Dibuja los nodos del árbol en una representación lineal en estilo lista enlazada.
+     *
+     * @param root la raíz del árbol a renderizar
+     */
     public void drawLinkedList(TreeNode root) {
         clearCanvas();
 
@@ -157,6 +213,11 @@ public class TreeCanvas {
         treeCanvas.setPrefHeight(startY + nodes.size() * (rowHeight + 18) + 40);
     }
 
+    /**
+     * Dibuja los nodos del árbol agrupados por nivel en filas horizontales.
+     *
+     * @param root la raíz del árbol a renderizar
+     */
     public void drawNodesByLevel(TreeNode root) {
         clearCanvas();
 
@@ -404,6 +465,12 @@ public class TreeCanvas {
         treeCanvas.getChildren().add(nodeView);
     }
 
+    /**
+     * Anima los nodos visitados durante una operación de búsqueda, marcando el resultado final.
+     *
+     * @param path el camino de búsqueda a animar
+     * @param found si el valor buscado fue encontrado
+     */
     public void animateSearch(List<TreeNode> path, boolean found) {
         if (path == null || path.isEmpty()) {
             return;

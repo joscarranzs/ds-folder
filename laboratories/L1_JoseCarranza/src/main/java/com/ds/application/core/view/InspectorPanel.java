@@ -12,6 +12,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+/**
+ * Construye el panel inspector de nodo usado para mostrar metadatos del nodo seleccionado.
+ *
+ * <p>El panel inspector muestra la clave del nodo, el grado, el nivel, los hijos y
+ * proporciona una acción de eliminación.</p>
+ */
 public class InspectorPanel {
 
     private final VBox root;
@@ -68,14 +74,32 @@ public class InspectorPanel {
         root.getChildren().add(filler);
     }
 
+    /**
+     * Asigna la acción que se ejecuta al pulsar el botón de eliminar nodo.
+     *
+     * @param action el manejador de eventos ejecutado cuando se pulsa el botón
+     */
     public void setDeleteAction(javafx.event.EventHandler<javafx.event.ActionEvent> action) {
         btnDelete.setOnAction(action);
     }
 
+    /**
+     * Devuelve el contenedor raíz de UI del panel inspector.
+     *
+     * @return el nodo raíz del panel inspector
+     */
     public VBox getRoot() {
         return root;
     }
 
+    /**
+     * Escribe las propiedades del nodo actual en los campos del inspector.
+     *
+     * @param key la clave del nodo mostrada
+     * @param degree el grado mostrado del nodo
+     * @param level el nivel mostrado del nodo
+     * @param childNodes el resumen de hijos mostrado
+     */
     public void setInspector(String key, String degree, String level, String childNodes) {
         lblKeyValue.setText(key);
         lblDegree.setText(degree);

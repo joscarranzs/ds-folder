@@ -1,135 +1,168 @@
 # ds-folder
 
-## Descripción
+## Descripción del proyecto
 
-Este repositorio se utiliza para organizar y subir todos los proyectos, tareas y laboratorios de la materia de Estructura de Datos.
+Este repositorio agrupa proyectos, tareas y laboratorios de la materia de Estructuras de Datos. El ejercicio principal aquí es el laboratorio `L1_JoseCarranza`, que implementa un visualizador interactivo de árbol binario utilizando JavaFX.
 
-## Flujo de trabajo
+## Estructura del repositorio
 
-- Clonar el repositorio:
-  ```bash
-  git clone https://github.com/joscarranzs/ds-folder.git
-  ```
-- Cambiar a la rama `dev`:
-  ```bash
-  git checkout dev
-  ```
-  Si la rama no existe localmente, crearla desde la rama principal:
-  ```bash
-  git checkout -b dev origin/main
-  ```
-- Verificar cambios en remoto y sincronizar todo:
-  ```bash
-  git fetch
-  git status
-  git pull origin dev
-  ```
-- Usar ramas temporales con convenciones locales para trabajar en cambios aislados.
-- Crear una rama de convención con un nombre claro según el tipo de tarea:
-  ```bash
-  git checkout -b feat/nombre-descriptivo
-  git checkout -b fix/nombre-descriptivo
-  git checkout -b docs/nombre-descriptivo
-  git checkout -b chore/nombre-descriptivo
-  ```
-  Tipos de convenciones de rama:
-  - `feat/` para nuevas funcionalidades.
-  - `fix/` para correcciones de errores.
-  - `docs/` para cambios en documentación.
-  - `chore/` para tareas de mantenimiento y configuración.
-- Al terminar la tarea, agregar los cambios y crear un commit usando las convenciones:
-  ```bash
-  git add .
-  git commit -m "feat: agregar nuevo algoritmo de búsqueda"
-  ```
-  Convenciones de commit:
-  - `feat:` para nuevas funcionalidades.
-  - `fix:` para correcciones de errores.
-  - `docs:` para documentación.
-  - `chore:` para tareas generales o de mantenimiento.
-  - `refactor:` para cambios en el código sin nueva funcionalidad.
-- Fusionar los cambios a la rama `dev` cuando termines la tarea:
-  ```bash
-  git checkout dev
-  git merge --no-ff feat/nombre-descriptivo
-  ```
-- Eliminar la rama temporal en el local después de fusionar:
-  ```bash
-  git branch -d feat/nombre-descriptivo
-  ```
+- `README.md`: documentación general del proyecto.
+- `laboratories/L1_JoseCarranza`: proyecto Maven principal del laboratorio.
+- `laboratories/L1_JoseCarranza/pom.xml`: configuración de Maven, dependencias y plugins.
+- `laboratories/L1_JoseCarranza/src/main/java`: código fuente Java de la aplicación.
+- `laboratories/L1_JoseCarranza/src/main/resources`: recursos JavaFX, hojas de estilo y recursos gráficos.
 
-## Funcionamiento del código del laboratorio L1_JoseCarranza
+## Estructura del proyecto `L1_JoseCarranza`
 
-Este repositorio contiene un proyecto Maven en `laboratories/L1_JoseCarranza` que implementa un visualizador de árbol binario con una interfaz JavaFX.
+### Paquetes principales
 
-### Estructura principal
+- `com.ds`: clase `App` que arranca la aplicación.
+- `com.ds.application.core.controller`: lógica de control y presentación.
+- `com.ds.application.core.model`: implementación de la estructura de datos y cálculos de métricas.
+- `com.ds.application.core.view`: componentes gráficos y visualización de la interfaz.
 
-- `src/main/java/com/ds/App.java`
-  - Clase de entrada (`main`).
-  - Inicia la aplicación JavaFX delegando en `BinaryTree`.
-- `src/main/java/com/ds/application/core/view/BinaryTree.java`
-  - Construye la interfaz de usuario completa.
-  - Crea la barra lateral, el lienzo central, el panel inspector y la barra inferior de estadísticas.
-  - Dibuja dos representaciones:
-    - `drawTree(...)`: muestra el árbol binario con nodos y conexiones.
-    - `drawLinkedList(...)`: muestra una vista en tabla enlazada con columnas `LEFT`, `INFO` y `RIGHT`.
-  - Controla la presentación activa entre árbol y tabla.
-- `src/main/java/com/ds/application/core/controller/TreeController.java`
-  - Controlador MVC que maneja la interacción entre modelo y vista.
-  - Inserta nuevos nodos, actualiza el inspector, y refresca las métricas.
-  - Cambia la representación activa según la selección del usuario.
-- `src/main/java/com/ds/application/core/model/BinarySearchTree.java`
-  - Implementa el árbol binario de búsqueda.
-  - Provee inserción, búsqueda y cálculo de métricas.
-  - Calcula:
-    - profundidad del árbol (`depth()`)
-    - longitud de camino interno (`internalPathLength()`)
-    - longitud de camino interno medio (`meanInternalPathLength()`)
-    - nodos padres y hojas.
-- `src/main/java/com/ds/application/core/model/TreeNode.java`
-  - Representa cada nodo del árbol.
-  - Guarda valor y referencias a hijos izquierdo y derecho.
+## Archivos clave y su propósito
 
-### Flujo de ejecución
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/App.java`
 
-1. `App.main(...)` arranca JavaFX.
-2. `BinaryTree.start(...)` construye la ventana y crea el controlador.
-3. `TreeController` opera sobre el modelo `BinarySearchTree` y actualiza la vista.
-4. Al insertar un valor, el árbol se redibuja y se recalculan las métricas.
-5. Al cambiar a `Linked List Table`, la vista muestra una tabla ordenada en preorden con índices 1-based para los nodos.
+- Clase principal que extiende `javafx.application.Application`.
+- Método `main(String[] args)` ejecuta `launch(args)` para iniciar JavaFX.
+- Método `start(Stage stage)` crea y muestra la pantalla de bienvenida con `WelcomeScreen`.
 
-### Cómo exponerlo
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/view/WelcomeScreen.java`
 
-- Explica la separación MVC:
-  - La vista contiene todos los elementos gráficos.
-  - El controlador gestiona eventos y recibe datos del modelo.
-  - El modelo mantiene la estructura de datos y los cálculos.
-- Muestra que la aplicación soporta dos vistas del mismo árbol:
-  - visualización gráfica en árbol
-  - visualización tipo tabla enlazada
-- Describe cómo se calculan las métricas de árbol internas y cómo se actualizan automáticamente.
+- Construye la pantalla inicial de bienvenida.
+- Muestra información del laboratorio, integrantes y botón de inicio.
+- Al pulsar "Inicio", cierra la ventana de bienvenida y abre la vista principal `BinaryTree`.
 
-### Cómo exponerlo
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/view/BinaryTree.java`
 
-- Explica la separación MVC:
-  - La vista contiene todos los elementos gráficos.
-  - El controlador gestiona eventos y recibe datos del modelo.
-  - El modelo mantiene la estructura de datos y los cálculos.
-- Muestra que la aplicación soporta dos vistas del mismo árbol:
-  - visualización gráfica en árbol
-  - visualización tipo tabla enlazada
-- Describe cómo se calculan las métricas de árbol internas y cómo se actualizan automáticamente.
+- Implementa la interfaz principal del visualizador.
+- Crea la barra superior, la barra lateral de acciones, el canvas central, el panel inspector y la barra de estadísticas.
+- Mantiene el estado de la vista y el controlador `TreeController`.
+- Métodos principales:
+  - `start(Stage stage)`: monta la ventana principal y todos los componentes.
+  - `resetView()`: restablece la interfaz a estado inicial vacío.
+  - `drawCurrentRepresentation(TreeNode root)`: dibuja el árbol según el modo activo.
+  - `drawNodesByLevel(TreeNode root)`: dibuja la vista de nodos por nivel.
+  - `animateSearch(List<TreeNode> path, boolean found)`: anima el recorrido de búsqueda.
+  - `setInspector(...)` y `setStats(...)`: actualizan datos en el panel derecho y en la barra inferior.
 
-### Cómo ejecutar el proyecto
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/view/TreeCanvas.java`
 
-Para ejecutar el laboratorio desde Maven y que JavaFX se cargue correctamente:
+- Motor gráfico que dibuja el árbol y las representaciones complementarias.
+- Métodos principales:
+  - `getView()`: devuelve el contenedor visual principal.
+  - `resetView()`: limpia el canvas y muestra el mensaje de árbol vacío.
+  - `drawTree(TreeNode root)`: dibuja la estructura jerárquica del árbol.
+  - `drawLinkedList(TreeNode root)`: representa el árbol como una lista enlazada lineal.
+  - `drawNodesByLevel(TreeNode root)`: muestra cada nivel de nodos en filas horizontales.
+  - `animateSearch(...)`: destaca nodos visitados durante una búsqueda.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/view/InspectorPanel.java`
+
+- Panel lateral para inspeccionar el nodo seleccionado.
+- Muestra clave, grado, nivel y nodos hijos.
+- Permite asignar la acción de eliminar con `setDeleteAction(...)`.
+- Actualiza los valores con `setInspector(...)`.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/view/StatsBar.java`
+
+- Barra inferior que muestra métricas del árbol.
+- Muestra:
+  - profundidad del árbol
+  - longitud de camino interno (LCI)
+  - longitud interna media (LCIM)
+  - lista de valores de nodos padres
+  - lista de valores de nodos hoja
+- Método principal: `setStats(...)` para actualizar la información visual.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/controller/TreeController.java`
+
+- Conecta la vista con el modelo (controlador en patrón MVC).
+- Administra las acciones del usuario:
+  - insertar nodos
+  - buscar valores
+  - eliminar nodos
+  - cambiar representación entre árbol, lista y niveles
+- Métodos principales:
+  - `handleInsertNode()`: solicita un valor al usuario y lo inserta en el árbol.
+  - `handleSearch()`: solicita un valor, busca el nodo y anima el resultado.
+  - `handleDeleteNode()`: elimina el nodo seleccionado.
+  - `handleNewTree()`: reinicia el árbol.
+  - `handleSequential()`, `handleLinkedList()`, `handleNodesByLevel()`: cambian la vista activa.
+  - `handleNodeClick(TreeNode node)`: guarda el nodo seleccionado y actualiza el inspector.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/controller/TreeDialogService.java`
+
+- Servicio de diálogos para interactuar con el usuario.
+- Métodos principales:
+  - `requestInteger(String title, String prompt)`: muestra un diálogo para ingresar un entero.
+  - `showError(...)` y `showInformation(...)`: muestran alertas modales.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/controller/TreeInspectorPresenter.java`
+
+- Calcula y formatea los datos del nodo seleccionado.
+- Determina grado, nivel y valores de hijos.
+- Actualiza el panel inspector con `updateInspector(...)`.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/controller/TreeStatsPresenter.java`
+
+- Calcula y muestra las métricas generales del árbol.
+- Usa `TreeMetrics` para obtener profundidad, LCI, LCIM, padres y hojas.
+- Actualiza la vista con `updateStats(...)`.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/model/BinarySearchTree.java`
+
+- Implementa la estructura de datos principal.
+- Operaciones básicas:
+  - `insert(int value)`: inserta un valor siguiendo la propiedad BST.
+  - `delete(int value)`: elimina un valor y reorganiza el árbol.
+  - `search(int value)`: busca un nodo por valor.
+  - `reset()`: borra todos los nodos.
+- Estructura interna:
+  - `insertNode(...)`, `deleteRecursive(...)`, `findMin(...)`, `searchNode(...)`.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/model/TreeNode.java`
+
+- Representa un nodo del árbol con:
+  - valor entero
+  - referencias a hijo izquierdo y derecho
+- Métodos principales:
+  - `isLeaf()`: indica si el nodo no tiene hijos.
+  - `isInternal()`: indica si tiene al menos un hijo.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/model/TreeMetrics.java`
+
+- Calcula métricas del árbol de forma recursiva.
+- Métodos más relevantes:
+  - `depth(TreeNode root)`: profundidad máxima.
+  - `size(TreeNode root)`: número total de nodos.
+  - `sumValues(TreeNode root)`: suma de valores.
+  - `averageValue(TreeNode root)`: promedio de valores.
+  - `internalPathLength(TreeNode root)`: suma de profundidades de nodos internos.
+  - `meanInternalPathLength(TreeNode root)`: promedio de la longitud interna.
+  - `parentValues(TreeNode root)`: lista de valores de nodos padres.
+  - `leafValues(TreeNode root)`: lista de valores de nodos hoja.
+
+### `laboratories/L1_JoseCarranza/src/main/java/com/ds/application/core/model/TreeTraversal.java`
+
+- Provee utilidades de recorrido y búsqueda.
+- Métodos principales:
+  - `searchWithPath(TreeNode root, int value)`: devuelve el camino recorrido hasta encontrar el valor.
+  - `nodesAtLevel(TreeNode root, int level)`: obtiene los nodos de un nivel específico.
+  - `level(TreeNode root, TreeNode target)`: calcula la profundidad de un nodo.
+
+## Cómo ejecutar el laboratorio
+
+Desde la carpeta del laboratorio:
 
 ```bash
 cd laboratories/L1_JoseCarranza
 mvn javafx:run
 ```
 
-Esta configuración detecta el sistema operativo y carga la dependencia de JavaFX correcta. Si usas otro sistema operativo y aparece un error, puedes forzar la plataforma con:
+Si necesitas forzar la plataforma JavaFX:
 
 ```bash
 mvn javafx:run -Djavafx.platform=linux
@@ -140,3 +173,15 @@ mvn javafx:run -Djavafx.platform=mac
 ```bash
 mvn javafx:run -Djavafx.platform=win32
 ```
+
+## Resumen de responsabilidades
+
+- La vista (`view`) se encarga de mostrar la UI y recolectar eventos.
+- El controlador (`controller`) coordina acciones del usuario, actualiza modelo y vista.
+- El modelo (`model`) mantiene la estructura de datos y calcula métricas.
+- El servicio de diálogo abstrae la entrada/salida de usuario.
+
+## Notas adicionales
+
+- El proyecto sigue una arquitectura similar a MVC para separar responsabilidades.
+- La aplicación es adecuada para aprender cómo funciona un árbol binario de búsqueda y visualizar el árbol en diferentes formas.

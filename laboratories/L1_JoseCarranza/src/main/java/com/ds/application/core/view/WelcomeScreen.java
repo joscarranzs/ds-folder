@@ -10,8 +10,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+/**
+ * Muestra la pantalla de bienvenida inicial y navega al visualizador principal de árbol binario.
+ *
+ * <p>La pantalla de bienvenida presenta metadatos de la aplicación y ofrece un único punto
+ * de entrada para iniciar la etapa principal de visualización.</p>
+ */
 public class WelcomeScreen {
 
+    /**
+     * Construye y muestra la pantalla de bienvenida.
+     *
+     * @param stage la etapa usada para mostrar la interfaz de bienvenida
+     */
     public void show(Stage stage) {
         StackPane root = new StackPane();
         root.setStyle("-fx-background-color: white;");
@@ -125,6 +136,13 @@ public class WelcomeScreen {
         return card;
     }
 
+    /**
+     * Crea una tarjeta compacta de etiqueta para la sección de detalles de la pantalla de bienvenida.
+     *
+     * @param label la etiqueta de título de la tarjeta
+     * @param value el contenido de valor mostrado en la tarjeta
+     * @return un nodo de tarjeta configurado
+     */
     private VBox infoCard(String label, String value) {
         VBox box = new VBox(4);
         box.setStyle(
@@ -140,6 +158,13 @@ public class WelcomeScreen {
         return box;
     }
 
+    /**
+     * Crea un bloque de información que contiene un encabezado y contenido multilineal.
+     *
+     * @param label el texto del encabezado
+     * @param value el texto descriptivo multilineal
+     * @return un nodo de bloque de información configurado
+     */
     private VBox infoBlock(String label, String value) {
         VBox box = new VBox(4);
         box.setStyle(

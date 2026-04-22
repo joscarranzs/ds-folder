@@ -6,6 +6,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
+/**
+ * Renderiza la barra de estadísticas inferior para las métricas del árbol actual.
+ *
+ * <p>La barra de estadísticas muestra la profundidad, la longitud del camino, los nodos padres y los nodos hoja.</p>
+ */
 public class StatsBar {
 
     private final HBox root;
@@ -41,10 +46,24 @@ public class StatsBar {
         root.getChildren().add(statItem("LEAF NODES:", lblLeavesBar));
     }
 
+    /**
+     * Devuelve el componente raíz de UI para la barra de estadísticas.
+     *
+     * @return el nodo raíz usado por el diseño padre
+     */
     public Node getRoot() {
         return root;
     }
 
+    /**
+     * Actualiza los valores estadísticos mostrados en la barra de estadísticas.
+     *
+     * @param depth la profundidad actual del árbol
+     * @param lci la longitud de camino interno formateada
+     * @param lcim la longitud interna media formateada
+     * @param parents los valores de nodos padres formateados
+     * @param leaves los valores de nodos hoja formateados
+     */
     public void setStats(int depth, String lci, String lcim, String parents, String leaves) {
         lblDepthBar.setText(String.valueOf(depth));
         lblLCIBar.setText(lci);
