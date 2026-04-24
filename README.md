@@ -79,3 +79,4 @@ Con estas herramientas podrás abrir el proyecto, compilar el código y ejecutar
 
 - Las ramas `dev` y `main` son las principales. Las ramas `jose`, `arena` y `xavi` son temporales y locales.
 - Nota: No tocar la rama `main`. Solo el administrador puede crear el PR y fusionar `dev` en `main`.
+
