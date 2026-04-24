@@ -35,25 +35,48 @@ Con estas herramientas podrás abrir el proyecto, compilar el código y ejecutar
 
 ## Instrucciones de git
 
-- Clonar repositorio:
-  - `git clone <url-del-repositorio>`
-  - `cd <nombre-del-repositorio>`
+- Preconfigurar git antes de clonar:
+  - `git config --global user.name "Tu Nombre"`
+  - `git config --global user.email "tu.email@dominio.com"`
 
-- Moverse a la rama correspondiente y asignada:
-  - José: `git checkout jose`
-  - Arena: `git checkout arena`
-  - Xavi: `git checkout xavi`
+- Clonar el repositorio desde la terminal:
+  - `git clone https://github.com/joscarranzs/ds-folder.git`
+  - `cd ds-folder`
 
-- Las ramas `dev` y `main` son las principales. Las demás ramas (`jose`, `arena`, `xavi`) son temporales.
-- Nota: No se debe tocar la rama `dev` ni `main` directamente. Solo subir y actualizar cambios desde sus ramas personales.
+- Crear y cambiarse a la rama temporal asignada en local:
+  - José: `git checkout -b jose`
+  - Arena: `git checkout -b arena`
+  - Xavi: `git checkout -b xavi`
 
-- Para actualizar su rama desde `dev` antes de subir cambios:
-  - `git checkout <rama-asignada>`
-  - `git pull origin dev`
-
-- Para subir cambios desde su rama temporal a `dev`:
+- Guardar cambios en la rama temporal y crear el commit en inglés usando convenciones:
   - `git add .`
-  - `git commit -m "Descripción de los cambios"`
-  - `git push origin <rama-asignada>`
+  - `git commit -m "feat: add git instructions"`
+  - Ejemplos de tipos de convenciones:
+    - `feat: ` para nuevas funcionalidades
+    - `fix: ` para correcciones de errores
+    - `docs: ` para cambios en documentación
+    - `style: ` para formato o estilo sin cambios funcionales
+    - `refactor: ` para reestructurar código sin comportamiento nuevo
+    - `test: ` para agregar o actualizar pruebas
+    - `chore: ` para tareas de mantenimiento y configuración
 
-- Después de que la rama temporal haya sido revisada y aprobada, hacer merge a `dev` según la política del equipo.
+- Subir los cambios a `dev` desde la rama temporal local:
+  - `git checkout dev`
+  - `git pull origin dev`
+  - `git merge --no-ff <rama-asignada>`
+  - `git push origin dev`
+  - `git checkout <rama-asignada>`
+
+- Repetir el mismo flujo para seguir trabajando en su rama temporal:
+  - trabajar en la rama temporal local
+  - `git add .`
+  - `git commit -m "<tipo>: <descripción en inglés>"`
+  - `git checkout dev`
+  - `git pull origin dev`
+  - `git merge --no-ff <rama-asignada>`
+  - `git push origin dev`
+  - `git checkout <rama-asignada>`
+
+- Las ramas `dev` y `main` son las principales. Las ramas `jose`, `arena` y `xavi` son temporales y locales.
+- Nota: No tocar la rama `main`. Solo el administrador puede crear el PR y fusionar `dev` en `main`.
+
