@@ -32,3 +32,28 @@ Para trabajar en los proyectos se recomienda instalar las siguientes herramienta
    - También puedes instalar la extensión "Language Support for Java(TM) by Red Hat" si deseas soporte adicional.
 
 Con estas herramientas podrás abrir el proyecto, compilar el código y ejecutar las pruebas de forma sencilla en un entorno Windows.
+
+## Instrucciones de git
+
+- Clonar repositorio:
+  - `git clone <url-del-repositorio>`
+  - `cd <nombre-del-repositorio>`
+
+- Moverse a la rama correspondiente y asignada:
+  - José: `git checkout jose`
+  - Arena: `git checkout arena`
+  - Xavi: `git checkout xavi`
+
+- Las ramas `dev` y `main` son las principales. Las demás ramas (`jose`, `arena`, `xavi`) son temporales.
+- Nota: No se debe tocar la rama `dev` ni `main` directamente. Solo subir y actualizar cambios desde sus ramas personales.
+
+- Para actualizar su rama desde `dev` antes de subir cambios:
+  - `git checkout <rama-asignada>`
+  - `git pull origin dev`
+
+- Para subir cambios desde su rama temporal a `dev`:
+  - `git add .`
+  - `git commit -m "Descripción de los cambios"`
+  - `git push origin <rama-asignada>`
+
+- Después de que la rama temporal haya sido revisada y aprobada, hacer merge a `dev` según la política del equipo.
