@@ -1,7 +1,27 @@
 package com.ds.application.core.structures;
 
-// Representa una única entrada clave-valor, similar a una entrada de mapa,
-// pero con una sola asociación entre una clave y un valor.
-public class Entry {
-    // TODO: define key and value fields
+public class Entry<K, V> {
+    private K key;
+    private V value;
+
+    public Entry(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    public void setKey(K key) {
+        this.key = key;
+    }
+
+    public void setValue(V value) {
+        this.value = value;
+    }
 }
