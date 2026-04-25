@@ -48,7 +48,6 @@ Con estas herramientas podrás abrir el proyecto, compilar el código y ejecutar
   - Arena: `git checkout -b arena`
   - Xavi: `git checkout -b xavi`
 
-<<<<<<< HEAD
 - Guardar cambios en la rama temporal y crear el commit en inglés usando convenciones:
   - `git add .`
   - `git commit -m "feat: add git instructions"`
@@ -68,7 +67,6 @@ Con estas herramientas podrás abrir el proyecto, compilar el código y ejecutar
   - `git push origin dev`
   - `git checkout <rama-asignada>`
 
-<<<<<<< HEAD
 - Repetir el mismo flujo para seguir trabajando en su rama temporal:
   - trabajar en la rama temporal local
   - `git add .`
