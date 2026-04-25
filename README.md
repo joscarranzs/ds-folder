@@ -28,7 +28,7 @@ Para trabajar en los proyectos se recomienda instalar las siguientes herramienta
 3. Visual Studio Code
    - Descarga VS Code desde https://code.visualstudio.com/
    - Ejecuta el instalador `.exe` y sigue los pasos del asistente.
-   - Para Java en VS Code, instala la extensión "Extension Pack for Java" desde el marketplace.
+   - Para Java en VS Code, instala el paquete de extensiones "Extension Pack for Java" desde el marketplace.
    - También puedes instalar la extensión "Language Support for Java(TM) by Red Hat" si deseas soporte adicional.
 
 Con estas herramientas podrás abrir el proyecto, compilar el código y ejecutar las pruebas de forma sencilla en un entorno Windows.
@@ -48,9 +48,9 @@ Con estas herramientas podrás abrir el proyecto, compilar el código y ejecutar
   - Arena: `git checkout -b arena`
   - Xavi: `git checkout -b xavi`
 
-- Guardar cambios en la rama temporal y crear el commit en inglés usando convenciones:
+- Guardar cambios en la rama temporal y crear el commit siguiendo convenciones:
   - `git add .`
-  - `git commit -m "feat: add git instructions"`
+  - `git commit -m "feat: agregar instrucciones de git"`
   - Ejemplos de tipos de convenciones:
     - `feat: ` para nuevas funcionalidades
     - `fix: ` para correcciones de errores
@@ -67,10 +67,10 @@ Con estas herramientas podrás abrir el proyecto, compilar el código y ejecutar
   - `git push origin dev`
   - `git checkout <rama-asignada>`
 
-- Repetir el mismo flujo para seguir trabajando en su rama temporal:
+- Repetir el mismo flujo para seguir trabajando en la rama temporal:
   - trabajar en la rama temporal local
   - `git add .`
-  - `git commit -m "<tipo>: <descripción en inglés>"`
+  - `git commit -m "<tipo>: <descripción>"`
   - `git checkout dev`
   - `git pull origin dev`
   - `git merge --no-ff <rama-asignada>`
