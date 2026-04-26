@@ -21,14 +21,14 @@ public class Interface {
         );
 
         root.setTop(header);
-        root.setStyle("-fx-background-color: #f5f7fb;");
+        root.setStyle("-fx-background-color: #eef2f7;");
 
-        showBinaryTreeView(); // vista inicial
+        showBinaryTreeView();
     }
 
     private void showBinaryTreeView() {
         NodeInspector inspector = new NodeInspector();
-        BinaryTreeVisualizer visualizer = new BinaryTreeVisualizer(inspector);
+        BinaryTreeVisualizer visualizer = new BinaryTreeVisualizer();
 
         root.setLeft(new BinaryTreeControlPanel(visualizer));
         root.setCenter(visualizer);

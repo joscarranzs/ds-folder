@@ -1,48 +1,75 @@
 package com.ds.application.view.components.header;
 
+import com.ds.application.view.components.elements.ui.ButtonElement;
+import com.ds.application.view.components.elements.ui.LabelElement;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 public class Views extends HBox {
 
-    private Button binaryButton;
-    private Button huffmanButton;
+    private ButtonElement binaryButton;
+    private ButtonElement huffmanButton;
 
     public Views(Runnable showBinaryView, Runnable showHuffmanView) {
-        setPadding(new Insets(12));
+        setPadding(new Insets(14, 18, 14, 18));
         setSpacing(12);
-        setStyle("-fx-background-color: #ffffff; -fx-border-color: #e5e7eb;");
+        setStyle("-fx-background-color: #ffffff; -fx-border-color: #dbe1ea;");
 
-        Label title = new Label("Visualizador de Arboles");
-        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        LabelElement title = new LabelElement("Visualizador de Arboles");
+        title.getNode().setStyle("-fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: #111827;");
 
-        binaryButton = new Button("Arbol Binario");
-        huffmanButton = new Button("Huffman");
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        binaryButton.setOnAction(event -> {
+        binaryButton = new ButtonElement("Arbol Binario");
+        huffmanButton = new ButtonElement("Huffman");
+
+        binaryButton.getNode().setOnAction(e -> {
             showBinaryView.run();
             selectBinary();
         });
 
-        huffmanButton.setOnAction(event -> {
+        huffmanButton.getNode().setOnAction(e -> {
             showHuffmanView.run();
             selectHuffman();
         });
 
         selectBinary();
 
-        getChildren().addAll(title, binaryButton, huffmanButton);
+        getChildren().addAll(
+                title.getNode(),
+                spacer,
+                binaryButton.getNode(),
+                huffmanButton.getNode()
+        );
     }
 
     private void selectBinary() {
-        binaryButton.setStyle("-fx-background-color: #2563eb; -fx-text-fill: white; -fx-cursor: hand;");
-        huffmanButton.setStyle("-fx-background-color: #f3f4f6; -fx-border-color: #d1d5db; -fx-cursor: hand;");
+        binaryButton.getNode().setStyle(activeStyle());
+        huffmanButton.getNode().setStyle(normalStyle());
     }
 
     private void selectHuffman() {
-        huffmanButton.setStyle("-fx-background-color: #2563eb; -fx-text-fill: white; -fx-cursor: hand;");
-        binaryButton.setStyle("-fx-background-color: #f3f4f6; -fx-border-color: #d1d5db; -fx-cursor: hand;");
+        huffmanButton.getNode().setStyle(activeStyle());
+        binaryButton.getNode().setStyle(normalStyle());
+    }
+
+    private String activeStyle() {
+        return "-fx-background-color: #2563eb;" +
+                "-fx-text-fill: white;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 8;" +
+                "-fx-cursor: hand;";
+    }
+
+    private String normalStyle() {
+        return "-fx-background-color: #f3f4f6;" +
+                "-fx-text-fill: #374151;" +
+                "-fx-border-color: #d1d5db;" +
+                "-fx-border-radius: 8;" +
+                "-fx-background-radius: 8;" +
+                "-fx-cursor: hand;";
     }
 }

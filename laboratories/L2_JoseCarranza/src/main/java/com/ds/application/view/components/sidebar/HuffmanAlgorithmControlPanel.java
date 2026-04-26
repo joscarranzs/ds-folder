@@ -1,61 +1,59 @@
 package com.ds.application.view.components.sidebar;
 
+import com.ds.application.view.components.elements.ui.ButtonElement;
+import com.ds.application.view.components.elements.ui.InputElement;
+import com.ds.application.view.components.elements.ui.LabelElement;
 import com.ds.application.view.components.visualizers.HuffmanAlgorithmVisualizer;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 public class HuffmanAlgorithmControlPanel extends VBox {
 
-    private TextField textField;
+    private InputElement textInput;
     private HuffmanAlgorithmVisualizer visualizer;
 
     public HuffmanAlgorithmControlPanel(HuffmanAlgorithmVisualizer visualizer) {
         this.visualizer = visualizer;
 
-        setPadding(new Insets(15));
+        setPadding(new Insets(16));
         setSpacing(12);
         setPrefWidth(240);
-        setStyle("-fx-background-color: #ffffff; -fx-border-color: #e5e7eb;");
+        setStyle("-fx-background-color: #ffffff; -fx-border-color: #dbe1ea;");
 
-        Label title = new Label("Algoritmo Huffman");
-        title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        LabelElement title = new LabelElement("Panel de Control");
+        LabelElement subtitle = new LabelElement("Algoritmo Huffman");
+        LabelElement inputTitle = new LabelElement("Texto de entrada");
 
-        textField = new TextField();
-        textField.setPromptText("Ingrese texto");
+        textInput = new InputElement("Ingrese texto");
 
-        Button generateButton = new Button("Generar");
-        Button clearButton = new Button("Limpiar");
+        ButtonElement generateButton = new ButtonElement("Generar");
+        ButtonElement clearButton = new ButtonElement("Limpiar");
 
-        generateButton.setMaxWidth(Double.MAX_VALUE);
-        clearButton.setMaxWidth(Double.MAX_VALUE);
-
-        generateButton.setStyle("-fx-background-color: #f3f4f6; -fx-border-color: #d1d5db; -fx-cursor: hand;");
-        clearButton.setStyle("-fx-background-color: #f3f4f6; -fx-border-color: #d1d5db; -fx-cursor: hand;");
-
-        generateButton.setOnAction(e -> generate());
-        clearButton.setOnAction(e -> clear());
+        generateButton.getNode().setOnAction(e -> generate());
+        clearButton.getNode().setOnAction(e -> clear());
 
         getChildren().addAll(
-            title,
-            textField,
-            generateButton,
-            clearButton
+                title.getNode(),
+                subtitle.getNode(),
+                inputTitle.getNode(),
+                textInput.getNode(),
+                generateButton.getNode(),
+                clearButton.getNode()
         );
     }
 
     private void generate() {
-        String value = textField.getText().trim();
+        String value = textInput.getValue().trim();
 
         if (!value.isEmpty()) {
             visualizer.showText(value);
+        } else {
+            visualizer.showText("Esperando texto desde el input...");
         }
     }
 
     private void clear() {
-        textField.clear();
+        textInput.getNode().clear();
         visualizer.clear();
     }
 }
