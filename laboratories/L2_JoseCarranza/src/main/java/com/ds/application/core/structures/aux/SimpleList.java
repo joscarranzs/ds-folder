@@ -1,4 +1,4 @@
-package com.ds.application.core.structures;
+package com.ds.application.core.structures.aux;
 
 public class SimpleList<T> {
   private T[] elements;

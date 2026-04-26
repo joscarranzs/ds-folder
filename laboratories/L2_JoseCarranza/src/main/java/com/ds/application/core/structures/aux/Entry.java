@@ -1,4 +1,4 @@
-package com.ds.application.core.structures;
+package com.ds.application.core.structures.aux;
 
 public class Entry<K, V> {
   private K key;
