@@ -1,8 +1,13 @@
 package com.ds.application.core.structures.aux;
 
 /**
- * Simple binary-heap priority queue implementation using AuxComparator.
- * Not thread-safe. Minimal API: offer, poll, peek, size, isEmpty.
+ * Cola de prioridad mínima implementada mediante un montículo (binary heap).
+ * <p>
+ * Esta implementación es ligera y no es segura para uso concurrente.
+ * Proporciona las operaciones básicas necesarias: {@code offer}, {@code poll},
+ * {@code peek}, {@code size} e {@code isEmpty}.
+ *
+ * @param <T> tipo de elementos almacenados
  */
 public class AuxPriorityQueue<T> implements AuxQueue<T> {
     private Object[] heap;
