@@ -16,6 +16,11 @@ public class AuxPriorityQueue<T> implements AuxQueue<T> {
 
     private static final int DEFAULT_CAPACITY = 16;
 
+    /**
+     * Crea una nueva cola de prioridad usando el comparador proporcionado.
+     *
+     * @param comparator comparador que define el orden entre elementos
+     */
     public AuxPriorityQueue(AuxComparator<T> comparator) {
         this.comparator = comparator;
         this.heap = new Object[DEFAULT_CAPACITY];
@@ -23,10 +28,21 @@ public class AuxPriorityQueue<T> implements AuxQueue<T> {
     }
 
     @SuppressWarnings("unchecked")
+    /**
+     * Devuelve el elemento almacenado en la posición interna del heap.
+     * Método interno; lanza ClassCastException si el tipo no coincide.
+     *
+     * @param idx índice dentro del array de heap
+     * @return elemento en la posición indicada
+     */
     private T heapAt(int idx) {
         return (T) heap[idx];
     }
 
+    /**
+     * Asegura que el array interno tenga capacidad para al menos un elemento
+     * más; si no la tiene, duplica la capacidad.
+     */
     private void ensureCapacity() {
         if (size >= heap.length) {
             Object[] newHeap = new Object[heap.length * 2];
@@ -35,6 +51,14 @@ public class AuxPriorityQueue<T> implements AuxQueue<T> {
         }
     }
 
+    /**
+     * Inserta un elemento en la cola con la prioridad definida por el
+     * comparador. El elemento se sitúa en la posición adecuada para
+     * mantener la propiedad del heap.
+     *
+     * @param item elemento a insertar
+     * @return true si la inserción se realizó correctamente
+     */
     @Override
     public boolean offer(T item) {
         ensureCapacity();
@@ -43,6 +67,12 @@ public class AuxPriorityQueue<T> implements AuxQueue<T> {
         return true;
     }
 
+    /**
+     * Extrae y devuelve el elemento con la prioridad más alta (mínima
+     * según el comparador). Devuelve null si la cola está vacía.
+     *
+     * @return elemento extraído o null si no hay elementos
+     */
     @Override
     public T poll() {
         if (size == 0) return null;
@@ -53,21 +83,42 @@ public class AuxPriorityQueue<T> implements AuxQueue<T> {
         return result;
     }
 
+    /**
+     * Consulta el elemento con prioridad más alta sin extraerlo.
+     *
+     * @return elemento en la cima del heap o null si la cola está vacía
+     */
     @Override
     public T peek() {
         return size == 0 ? null : heapAt(0);
     }
 
+    /**
+     * Número de elementos actualmente almacenados en la cola.
+     *
+     * @return tamaño actual
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * Indica si la cola no contiene elementos.
+     *
+     * @return true si está vacía
+     */
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Ajusta hacia arriba el elemento en la posición indicada para mantener
+     * la propiedad de heap (heapify-up).
+     *
+     * @param idx índice del elemento a ajustar
+     */
     @SuppressWarnings("unchecked")
     private void siftUp(int idx) {
         int child = idx;
@@ -85,6 +136,12 @@ public class AuxPriorityQueue<T> implements AuxQueue<T> {
         }
     }
 
+    /**
+     * Ajusta hacia abajo el elemento en la posición indicada para mantener
+     * la propiedad de heap (heapify-down).
+     *
+     * @param idx índice desde el que comenzar el ajuste
+     */
     @SuppressWarnings("unchecked")
     private void siftDown(int idx) {
         int parent = idx;
