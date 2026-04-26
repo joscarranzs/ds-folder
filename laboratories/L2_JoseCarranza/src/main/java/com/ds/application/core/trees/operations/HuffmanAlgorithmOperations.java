@@ -8,7 +8,7 @@ import com.ds.application.core.structures.aux.SimpleList;
 import com.ds.application.core.structures.aux.AuxMap;
 import com.ds.application.core.structures.aux.AuxPriorityQueue;
 import com.ds.application.core.structures.aux.AuxQueue;
-import java.util.Comparator;
+import com.ds.application.core.structures.aux.AuxComparator;
 
 // Operaciones para construir y usar un árbol Huffman.
 public class HuffmanAlgorithmOperations {
@@ -26,7 +26,7 @@ public class HuffmanAlgorithmOperations {
             return new HuffmanBinaryTree();
         }
 
-        AuxQueue<HuffmanNode> queue = new AuxPriorityQueue<>(new Comparator<HuffmanNode>() {
+        AuxQueue<HuffmanNode> queue = new AuxPriorityQueue<>(new AuxComparator<HuffmanNode>() {
             @Override
             public int compare(HuffmanNode a, HuffmanNode b) {
                 return Integer.compare(a.getFrequency(), b.getFrequency());

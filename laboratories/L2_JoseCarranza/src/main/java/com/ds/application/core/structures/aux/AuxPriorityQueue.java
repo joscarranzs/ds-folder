@@ -1,19 +1,17 @@
 package com.ds.application.core.structures.aux;
 
-import java.util.Comparator;
-
 /**
- * Simple binary-heap priority queue implementation.
+ * Simple binary-heap priority queue implementation using AuxComparator.
  * Not thread-safe. Minimal API: offer, poll, peek, size, isEmpty.
  */
 public class AuxPriorityQueue<T> implements AuxQueue<T> {
     private Object[] heap;
     private int size;
-    private Comparator<T> comparator;
+    private AuxComparator<T> comparator;
 
     private static final int DEFAULT_CAPACITY = 16;
 
-    public AuxPriorityQueue(Comparator<T> comparator) {
+    public AuxPriorityQueue(AuxComparator<T> comparator) {
         this.comparator = comparator;
         this.heap = new Object[DEFAULT_CAPACITY];
         this.size = 0;

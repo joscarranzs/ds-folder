@@ -3,7 +3,7 @@ package com.ds.application.core.trees.operations;
 import com.ds.application.core.structures.BinaryTreeNode;
 import junit.framework.TestCase;
 
-import java.util.List;
+import com.ds.application.core.structures.aux.SimpleList;
 
 public class BinaryTreeOperationsTest extends TestCase {
 
@@ -23,7 +23,7 @@ public class BinaryTreeOperationsTest extends TestCase {
         assertEquals(3, operations.height());
         assertEquals(6, operations.size());
 
-        List<Integer> inOrder = operations.inOrder();
+        SimpleList<Integer> inOrder = operations.inOrder();
         assertEquals(6, inOrder.size());
         assertEquals(Integer.valueOf(1), inOrder.get(0));
         assertEquals(Integer.valueOf(14), inOrder.get(5));

@@ -2,8 +2,6 @@ package com.ds.application.core.trees.operations;
 
 import com.ds.application.core.structures.BinaryTreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.ds.application.core.structures.aux.SimpleList;
 
 // Operaciones específicas del árbol binario de búsqueda.
@@ -38,34 +36,22 @@ public class BinaryTreeOperations {
         return sizeRec(root);
     }
 
-    public List<Integer> inOrder() {
+    public SimpleList<Integer> inOrder() {
         SimpleList<Integer> result = new SimpleList<>();
         inOrderRec(root, result);
-        List<Integer> out = new ArrayList<>();
-        for (int i = 0; i < result.size(); i++) {
-            out.add(result.get(i));
-        }
-        return out;
+        return result;
     }
 
-    public List<Integer> preOrder() {
+    public SimpleList<Integer> preOrder() {
         SimpleList<Integer> result = new SimpleList<>();
         preOrderRec(root, result);
-        List<Integer> out = new ArrayList<>();
-        for (int i = 0; i < result.size(); i++) {
-            out.add(result.get(i));
-        }
-        return out;
+        return result;
     }
 
-    public List<Integer> postOrder() {
+    public SimpleList<Integer> postOrder() {
         SimpleList<Integer> result = new SimpleList<>();
         postOrderRec(root, result);
-        List<Integer> out = new ArrayList<>();
-        for (int i = 0; i < result.size(); i++) {
-            out.add(result.get(i));
-        }
-        return out;
+        return result;
     }
 
     public String inOrderString() {
@@ -136,12 +122,13 @@ public class BinaryTreeOperations {
         result.add(node.getValue());
     }
 
-    private String joinValues(List<Integer> values) {
-        if (values.isEmpty()) {
+    private String joinValues(SimpleList<Integer> values) {
+        if (values.size() == 0) {
             return "";
         }
         StringBuilder builder = new StringBuilder();
-        for (int value : values) {
+        for (int i = 0; i < values.size(); i++) {
+            int value = values.get(i);
             if (builder.length() > 0) {
                 builder.append(' ');
             }
