@@ -1,11 +1,8 @@
 package com.ds.application.view.components.header;
 
 import com.ds.application.view.components.elements.ui.ButtonElement;
-import com.ds.application.view.components.elements.ui.LabelElement;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 
 public class Views extends HBox {
 
@@ -13,18 +10,12 @@ public class Views extends HBox {
     private ButtonElement huffmanButton;
 
     public Views(Runnable showBinaryView, Runnable showHuffmanView) {
-        setPadding(new Insets(14, 18, 14, 18));
-        setSpacing(12);
+        setPadding(new Insets(12, 20, 0, 20));
+        setSpacing(22);
         setStyle("-fx-background-color: #ffffff; -fx-border-color: #dbe1ea;");
 
-        LabelElement title = new LabelElement("Visualizador de Arboles");
-        title.getNode().setStyle("-fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: #111827;");
-
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        binaryButton = new ButtonElement("Arbol Binario");
-        huffmanButton = new ButtonElement("Huffman");
+        binaryButton = new ButtonElement("ARBOL BINARIO");
+        huffmanButton = new ButtonElement("ALGORITMO DE HUFFMAN");
 
         binaryButton.getNode().setOnAction(e -> {
             showBinaryView.run();
@@ -39,37 +30,36 @@ public class Views extends HBox {
         selectBinary();
 
         getChildren().addAll(
-                title.getNode(),
-                spacer,
                 binaryButton.getNode(),
                 huffmanButton.getNode()
         );
     }
 
     private void selectBinary() {
-        binaryButton.getNode().setStyle(activeStyle());
-        huffmanButton.getNode().setStyle(normalStyle());
+        binaryButton.getNode().setStyle(activeTabStyle());
+        huffmanButton.getNode().setStyle(normalTabStyle());
     }
 
     private void selectHuffman() {
-        huffmanButton.getNode().setStyle(activeStyle());
-        binaryButton.getNode().setStyle(normalStyle());
+        huffmanButton.getNode().setStyle(activeTabStyle());
+        binaryButton.getNode().setStyle(normalTabStyle());
     }
 
-    private String activeStyle() {
-        return "-fx-background-color: #2563eb;" +
-                "-fx-text-fill: white;" +
+    private String activeTabStyle() {
+        return "-fx-background-color: transparent;" +
+                "-fx-text-fill: #2563eb;" +
                 "-fx-font-weight: bold;" +
-                "-fx-background-radius: 8;" +
+                "-fx-border-color: transparent transparent #2563eb transparent;" +
+                "-fx-border-width: 0 0 2 0;" +
+                "-fx-padding: 12 0 12 0;" +
                 "-fx-cursor: hand;";
     }
 
-    private String normalStyle() {
-        return "-fx-background-color: #f3f4f6;" +
-                "-fx-text-fill: #374151;" +
-                "-fx-border-color: #d1d5db;" +
-                "-fx-border-radius: 8;" +
-                "-fx-background-radius: 8;" +
+    private String normalTabStyle() {
+        return "-fx-background-color: transparent;" +
+                "-fx-text-fill: #6b7280;" +
+                "-fx-font-weight: bold;" +
+                "-fx-padding: 12 0 12 0;" +
                 "-fx-cursor: hand;";
     }
 }

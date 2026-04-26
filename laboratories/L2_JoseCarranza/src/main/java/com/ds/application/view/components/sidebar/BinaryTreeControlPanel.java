@@ -13,19 +13,26 @@ public class BinaryTreeControlPanel extends VBox {
     public BinaryTreeControlPanel(BinaryTreeVisualizer visualizer) {
         this.visualizer = visualizer;
 
-        setPadding(new Insets(16));
-        setSpacing(12);
-        setPrefWidth(240);
-        setStyle("-fx-background-color: #ffffff; -fx-border-color: #dbe1ea;");
+        setPadding(new Insets(18));
+        setSpacing(14);
+        setPrefWidth(250);
+        setStyle("-fx-background-color: #f8fafc; -fx-border-color: #dbe1ea;");
 
-        LabelElement title = new LabelElement("Panel de Control");
-        LabelElement subtitle = new LabelElement("Arbol Binario");
-        LabelElement operations = new LabelElement("Operaciones");
-        LabelElement traversals = new LabelElement("Recorridos");
+        LabelElement title = new LabelElement("PANEL DE CONTROL");
+        title.getNode().setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2563eb;");
+
+        LabelElement subtitle = new LabelElement("ARBOL BINARIO");
+        subtitle.getNode().setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;");
+
+        LabelElement operations = new LabelElement("OPERACIONES");
+        operations.getNode().setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;");
 
         ButtonElement insertBtn = new ButtonElement("Insertar");
         ButtonElement searchBtn = new ButtonElement("Buscar");
         ButtonElement clearBtn = new ButtonElement("Limpiar");
+
+        LabelElement traversals = new LabelElement("RECORRIDOS");
+        traversals.getNode().setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;");
 
         ButtonElement preorderBtn = new ButtonElement("Pre-orden");
         ButtonElement inorderBtn = new ButtonElement("In-orden");
