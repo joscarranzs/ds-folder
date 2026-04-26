@@ -1,32 +1,33 @@
 ++README.md
-Core package usage
-==================
+README - Paquete core
+=====================
 
-This README gives short usage examples for the core classes that other
-packages in the project depend on. Only classes that are intended to be
-consumed by other packages are documented here.
+Este README contiene ejemplos de uso cortos para las clases del paquete
+core que se consumen desde otros paquetes del proyecto. Solo se documentan
+las clases previstas para uso externo.
 
 1) BinarySearchTree
 -------------------
-Simple BST storing integers. Use insert/delete/getRoot to manipulate the tree.
+Árbol binario de búsqueda (BST) simple que almacena enteros. Se usan los
+métodos insert/delete/getRoot para manipular el árbol.
 
-Example:
+Ejemplo:
 
 ```java
 BinarySearchTree bst = new BinarySearchTree();
 bst.insert(10);
 bst.insert(5);
 bst.insert(15);
-// root available for visualizers or other utilities
+// obtener la raíz para visualizadores u otras utilidades
 BinaryTreeNode<Integer> root = bst.getRoot();
 ```
 
 2) BinaryTreeOperations
 -----------------------
-Utility class for performing searches, traversals and simple metrics on a
-binary tree. Construct it with a BinaryTreeNode root.
+Clase de utilidades para realizar búsquedas, recorridos y métricas simples
+sobre un árbol binario. Se construye con la raíz (BinaryTreeNode).
 
-Example:
+Ejemplo:
 
 ```java
 BinaryTreeOperations ops = new BinaryTreeOperations(root);
@@ -37,15 +38,15 @@ int height = ops.height();
 String inOrder = ops.inOrderString();
 ```
 
-3) HuffmanBinaryTree and HuffmanNode
-------------------------------------
-Lightweight container for a Huffman tree and its nodes. Use
-HuffmanAlgorithmOperations to build and use the tree.
+3) HuffmanBinaryTree y HuffmanNode
+----------------------------------
+Contenedor ligero para un árbol de Huffman y sus nodos. Para construir y
+usar el árbol, emplea HuffmanAlgorithmOperations.
 
-Example:
+Ejemplo:
 
 ```java
-// build tree from text
+// construir árbol desde texto
 HuffmanBinaryTree tree = HuffmanAlgorithmOperations.buildTreeFromText("aaabbc");
 HuffmanNode root = tree.getRoot();
 boolean empty = tree.isEmpty();
@@ -53,10 +54,11 @@ boolean empty = tree.isEmpty();
 
 4) HuffmanAlgorithmOperations
 -----------------------------
-Contains static helpers for Huffman coding: counting frequencies, building
-the tree, generating codes, encoding and decoding strings.
+Contiene funciones estáticas para el algoritmo de Huffman: conteo de
+frecuencias, construcción del árbol, generación de códigos, codificar y
+decodificar cadenas.
 
-Example:
+Ejemplo:
 
 ```java
 AuxMap<Character, Integer> freqs = HuffmanAlgorithmOperations.countFrequencies("aabccc");
@@ -66,21 +68,21 @@ String encoded = HuffmanAlgorithmOperations.encode("aab", codes);
 String decoded = HuffmanAlgorithmOperations.decode(encoded, tree.getRoot());
 ```
 
-5) Auxiliary data structures (used across core)
----------------------------------------------
-The core package uses small replacements for java.util collections to avoid
-bringing java.util into core code. These are lightweight and designed to be
-used internally and by other packages.
+5) Estructuras auxiliares (usadas desde core)
+--------------------------------------------
+El paquete core usa reemplazos ligeros de colecciones de java.util para
+mantener el núcleo libre de esas dependencias. Son estructuras simples,
+diseñadas para uso interno y por otros paquetes.
 
-Main types:
-- SimpleList<T>: dynamic list with add/get/size
-- AuxMap<K,V>: simple map backed by Entry<K,V> list
-- Entry<K,V>: key/value pair used by AuxMap
-- AuxQueue<T>: queue interface
-- AuxPriorityQueue<T>: priority queue implementation that needs an AuxComparator
-- AuxComparator<T>: comparator functional interface
+Tipos principales:
+- SimpleList<T>: lista dinámica con add/get/size
+- AuxMap<K,V>: mapa sencillo respaldado por una lista de Entry<K,V>
+- Entry<K,V>: par clave/valor usado por AuxMap
+- AuxQueue<T>: interfaz de cola
+- AuxPriorityQueue<T>: implementación de cola de prioridad que requiere un AuxComparator
+- AuxComparator<T>: interfaz comparadora
 
-Example usage (SimpleList & AuxMap):
+Ejemplo de uso (SimpleList & AuxMap):
 
 ```java
 SimpleList<Integer> list = new SimpleList<>();
@@ -93,7 +95,7 @@ map.put('a', 2);
 Integer count = map.get('a');
 ```
 
-Priority queue example (used by Huffman builder):
+Ejemplo de cola de prioridad (usado por el constructor de Huffman):
 
 ```java
 AuxQueue<HuffmanNode> pq = new AuxPriorityQueue<>(new AuxComparator<HuffmanNode>() {
@@ -106,8 +108,10 @@ pq.offer(new HuffmanNode('a', 3));
 HuffmanNode n = pq.poll();
 ```
 
-Notes
+Notas
 -----
-- All examples assume appropriate imports from com.ds.application.core.*
-- These classes are intentionally small; consult their Javadoc for more
-  precise contract details (null handling, return values, exceptions).
+- Los ejemplos presuponen las importaciones adecuadas desde
+  com.ds.application.core.*
+- Estas clases son intencionalmente pequeñas; consulta su Javadoc para
+  detalles más precisos sobre contratos (manejo de null, valores devueltos,
+  excepciones).
