@@ -1,52 +1,61 @@
-// Elemento de UI usado para construir componentes como header, sidebar y controles de formulario.
 package com.ds.application.view.components.elements.ui;
 
 import javafx.scene.control.Button;
-    /*
-    *Componente reutilizable para botones en JavaFX,
-    *con estilos dinámicos para estados activos e inactivos.
-    */
+
+/**
+ * Componente envoltorio para javafx.scene.control.Button.
+ * Proporciona una forma sencilla de crear un botón con estilos predeterminados
+ * y alternar su apariencia entre estados "activo" e "inactivo".
+ * <p>
+ * Las instancias devuelven el nodo JavaFX mediante {@link #getNode()} para
+ * ser insertadas en la escena. Los estilos aplicados son inline; se
+ * recomienda usar una hoja de estilos externa para proyectos mayores.
+ */
+/**
+ * Crea y estiliza un {@link javafx.scene.control.Button} con estados visuales.
+ */
 public class ButtonElement {
-    /*
-    instancia interna del boton de JavaFX */
     private Button button;
-    /*
-    *Constructor que inicializa el botón con un texto y 
-    *aplica estilos predeterminados para el estado inactivo.
-    */
+
+    /**
+     * Crea un ButtonElement con el texto visible en el botón.
+     * El estado inicial es inactivo.
+     *
+     * @param text texto que se mostrará en el botón
+     */
     public ButtonElement(String text){
         button = new Button(text);
-        setActive(false );
+        setActive(false);
     }
 
-    /*
-    Cambia el estado visual del boton entre activo e inactivo
-    * aplicando estilos CSS dinámicamente.
-    */
+    /**
+     * Actualiza la apariencia visual del botón para indicar su estado.
+     *
+     * @param active true para aplicar el estilo "activo", false para "inactivo"
+     */
     public void setActive(boolean active){
-    if(active){
-        /*
-        boton activo estara de azul */
-        button.setStyle(
-            "-fx-background-color: #2563eb;" +
-            "-fx-text-fill: white;" +
-            "-fx-font-weight: bold;" +
-            "-fx-background-radius: 8;" +
-            "-fx-cursor: hand;"
-        );
-    } else {
-        /*
-        boton inactivo tendra fondo blanco y borde gris */
-        button.setStyle(
-            "-fx-background-color: #ffffff;" +
-            "-fx-border-color: #dbe1ea;"
-        );
+        if(active){
+            button.setStyle(
+                "-fx-background-color: #2563eb;" +
+                "-fx-text-fill: white;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 8;" +
+                "-fx-cursor: hand;"
+            );
+        } else {
+            button.setStyle(
+                "-fx-background-color: #ffffff;" +
+                "-fx-border-color: #dbe1ea;"
+            );
+        }
     }
-}
-/*
-devuelve el nodo JavaFX del boton */
+
+    /**
+     * Devuelve el nodo JavaFX asociado a este componente.
+     *
+     * @return instancia de {@link Button} que representa este elemento
+     */
     public Button getNode(){
         return button;
     }
-
 }

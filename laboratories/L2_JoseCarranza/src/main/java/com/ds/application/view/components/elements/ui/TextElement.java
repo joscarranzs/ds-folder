@@ -1,29 +1,27 @@
-// Elemento de UI usado para construir componentes como header, sidebar y controles de formulario.
 package com.ds.application.view.components.elements.ui;
-import javafx.scene.control.TextArea;
-       /*
-    *Componente reutilizable para botones en JavaFX,
-    *con estilos dinámicos para estados activos e inactivos.
-    */
+
+/**
+ * Representa un contenido de texto sencillo que puede ser utilizado por
+ * componentes visuales (por ejemplo, un {@link javafx.scene.control.Label}).
+ */
 public class TextElement {
-      /*
-    instancia interna del boton de JavaFX */
     private String text;
-            /*
-    *Constructor que inicializa el botón con un texto y 
-    *aplica estilos predeterminados para el estado inactivo.
-    */
+
+    /**
+     * Crea un TextElement con la cadena proporcionada.
+     *
+     * @param text texto a almacenar
+     */
     public TextElement(String text){
-        this.text= text;
-        applyStyles();
+        this.text = text;
     }
-    private void applyStyles(){
-        //Clase CSS para el texto
-        applyStyles();
-    }
-/*
-devuelve el nodo JavaFX del boton */
-        public String getText(){
+
+    /**
+     * Devuelve el texto almacenado en este elemento.
+     *
+     * @return texto contenido
+     */
+    public String getText(){
         return text;
     }
 }

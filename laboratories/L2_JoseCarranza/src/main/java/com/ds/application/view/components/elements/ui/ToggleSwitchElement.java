@@ -1,45 +1,51 @@
-// Elemento de UI usado para construir componentes como header, sidebar y controles de formulario.
-
 package com.ds.application.view.components.elements.ui;
+
 import javafx.scene.control.ToggleButton;
-    /*
-    *Componente reutilizable para interruptores de toggle en JavaFX,
-    *con estilos dinámicos para estados activos e inactivos.
-    */
+
+/**
+ * Envoltorio para {@link ToggleButton} que permite crear un interruptor
+ * y alternar su estilo entre activo e inactivo.
+ */
 public class ToggleSwitchElement {
-          /*
-    instancia interna del interruptor de toggle de JavaFX */
     private ToggleButton toggleButton;
-            /*
-    *Constructor que inicializa el interruptor con un texto y 
-    *aplica estilos predeterminados para el estado inactivo.
-    */
+
+    /**
+     * Crea un ToggleButton con la etiqueta indicada.
+     *
+     * @param label texto del interruptor
+     */
     public ToggleSwitchElement(String label){
         toggleButton = new ToggleButton(label);
         setActive(false);
     }
-    /*Cambia el estado visual del interruptor entre activo e inactivo
-    * aplicando estilos CSS dinámicamente.
-    */
-   public void setActive(boolean active){
-    if(active){
-        /*cuando esta activo estara azul */
-        toggleButton.setStyle(
-            "-fx-background-color: #2563eb;" +
-            "-fx-text-fill: white;" +
-            "-fx-font-weight: bold;" +
-            "-fx-background-radius: 8;" +
-            "-fx-cursor: hand;"
-        );
-    } else {
-        /*cuando este inactivo tendra fondo blanco y borde gris */
-        toggleButton.setStyle(
-            "-fx-background-color: #ffffff;" +
-            "-fx-border-color: #dbe1ea;"
-        );
+
+    /**
+     * Aplica estilo visual según el estado.
+     *
+     * @param active true para estilo activo, false para inactivo
+     */
+    public void setActive(boolean active){
+        if(active){
+            toggleButton.setStyle(
+                "-fx-background-color: #2563eb;" +
+                "-fx-text-fill: white;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 8;" +
+                "-fx-cursor: hand;"
+            );
+        } else {
+            toggleButton.setStyle(
+                "-fx-background-color: #ffffff;" +
+                "-fx-border-color: #dbe1ea;"
+            );
+        }
     }
-}
-/*devuelve el nodo JavaFX del interruptor */
+
+    /**
+     * Devuelve el nodo {@link ToggleButton} asociado.
+     *
+     * @return ToggleButton creado
+     */
     public ToggleButton getNode(){
         return toggleButton;
     }

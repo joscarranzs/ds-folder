@@ -1,53 +1,53 @@
-// Elemento de UI usado para construir componentes como header, sidebar y controles de formulario.
 package com.ds.application.view.components.elements.ui;
 
 import javafx.scene.control.CheckBox;
-    /*
-    *Componente reutilizable para botones en JavaFX,
-    *con estilos dinámicos para estados activos e inactivos.
-    */
+
+/**
+ * Componente envoltorio para {@link CheckBox} que facilita la aplicación
+ * de estilos y la obtención del nodo visual.
+ */
 public class CheckboxElement {
-       /*
-    instancia interna del boton de JavaFX */
     private CheckBox checkBox;
-  /*
-    *Constructor que inicializa el botón con un texto y 
-    *aplica estilos predeterminados para el estado inactivo.
-    */
+    /**
+     * Crea un checkbox con la etiqueta indicada. Estado inicial: inactivo.
+     *
+     * @param label etiqueta del checkbox
+     */
     public CheckboxElement(String label){
         checkBox = new CheckBox(label);
-        setActive(false );
-    }
-        /*
-    Cambia el estado visual del boton entre activo e inactivo
-    * aplicando estilos CSS dinámicamente.
-    */
-    public void setActive(boolean active){
-    if(active){
-         /*
-        boton activo estara de azul */
-        checkBox.setStyle(
-            "-fx-background-color: #2563eb;" +
-            "-fx-text-fill: white;" +
-            "-fx-font-weight: bold;" +
-            "-fx-background-radius: 8;" +
-            "-fx-cursor: hand;"
-        );
-    } else {
-              /*
-        boton inactivo tendra fondo blanco y borde gris */
-        checkBox.setStyle(
-            "-fx-background-color: #ffffff;" +
-            "-fx-border-color: #dbe1ea;"
-        );
+        setActive(false);
     }
 
-}
-/*
-devuelve el nodo JavaFX del boton */
-public CheckBox getNode(){
+    /**
+     * Cambia el estilo visual entre activo e inactivo.
+     *
+     * @param active true para aplicar estilo activo, false para inactivo
+     */
+    public void setActive(boolean active){
+        if(active){
+            checkBox.setStyle(
+                "-fx-background-color: #2563eb;" +
+                "-fx-text-fill: white;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 8;" +
+                "-fx-cursor: hand;"
+            );
+        } else {
+            checkBox.setStyle(
+                "-fx-background-color: #ffffff;" +
+                "-fx-border-color: #dbe1ea;"
+            );
+        }
+    }
+
+    /**
+     * Devuelve el nodo {@link CheckBox} que representa este componente.
+     *
+     * @return CheckBox instanciado
+     */
+    public CheckBox getNode(){
         return checkBox;
-}
+    }
 }
 
 

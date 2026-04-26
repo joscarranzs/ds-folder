@@ -1,48 +1,49 @@
-// Elemento de UI usado para construir componentes como header, sidebar y controles de formulario.
-
 package com.ds.application.view.components.elements.ui;
+
 import javafx.scene.control.ListView;
-    /*
-    *Componente reutilizable para botones en JavaFX,
-    *con estilos dinámicos para estados activos e inactivos.
-    */
+
+/**
+ * Envoltorio para {@link ListView} que expone un nodo ya configurado y
+ * permite alternar un estilo simple entre activo e inactivo.
+ */
 public class ListElement {
-          /*
-    instancia interna del boton de JavaFX */
     private ListView<String> listView;
-            /*
-    *Constructor que inicializa el botón con un texto y 
-    *aplica estilos predeterminados para el estado inactivo.
-    */
+
+    /**
+     * Crea una lista vacía y aplica el estilo inicial (inactivo).
+     */
     public ListElement(){
         listView = new ListView<>();
         setActive(false);
     }
-       /*
-    Cambia el estado visual del boton entre activo e inactivo
-    * aplicando estilos CSS dinámicamente.
-    */
-       public void setActive(boolean active){
-    if(active){
-                             /*
-        boton activo estara de azul */
-        listView.setStyle(
-            "-fx-background-color: #2563eb;" +
-            "-fx-text-fill: white;" +
-            "-fx-font-weight: bold;" +
-            "-fx-background-radius: 8;" +
-            "-fx-cursor: hand;"
-        );
-    } else {
-                           /*
-        boton inactivo tendra fondo blanco y borde gris */
-        listView.setStyle(
-            "-fx-background-color: #ffffff;" +
-            "-fx-border-color: #dbe1ea;"
-        );
+
+    /**
+     * Alterna el estilo visual de la lista.
+     *
+     * @param active true para estilo activo, false para inactivo
+     */
+    public void setActive(boolean active){
+        if(active){
+            listView.setStyle(
+                "-fx-background-color: #2563eb;" +
+                "-fx-text-fill: white;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 8;" +
+                "-fx-cursor: hand;"
+            );
+        } else {
+            listView.setStyle(
+                "-fx-background-color: #ffffff;" +
+                "-fx-border-color: #dbe1ea;"
+            );
+        }
     }
-}   
- /*devuelve el nodo JavaFX del boton */
+
+    /**
+     * Devuelve el nodo {@link ListView} para su inserción en la escena.
+     *
+     * @return instancia de ListView
+     */
     public ListView<String> getNode(){
         return listView;
     }
