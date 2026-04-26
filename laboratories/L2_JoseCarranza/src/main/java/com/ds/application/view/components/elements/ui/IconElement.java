@@ -9,15 +9,15 @@ public class IconElement {
 
     public IconElement(String imagePath){
         image = new Image(imagePath);
-        applyStyles();
+        applyStyles(false);
     }
 
-    private void applyStyles(){
+    private void applyStyles(boolean active){
         //Clase CSS
         image.getUrl();
     }
 
-    public Image getnode(){
+    public Image getNode(){
         return image;
     }
 }
