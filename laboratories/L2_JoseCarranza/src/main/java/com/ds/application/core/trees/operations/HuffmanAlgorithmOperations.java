@@ -3,11 +3,12 @@ package com.ds.application.core.trees.operations;
 import com.ds.application.core.structures.HuffmanNode;
 import com.ds.application.core.trees.HuffmanBinaryTree;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
 import com.ds.application.core.structures.aux.Entry;
 import com.ds.application.core.structures.aux.SimpleList;
 import com.ds.application.core.structures.aux.AuxMap;
+import com.ds.application.core.structures.aux.AuxPriorityQueue;
+import com.ds.application.core.structures.aux.AuxQueue;
+import java.util.Comparator;
 
 // Operaciones para construir y usar un árbol Huffman.
 public class HuffmanAlgorithmOperations {
@@ -25,7 +26,12 @@ public class HuffmanAlgorithmOperations {
             return new HuffmanBinaryTree();
         }
 
-        Queue<HuffmanNode> queue = new PriorityQueue<>((a, b) -> Integer.compare(a.getFrequency(), b.getFrequency()));
+        AuxQueue<HuffmanNode> queue = new AuxPriorityQueue<>(new Comparator<HuffmanNode>() {
+            @Override
+            public int compare(HuffmanNode a, HuffmanNode b) {
+                return Integer.compare(a.getFrequency(), b.getFrequency());
+            }
+        });
         SimpleList<Entry<Character, Integer>> entries = frequencies.entryList();
         for (int i = 0; i < entries.size(); i++) {
             Entry<Character, Integer> en = entries.get(i);
