@@ -10,9 +10,21 @@ import com.ds.application.core.structures.aux.AuxPriorityQueue;
 import com.ds.application.core.structures.aux.AuxQueue;
 import com.ds.application.core.structures.aux.AuxComparator;
 
-// Operaciones para construir y usar un árbol Huffman.
+/**
+ * Operaciones relacionadas con el algoritmo y uso del árbol de Huffman.
+ *
+ * Incluye funciones para construir el árbol a partir de un texto o mapas de
+ * frecuencias, generar códigos, codificar y decodificar cadenas.
+ */
 public class HuffmanAlgorithmOperations {
 
+    /**
+     * Construye un HuffmanBinaryTree a partir de un texto, contando las
+     * frecuencias de caracteres.
+     *
+     * @param text texto fuente (puede ser null o vacío)
+     * @return árbol de Huffman construido o un árbol vacío si no hay datos
+     */
     public static HuffmanBinaryTree buildTreeFromText(String text) {
         if (text == null || text.isEmpty()) {
             return new HuffmanBinaryTree();
@@ -21,6 +33,12 @@ public class HuffmanAlgorithmOperations {
         AuxMap<Character, Integer> frequencyMap = countFrequencies(text);
         return buildTreeFromFrequencies(frequencyMap);
     }
+    /**
+     * Construye un HuffmanBinaryTree a partir de un mapa de frecuencias.
+     *
+     * @param frequencies mapa de frecuencias (puede ser null o vacío)
+     * @return árbol de Huffman resultante
+     */
     public static HuffmanBinaryTree buildTreeFromFrequencies(AuxMap<Character, Integer> frequencies) {
         if (frequencies == null || frequencies.isEmpty()) {
             return new HuffmanBinaryTree();
@@ -51,6 +69,12 @@ public class HuffmanAlgorithmOperations {
         return new HuffmanBinaryTree(root);
     }
 
+    /**
+     * Cuenta la frecuencia de aparición de cada carácter en el texto.
+     *
+     * @param text texto fuente (puede ser null)
+     * @return AuxMap con la frecuencia por carácter
+     */
     public static AuxMap<Character, Integer> countFrequencies(String text) {
         AuxMap<Character, Integer> frequencies = new AuxMap<>();
         if (text == null) {
@@ -65,6 +89,13 @@ public class HuffmanAlgorithmOperations {
         return frequencies;
     }
 
+    /**
+     * Genera el mapa de códigos Huffman (carácter -> código binario en forma de String)
+     * a partir de la raíz del árbol.
+     *
+     * @param root raíz del árbol de Huffman
+     * @return AuxMap con códigos por carácter (vacío si root es null)
+     */
     public static AuxMap<Character, String> buildCodes(HuffmanNode root) {
         AuxMap<Character, String> codes = new AuxMap<>();
         if (root == null) {
@@ -88,6 +119,14 @@ public class HuffmanAlgorithmOperations {
         buildCodesRecursive(node.getRight(), code + '1', codes);
     }
 
+    /**
+     * Codifica un texto usando la tabla de códigos proporcionada.
+     *
+     * @param text  texto a codificar
+     * @param codes mapa de códigos generado por buildCodes
+     * @return cadena con la representación en bits (como '0' y '1')
+     * @throws IllegalArgumentException si un carácter del texto no tiene código
+     */
     public static String encode(String text, AuxMap<Character, String> codes) {
         if (text == null || text.isEmpty() || codes == null || codes.isEmpty()) {
             return "";
@@ -104,6 +143,14 @@ public class HuffmanAlgorithmOperations {
         return encoded.toString();
     }
 
+    /**
+     * Decodifica una cadena de bits usando el árbol de Huffman.
+     *
+     * @param encodedText cadena de bits (por ejemplo "0101")
+     * @param root        raíz del árbol de Huffman usado para decodificar
+     * @return texto original decodificado
+     * @throws IllegalArgumentException si el texto codificado no es válido
+     */
     public static String decode(String encodedText, HuffmanNode root) {
         if (encodedText == null || encodedText.isEmpty() || root == null) {
             return "";
@@ -125,6 +172,12 @@ public class HuffmanAlgorithmOperations {
         return decoded.toString();
     }
 
+    /**
+     * Indica si un nodo de Huffman es hoja (no tiene hijos).
+     *
+     * @param node nodo a comprobar
+     * @return true si es hoja, false en caso contrario
+     */
     public static boolean isLeaf(HuffmanNode node) {
         return node != null && node.getLeft() == null && node.getRight() == null;
     }
