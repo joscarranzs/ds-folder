@@ -3,10 +3,11 @@ package com.ds.application.core.trees.operations;
 import com.ds.application.core.structures.HuffmanNode;
 import com.ds.application.core.trees.HuffmanBinaryTree;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import com.ds.application.core.structures.aux.Entry;
+import com.ds.application.core.structures.aux.SimpleList;
+import com.ds.application.core.structures.aux.AuxMap;
 
 // Operaciones para construir y usar un árbol Huffman.
 public class HuffmanAlgorithmOperations {
@@ -16,18 +17,19 @@ public class HuffmanAlgorithmOperations {
             return new HuffmanBinaryTree();
         }
 
-        Map<Character, Integer> frequencyMap = countFrequencies(text);
+        AuxMap<Character, Integer> frequencyMap = countFrequencies(text);
         return buildTreeFromFrequencies(frequencyMap);
     }
-
-    public static HuffmanBinaryTree buildTreeFromFrequencies(Map<Character, Integer> frequencies) {
+    public static HuffmanBinaryTree buildTreeFromFrequencies(AuxMap<Character, Integer> frequencies) {
         if (frequencies == null || frequencies.isEmpty()) {
             return new HuffmanBinaryTree();
         }
 
         Queue<HuffmanNode> queue = new PriorityQueue<>((a, b) -> Integer.compare(a.getFrequency(), b.getFrequency()));
-        for (Map.Entry<Character, Integer> entry : frequencies.entrySet()) {
-            queue.offer(new HuffmanNode(entry.getKey(), entry.getValue()));
+        SimpleList<Entry<Character, Integer>> entries = frequencies.entryList();
+        for (int i = 0; i < entries.size(); i++) {
+            Entry<Character, Integer> en = entries.get(i);
+            queue.offer(new HuffmanNode(en.getKey(), en.getValue()));
         }
 
         while (queue.size() > 1) {
@@ -43,21 +45,22 @@ public class HuffmanAlgorithmOperations {
         return new HuffmanBinaryTree(root);
     }
 
-    public static Map<Character, Integer> countFrequencies(String text) {
-        Map<Character, Integer> frequencies = new HashMap<>();
+    public static AuxMap<Character, Integer> countFrequencies(String text) {
+        AuxMap<Character, Integer> frequencies = new AuxMap<>();
         if (text == null) {
             return frequencies;
         }
 
         for (char c : text.toCharArray()) {
-            frequencies.put(c, frequencies.getOrDefault(c, 0) + 1);
+            Integer prev = frequencies.get(c);
+            frequencies.put(c, (prev == null ? 0 : prev) + 1);
         }
 
         return frequencies;
     }
 
-    public static Map<Character, String> buildCodes(HuffmanNode root) {
-        Map<Character, String> codes = new HashMap<>();
+    public static AuxMap<Character, String> buildCodes(HuffmanNode root) {
+        AuxMap<Character, String> codes = new AuxMap<>();
         if (root == null) {
             return codes;
         }
@@ -65,7 +68,7 @@ public class HuffmanAlgorithmOperations {
         return codes;
     }
 
-    private static void buildCodesRecursive(HuffmanNode node, String code, Map<Character, String> codes) {
+    private static void buildCodesRecursive(HuffmanNode node, String code, AuxMap<Character, String> codes) {
         if (node == null) {
             return;
         }
@@ -79,7 +82,7 @@ public class HuffmanAlgorithmOperations {
         buildCodesRecursive(node.getRight(), code + '1', codes);
     }
 
-    public static String encode(String text, Map<Character, String> codes) {
+    public static String encode(String text, AuxMap<Character, String> codes) {
         if (text == null || text.isEmpty() || codes == null || codes.isEmpty()) {
             return "";
         }

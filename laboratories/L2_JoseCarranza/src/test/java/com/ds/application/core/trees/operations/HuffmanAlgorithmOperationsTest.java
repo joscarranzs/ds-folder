@@ -4,7 +4,7 @@ import com.ds.application.core.trees.HuffmanBinaryTree;
 import com.ds.application.core.structures.HuffmanNode;
 import junit.framework.TestCase;
 
-import java.util.Map;
+import com.ds.application.core.structures.aux.AuxMap;
 
 public class HuffmanAlgorithmOperationsTest extends TestCase {
 
@@ -15,7 +15,7 @@ public class HuffmanAlgorithmOperationsTest extends TestCase {
         assertNotNull(tree);
         assertNotNull(tree.getRoot());
 
-        Map<Character, String> codes = HuffmanAlgorithmOperations.buildCodes(tree.getRoot());
+        AuxMap<Character, String> codes = HuffmanAlgorithmOperations.buildCodes(tree.getRoot());
         assertNotNull(codes);
         assertFalse(codes.isEmpty());
         assertTrue(codes.containsKey('a'));
@@ -32,7 +32,7 @@ public class HuffmanAlgorithmOperationsTest extends TestCase {
 
     public void testCountFrequencies() {
         String text = "abac";
-        Map<Character, Integer> frequencyMap = HuffmanAlgorithmOperations.countFrequencies(text);
+        AuxMap<Character, Integer> frequencyMap = HuffmanAlgorithmOperations.countFrequencies(text);
 
         assertEquals(3, frequencyMap.size());
         assertEquals(Integer.valueOf(2), frequencyMap.get('a'));

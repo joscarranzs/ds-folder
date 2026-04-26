@@ -4,6 +4,7 @@ import com.ds.application.core.structures.BinaryTreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.ds.application.core.structures.aux.SimpleList;
 
 // Operaciones específicas del árbol binario de búsqueda.
 public class BinaryTreeOperations {
@@ -38,21 +39,33 @@ public class BinaryTreeOperations {
     }
 
     public List<Integer> inOrder() {
-        List<Integer> result = new ArrayList<>();
+        SimpleList<Integer> result = new SimpleList<>();
         inOrderRec(root, result);
-        return result;
+        List<Integer> out = new ArrayList<>();
+        for (int i = 0; i < result.size(); i++) {
+            out.add(result.get(i));
+        }
+        return out;
     }
 
     public List<Integer> preOrder() {
-        List<Integer> result = new ArrayList<>();
+        SimpleList<Integer> result = new SimpleList<>();
         preOrderRec(root, result);
-        return result;
+        List<Integer> out = new ArrayList<>();
+        for (int i = 0; i < result.size(); i++) {
+            out.add(result.get(i));
+        }
+        return out;
     }
 
     public List<Integer> postOrder() {
-        List<Integer> result = new ArrayList<>();
+        SimpleList<Integer> result = new SimpleList<>();
         postOrderRec(root, result);
-        return result;
+        List<Integer> out = new ArrayList<>();
+        for (int i = 0; i < result.size(); i++) {
+            out.add(result.get(i));
+        }
+        return out;
     }
 
     public String inOrderString() {
@@ -96,7 +109,7 @@ public class BinaryTreeOperations {
         return 1 + sizeRec(node.getLeft()) + sizeRec(node.getRight());
     }
 
-    private void inOrderRec(BinaryTreeNode<Integer> node, List<Integer> result) {
+    private void inOrderRec(BinaryTreeNode<Integer> node, SimpleList<Integer> result) {
         if (node == null) {
             return;
         }
@@ -105,7 +118,7 @@ public class BinaryTreeOperations {
         inOrderRec(node.getRight(), result);
     }
 
-    private void preOrderRec(BinaryTreeNode<Integer> node, List<Integer> result) {
+    private void preOrderRec(BinaryTreeNode<Integer> node, SimpleList<Integer> result) {
         if (node == null) {
             return;
         }
@@ -114,7 +127,7 @@ public class BinaryTreeOperations {
         preOrderRec(node.getRight(), result);
     }
 
-    private void postOrderRec(BinaryTreeNode<Integer> node, List<Integer> result) {
+    private void postOrderRec(BinaryTreeNode<Integer> node, SimpleList<Integer> result) {
         if (node == null) {
             return;
         }

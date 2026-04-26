@@ -33,6 +33,16 @@ public class SimpleList<T> {
     return elements[index];
   }
 
+  /**
+   * Replaces the element at the specified position.
+   */
+  public void set(int index, T element) {
+    if (index < 0 || index >= size) {
+      throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+    }
+    elements[index] = element;
+  }
+
   public void remove(int index) {
     if (index < 0 || index >= size) {
       throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
