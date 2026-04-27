@@ -1,55 +1,98 @@
 package com.ds.application.view.components.sidebar;
 
+import com.ds.application.core.trees.BinarySearchTree;
+import com.ds.application.core.trees.operations.BinaryTreeOperations;
 import com.ds.application.view.components.elements.ui.ButtonElement;
 import com.ds.application.view.components.elements.ui.LabelElement;
 import com.ds.application.view.components.visualizers.BinaryTreeVisualizer;
-import javafx.geometry.Insets;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 
 public class BinaryTreeControlPanel extends VBox {
 
-    private BinaryTreeVisualizer visualizer;
+    private final BinaryTreeVisualizer visualizer;
+
+    private BinarySearchTree tree;
+    private BinaryTreeOperations operations;
+
+    private final ButtonElement insertBtn;
+    private final ButtonElement searchBtn;
+    private final ButtonElement clearBtn;
+
+    private final ButtonElement preorderBtn;
+    private final ButtonElement inorderBtn;
+    private final ButtonElement postorderBtn;
 
     public BinaryTreeControlPanel(BinaryTreeVisualizer visualizer) {
         this.visualizer = visualizer;
+        this.tree = new BinarySearchTree();
+        this.operations = new BinaryTreeOperations(tree.getRoot());
 
-        setPadding(new Insets(18));
-        setSpacing(14);
-        setPrefWidth(250);
-        setStyle("-fx-background-color: #f8fafc; -fx-border-color: #dbe1ea;");
+        setSpacing(10);
+        setStyle("-fx-padding: 15; -fx-background-color: #f8fafc; -fx-border-color: #dbe1ea;");
 
         LabelElement title = new LabelElement("PANEL DE CONTROL");
-        title.getNode().setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2563eb;");
+        title.getNode().setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #2563eb;");
 
         LabelElement subtitle = new LabelElement("ARBOL BINARIO");
-        subtitle.getNode().setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;");
+        subtitle.getNode().setStyle("-fx-font-size: 10px; -fx-text-fill: #9ca3af;");
 
-        LabelElement operations = new LabelElement("OPERACIONES");
-        operations.getNode().setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;");
-
-        ButtonElement insertBtn = new ButtonElement("Insertar");
-        ButtonElement searchBtn = new ButtonElement("Buscar");
-        ButtonElement clearBtn = new ButtonElement("Limpiar");
+        LabelElement operationsTitle = new LabelElement("OPERACIONES");
+        operationsTitle.getNode().setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;");
 
         LabelElement traversals = new LabelElement("RECORRIDOS");
         traversals.getNode().setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;");
 
-        ButtonElement preorderBtn = new ButtonElement("Pre-orden");
-        ButtonElement inorderBtn = new ButtonElement("In-orden");
-        ButtonElement postorderBtn = new ButtonElement("Pos-orden");
+        insertBtn = new ButtonElement("Insertar");
+        searchBtn = new ButtonElement("Buscar");
+        clearBtn = new ButtonElement("Limpiar");
 
-        insertBtn.getNode().setOnAction(e -> pending("Insertar nodo"));
-        searchBtn.getNode().setOnAction(e -> pending("Buscar nodo"));
-        clearBtn.getNode().setOnAction(e -> visualizer.clear());
+        preorderBtn = new ButtonElement("Pre-orden");
+        inorderBtn = new ButtonElement("In-orden");
+        postorderBtn = new ButtonElement("Pos-orden");
 
-        preorderBtn.getNode().setOnAction(e -> pending("Pre-orden"));
-        inorderBtn.getNode().setOnAction(e -> pending("In-orden"));
-        postorderBtn.getNode().setOnAction(e -> pending("Pos-orden"));
+        insertBtn.setActive(true);
+
+        insertBtn.getNode().setOnAction(e -> {
+            resetButtons();
+            insertBtn.setActive(true);
+            insertValue();
+        });
+
+        searchBtn.getNode().setOnAction(e -> {
+            resetButtons();
+            searchBtn.setActive(true);
+            searchValue();
+        });
+
+        clearBtn.getNode().setOnAction(e -> {
+            resetButtons();
+            clearBtn.setActive(true);
+            clearTree();
+        });
+
+        preorderBtn.getNode().setOnAction(e -> {
+            resetButtons();
+            preorderBtn.setActive(true);
+            showTraversal("Pre-orden", operations.preOrderString());
+        });
+
+        inorderBtn.getNode().setOnAction(e -> {
+            resetButtons();
+            inorderBtn.setActive(true);
+            showTraversal("In-orden", operations.inOrderString());
+        });
+
+        postorderBtn.getNode().setOnAction(e -> {
+            resetButtons();
+            postorderBtn.setActive(true);
+            showTraversal("Pos-orden", operations.postOrderString());
+        });
 
         getChildren().addAll(
                 title.getNode(),
                 subtitle.getNode(),
-                operations.getNode(),
+                operationsTitle.getNode(),
                 insertBtn.getNode(),
                 searchBtn.getNode(),
                 clearBtn.getNode(),
@@ -60,8 +103,76 @@ public class BinaryTreeControlPanel extends VBox {
         );
     }
 
-    private void pending(String action) {
-        visualizer.showWaitingMessage();
-        System.out.println(action + " conectado a core despues");
+    private void insertValue() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Insertar nodo");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Ingrese valor:");
+
+        dialog.showAndWait().ifPresent(valueText -> {
+            try {
+                int value = Integer.parseInt(valueText.trim());
+
+                tree.insert(value);
+                operations.setRoot(tree.getRoot());
+
+                visualizer.drawTree(tree.getRoot());
+                System.out.println("Insertado: " + value);
+
+            } catch (NumberFormatException ex) {
+                System.out.println("Ingrese un numero valido.");
+            }
+        });
+    }
+
+    private void searchValue() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Buscar nodo");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Ingrese valor:");
+
+        dialog.showAndWait().ifPresent(valueText -> {
+            try {
+                int value = Integer.parseInt(valueText.trim());
+
+                operations.setRoot(tree.getRoot());
+
+                if (operations.contains(value)) {
+                    System.out.println("Encontrado: " + value);
+                } else {
+                    System.out.println("No encontrado: " + value);
+                }
+
+            } catch (NumberFormatException ex) {
+                System.out.println("Ingrese un numero valido.");
+            }
+        });
+    }
+
+    private void clearTree() {
+        tree = new BinarySearchTree();
+        operations.setRoot(tree.getRoot());
+
+        visualizer.clear();
+        System.out.println("Arbol limpiado.");
+    }
+
+    private void showTraversal(String name, String result) {
+        operations.setRoot(tree.getRoot());
+
+        if (result == null || result.isEmpty()) {
+            System.out.println(name + ": arbol vacio");
+        } else {
+            System.out.println(name + ": " + result);
+        }
+    }
+
+    private void resetButtons() {
+        insertBtn.setActive(false);
+        searchBtn.setActive(false);
+        clearBtn.setActive(false);
+        preorderBtn.setActive(false);
+        inorderBtn.setActive(false);
+        postorderBtn.setActive(false);
     }
 }

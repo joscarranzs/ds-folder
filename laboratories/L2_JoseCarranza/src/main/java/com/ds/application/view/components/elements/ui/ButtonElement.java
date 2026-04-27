@@ -25,21 +25,26 @@ public class ButtonElement {
     */
     public void setActive(boolean active){
     if(active){
-        /*
-        boton activo estara de azul */
         button.setStyle(
             "-fx-background-color: #2563eb;" +
             "-fx-text-fill: white;" +
+            "-fx-font-size: 13px;" +
             "-fx-font-weight: bold;" +
-            "-fx-background-radius: 8;" +
-            "-fx-cursor: hand;"
+            "-fx-background-radius: 10;" +
+            "-fx-padding: 8 14;" +
+            "-fx-cursor: hand;" +
+            "-fx-effect: dropshadow(gaussian, rgba(37,99,235,0.3), 8, 0.3, 0, 2);"
         );
     } else {
-        /*
-        boton inactivo tendra fondo blanco y borde gris */
         button.setStyle(
-            "-fx-background-color: #ffffff;" +
-            "-fx-border-color: #dbe1ea;"
+            "-fx-background-color: #f8fafc;" +
+            "-fx-text-fill: #1e293b;" +
+            "-fx-font-size: 13px;" +
+            "-fx-background-radius: 10;" +
+            "-fx-border-color: #e2e8f0;" +
+            "-fx-border-radius: 10;" +
+            "-fx-padding: 8 14;" +
+            "-fx-cursor: hand;"
         );
     }
 }

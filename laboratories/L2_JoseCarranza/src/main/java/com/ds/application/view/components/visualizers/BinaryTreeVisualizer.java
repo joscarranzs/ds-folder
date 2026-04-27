@@ -1,5 +1,6 @@
 package com.ds.application.view.components.visualizers;
 
+import com.ds.application.core.structures.BinaryTreeNode;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -22,21 +23,21 @@ public class BinaryTreeVisualizer extends Pane {
         getChildren().add(emptyText);
     }
 
-    public void showWaitingMessage() {
+    public void drawTree(BinaryTreeNode<Integer> root) {
         getChildren().clear();
-        emptyText.setText("Apuren el core >:v");
-        getChildren().add(emptyText);
+
+        if (root == null) {
+            clear();
+            return;
+        }
+
+        drawNodeRec(root, 325, 70, 160);
     }
 
-    public void drawSampleTree() {
+    public void showWaitingMessage() {
         getChildren().clear();
-
-        drawLine(325, 80, 220, 180);
-        drawLine(325, 80, 430, 180);
-
-        drawNode(325, 80, "Raiz", true);
-        drawNode(220, 180, "Izq", false);
-        drawNode(430, 180, "Der", false);
+        emptyText.setText("Esperando datos del core...");
+        getChildren().add(emptyText);
     }
 
     public void clear() {
@@ -45,21 +46,38 @@ public class BinaryTreeVisualizer extends Pane {
         getChildren().add(emptyText);
     }
 
-    private void drawNode(double x, double y, String value, boolean selected) {
-        Circle circle = new Circle(x, y, 25);
-
-        if (selected) {
-            circle.setFill(Color.web("#dbeafe"));
-            circle.setStroke(Color.web("#2563eb"));
-        } else {
-            circle.setFill(Color.web("#ffffff"));
-            circle.setStroke(Color.web("#94a3b8"));
+    private void drawNodeRec(BinaryTreeNode<Integer> node, double x, double y, double gap) {
+        if (node == null) {
+            return;
         }
 
+        if (node.getLeft() != null) {
+            double childX = x - gap;
+            double childY = y + 90;
+
+            drawLine(x, y, childX, childY);
+            drawNodeRec(node.getLeft(), childX, childY, gap / 2);
+        }
+
+        if (node.getRight() != null) {
+            double childX = x + gap;
+            double childY = y + 90;
+
+            drawLine(x, y, childX, childY);
+            drawNodeRec(node.getRight(), childX, childY, gap / 2);
+        }
+
+        drawNode(x, y, String.valueOf(node.getValue()));
+    }
+
+    private void drawNode(double x, double y, String value) {
+        Circle circle = new Circle(x, y, 25);
+        circle.setFill(Color.web("#dbeafe"));
+        circle.setStroke(Color.web("#2563eb"));
         circle.setStrokeWidth(2);
 
         Text text = new Text(value);
-        text.setX(x - 13);
+        text.setX(x - 7);
         text.setY(y + 5);
 
         getChildren().addAll(circle, text);
