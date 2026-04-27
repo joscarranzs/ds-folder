@@ -18,8 +18,8 @@ public class Interface {
         root = new BorderPane();
 
         Views header = new Views(
-                this::showBinaryTreeView,
-                this::showHuffmanView
+            this::showBinaryTreeView,
+            this::showHuffmanView
         );
 
         root.setTop(header);
@@ -31,7 +31,6 @@ public class Interface {
     private void showBinaryTreeView() {
         NodeInspector inspector = new NodeInspector();
         BinaryTreeVisualizer visualizer = new BinaryTreeVisualizer();
-
         StackPane inspectorWrap = new StackPane(inspector);
         inspectorWrap.setPadding(new Insets(28, 28, 28, 0));
         inspectorWrap.setStyle("-fx-background-color: #f8fafc;");

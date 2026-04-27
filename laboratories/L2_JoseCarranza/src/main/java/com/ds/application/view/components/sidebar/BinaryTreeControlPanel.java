@@ -8,6 +8,7 @@ import com.ds.application.view.components.elements.ui.LabelElement;
 import com.ds.application.view.components.inspector.NodeInspector;
 import com.ds.application.view.components.visualizers.BinaryTreeVisualizer;
 import javafx.scene.control.TextInputDialog;
+import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 
 public class BinaryTreeControlPanel extends VBox {

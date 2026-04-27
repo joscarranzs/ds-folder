@@ -39,6 +39,23 @@ public class BinaryTreeVisualizer extends Pane {
         highlightedValue = value;
     }
 
+    public void showWaitingMessage() {
+        getChildren().clear();
+        emptyText.setText("Apuren el core >:v");
+        getChildren().add(emptyText);
+    }
+
+    public void drawSampleTree() {
+        getChildren().clear();
+
+        drawLine(325, 80, 220, 180);
+        drawLine(325, 80, 430, 180);
+
+        drawNode(325, 80, "Raiz", true);
+        drawNode(220, 180, "Izq", false);
+        drawNode(430, 180, "Der", false);
+    }
+
     public void clear() {
         getChildren().clear();
         highlightedValue = null;

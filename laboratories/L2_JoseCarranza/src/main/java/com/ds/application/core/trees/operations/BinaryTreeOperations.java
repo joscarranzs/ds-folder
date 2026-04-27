@@ -1,7 +1,6 @@
 package com.ds.application.core.trees.operations;
 
 import com.ds.application.core.structures.BinaryTreeNode;
-
 import com.ds.application.core.structures.aux.SimpleList;
 
 /**

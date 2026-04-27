@@ -20,7 +20,6 @@
       durante el desarrollo.)
       Para distribución estable, considerar `jlink`/`jpackage`.
   -->
-
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
@@ -31,7 +30,6 @@
        - JavaFX (controls, fxml) para la UI.
        - JUnit para pruebas (alcance test).
   -->
-
   <dependencies>
     <dependency>
       <groupId>org.openjfx</groupId>
@@ -63,7 +61,6 @@
         nativas de JavaFX; pueden reintroducirse con cuidado si es
         estrictamente necesario.)
   -->
-
   <build>
     <plugins>
       <plugin>
@@ -76,7 +73,7 @@
         </configuration>
       </plugin>
 
-
+ 
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
@@ -90,4 +87,5 @@
            the project will be run with `mvn javafx:run` during development. -->
     </plugins>
   </build>
+
 </project>

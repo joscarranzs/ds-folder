@@ -128,3 +128,36 @@ public class NodeInspector extends VBox {
         statusLabel.setText("-");
     }
 }
+    }
+
+    public void updateTraversal(String type, String result) {
+        traversalLabel.setText(type + ": " + result);
+    }
+
+<<<<<<< HEAD
+    public void updateStatus(String message) {
+        statusLabel.setText(message);
+    }
+
+    public void setOnDelete(Consumer<Integer> onDelete) {
+        this.onDelete = onDelete;
+    }
+
+    public void clearInfo() {
+        selectedValue = null;
+
+        valueLabel.setText("Valor: -");
+        levelLabel.setText("Nivel: -");
+        heightLabel.setText("Altura: -");
+        sizeLabel.setText("Nodos: -");
+        traversalLabel.setText("-");
+        statusLabel.setText("-");
+=======
+    public void clearInfo() {
+        valueLabel.setText("Valor: -");
+        positionLabel.setText("Posicion: -");
+        levelLabel.setText("Nivel: -");
+        traversalLabel.setText("-");
+>>>>>>> origin/main
+    }
+}
