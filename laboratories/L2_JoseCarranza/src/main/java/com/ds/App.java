@@ -1,4 +1,4 @@
-package com.ds;
+package com.ds.application;
 
 import com.ds.application.view.Interface;
 import javafx.application.Application;
@@ -9,16 +9,19 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        Interface screen = new Interface();
+        Interface ui = new Interface();
 
-        Scene scene = new Scene(screen.getRoot(), 1200, 720);
+        Scene scene = new Scene(ui.getRoot(), 1280, 800);
 
-        stage.setTitle("Visualizador de Arboles");
+        stage.setTitle("Visualizador de Árboles");
         stage.setScene(scene);
+        stage.setMinWidth(1100);
+        stage.setMinHeight(700);
+        stage.centerOnScreen();
         stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }

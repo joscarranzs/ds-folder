@@ -1,7 +1,21 @@
-// Elemento de forma usado para visualización de gráficos, como círculos de nodos, aristas y etiquetas.
-
 package com.ds.application.view.components.elements.shapes;
 
-public class NodeElement {
-    // TODO: implement graph node element for JavaFX
+public class NodeElement extends ShapeElement {
+
+    public NodeElement(
+            double x,
+            double y,
+            String text,
+            String fillColor,
+            String strokeColor,
+            String textColor
+    ) {
+        CircleElement circle = new CircleElement(24, fillColor, strokeColor);
+        NodeLabelElement label = new NodeLabelElement(text, textColor);
+
+        getChildren().addAll(circle, label);
+
+        setLayoutX(x);
+        setLayoutY(y);
+    }
 }

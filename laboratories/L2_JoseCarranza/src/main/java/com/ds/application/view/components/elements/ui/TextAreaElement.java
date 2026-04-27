@@ -1,28 +1,44 @@
-// Elemento de UI usado para construir componentes como header, sidebar y controles de formulario.
 package com.ds.application.view.components.elements.ui;
 
 import javafx.scene.control.TextArea;
 
 public class TextAreaElement {
-    // TODO: implement text area element for JavaFX
+
     private TextArea textArea;
-    
-    public TextAreaElement(String placeholder){
+
+    public TextAreaElement(String placeholder) {
         textArea = new TextArea();
         textArea.setPromptText(placeholder);
-        applyStyles();
+        textArea.setWrapText(true);
+        setActive(false);
     }
 
-    private void applyStyles(){
-        //clase CSS
-        textArea.getStyleClass();
+    public void setActive(boolean active) {
+        if (active) {
+            textArea.setStyle(
+                    "-fx-background-color: #ffffff;" +
+                    "-fx-border-color: #2563eb;" +
+                    "-fx-border-width: 2;" +
+                    "-fx-border-radius: 8;" +
+                    "-fx-background-radius: 8;" +
+                    "-fx-padding: 8 10;"
+            );
+        } else {
+            textArea.setStyle(
+                    "-fx-background-color: #ffffff;" +
+                    "-fx-border-color: #dbe1ea;" +
+                    "-fx-border-radius: 8;" +
+                    "-fx-background-radius: 8;" +
+                    "-fx-padding: 8 10;"
+            );
+        }
     }
 
-    public String getValue(){
+    public String getValue() {
         return textArea.getText();
     }
-    public TextArea getNode(){
+
+    public TextArea getNode() {
         return textArea;
     }
-
 }
