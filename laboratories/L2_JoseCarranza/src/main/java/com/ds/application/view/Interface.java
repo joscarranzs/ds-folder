@@ -6,7 +6,9 @@ import com.ds.application.view.components.sidebar.BinaryTreeControlPanel;
 import com.ds.application.view.components.sidebar.HuffmanAlgorithmControlPanel;
 import com.ds.application.view.components.visualizers.BinaryTreeVisualizer;
 import com.ds.application.view.components.visualizers.HuffmanAlgorithmVisualizer;
+import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 public class Interface {
 
@@ -16,8 +18,8 @@ public class Interface {
         root = new BorderPane();
 
         Views header = new Views(
-            this::showBinaryTreeView,
-            this::showHuffmanView
+                this::showBinaryTreeView,
+                this::showHuffmanView
         );
 
         root.setTop(header);
@@ -30,9 +32,13 @@ public class Interface {
         NodeInspector inspector = new NodeInspector();
         BinaryTreeVisualizer visualizer = new BinaryTreeVisualizer();
 
-        root.setLeft(new BinaryTreeControlPanel(visualizer));
+        StackPane inspectorWrap = new StackPane(inspector);
+        inspectorWrap.setPadding(new Insets(28, 28, 28, 0));
+        inspectorWrap.setStyle("-fx-background-color: #f8fafc;");
+
+        root.setLeft(new BinaryTreeControlPanel(visualizer, inspector));
         root.setCenter(visualizer);
-        root.setRight(inspector);
+        root.setRight(inspectorWrap);
     }
 
     private void showHuffmanView() {
