@@ -1,0 +1,91 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.ds</groupId>
+  <artifactId>L2_JoseCarranza</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <!--
+    POM del módulo L2_JoseCarranza
+    - Objetivo: compilar y ejecutar la aplicación JavaFX (Java 17).
+    - Uso recomendado durante desarrollo: `mvn -DskipTests javafx:run`.
+    - Nota: JavaFX requiere librerías nativas. Para ejecutar con `java -jar`
+      puede ser necesario proporcionar el module-path del SDK de JavaFX.
+      (En la JVM esa opción se expresa como dos guiones seguidos de
+      "module-path"; por eso se utiliza el plugin javafx-maven-plugin
+      durante el desarrollo.)
+      Para distribución estable, considerar `jlink`/`jpackage`.
+  -->
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <javafx.version>21.0.2</javafx.version>
+  </properties>
+
+  <!-- Dependencias principales del proyecto:
+       - JavaFX (controls, fxml) para la UI.
+       - JUnit para pruebas (alcance test).
+  -->
+  <dependencies>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.13.2</version>
+        <scope>test</scope>
+      </dependency>
+  </dependencies>
+
+  <!-- Configuración de build y plugins:
+       - maven-compiler-plugin: establece source/target a Java 17.
+       - javafx-maven-plugin: facilita la ejecución de la aplicación
+         JavaFX durante el desarrollo y maneja correctamente el
+         classpath/module-path para JavaFX.
+       (Se ha eliminado maven-shade/maven-jar para evitar intentos
+        de crear fat-jars que no incluyen correctamente las librerías
+        nativas de JavaFX; pueden reintroducirse con cuidado si es
+        estrictamente necesario.)
+  -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
+
+ 
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>com.ds.App</mainClass>
+        </configuration>
+      </plugin>
+
+      <!-- Only keep compiler and javafx plugins; jar/shade were removed because
+           the project will be run with `mvn javafx:run` during development. -->
+    </plugins>
+  </build>
+
+</project>
