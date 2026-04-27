@@ -35,7 +35,7 @@ public class Interface {
         inspectorWrap.setPadding(new Insets(28, 28, 28, 0));
         inspectorWrap.setStyle("-fx-background-color: #f8fafc;");
 
-        root.setLeft(new BinaryTreeControlPanel(visualizer, inspector));
+        root.setLeft(new BinaryTreeControlPanel(visualizer));
         root.setCenter(visualizer);
         root.setRight(inspectorWrap);
     }
