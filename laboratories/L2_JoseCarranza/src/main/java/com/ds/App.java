@@ -1,24 +1,25 @@
 package com.ds.application;
 
-import com.ds.application.view.Interface;
+import com.ds.application.view.window.Primary;
 import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/**
+ * Minimal example that uses Primary to show a simple layout and a text label.
+ */
 public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        Interface ui = new Interface();
+        // create a simple layout and content
+        StackPane root = new StackPane();
+        root.getChildren().add(new Label("Hello from Primary window manager"));
 
-        Scene scene = new Scene(ui.getRoot(), 1280, 800);
-
-        stage.setTitle("Visualizador de Árboles");
-        stage.setScene(scene);
-        stage.setMinWidth(1100);
-        stage.setMinHeight(700);
-        stage.centerOnScreen();
-        stage.show();
+        // Use Primary to manage Stage/Scene
+        Primary primary = new Primary(stage, root, 1280, 800);
+        primary.show();
     }
 
     public static void main(String[] args) {
