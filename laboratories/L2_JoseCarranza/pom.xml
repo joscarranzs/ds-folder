@@ -57,7 +57,7 @@
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.8</version>
         <configuration>
-          <mainClass>com.ds.application.App</mainClass>
+          <mainClass>com.ds.App</mainClass>
         </configuration>
       </plugin>
     </plugins>
