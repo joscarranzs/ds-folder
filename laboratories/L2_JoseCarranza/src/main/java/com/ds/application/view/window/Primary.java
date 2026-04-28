@@ -15,6 +15,7 @@ public class Primary {
 
     private final Stage stage;
     private final Scene scene;
+    private final String DEFAULT_TITLE = "Visualizador de Árboles";
 
     /**
      * Create a Primary window manager.
@@ -26,6 +27,7 @@ public class Primary {
      */
     public Primary(Stage stage, Parent initialRoot, double width, double height) {
         this.stage = stage;
+        this.stage.setTitle(DEFAULT_TITLE);
         this.scene = new Scene(initialRoot, width, height);
 
         stage.setScene(scene);
@@ -56,6 +58,16 @@ public class Primary {
     public void setRoot(Parent newRoot) {
         Platform.runLater(() -> scene.setRoot(newRoot));
     }
+
+    /**
+     * Update the window title. Safe to call from any thread.
+     *
+     * @param title new window title
+     */
+    public void setTitle(String title) {
+        Platform.runLater(() -> stage.setTitle(title));
+    }
+
     // Stage and Scene are intentionally encapsulated. External modules should
     // not access them directly; use setRoot(...) and show() instead.
 }
