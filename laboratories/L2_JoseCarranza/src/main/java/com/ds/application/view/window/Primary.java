@@ -32,7 +32,7 @@ public class Primary {
         this.scene = new Scene(initialRoot, width, height);
 
         stage.setScene(scene);
-        // sensible defaults — App may override title or sizing
+        // Configuración de tamaño mínimo y centrado en pantalla
         stage.setMinWidth(1100);
         stage.setMinHeight(700);
         stage.centerOnScreen();
@@ -69,6 +69,6 @@ public class Primary {
         Platform.runLater(() -> stage.setTitle(title));
     }
 
-    // Stage and Scene are intentionally encapsulated. External modules should
-    // not access them directly; use setRoot(...) and show() instead.
+    // Stage y Scene son privados para evitar acceso directo desde otras clases, garantizando que
+    // todas las modificaciones se realicen a través de métodos controlados.
 }
