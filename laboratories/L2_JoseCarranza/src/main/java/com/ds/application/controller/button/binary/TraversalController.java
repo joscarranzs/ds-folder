@@ -1,6 +1,5 @@
 package com.ds.application.controller.button.binary;
 
-import com.ds.application.view.components.inspector.NodeInspector;
 
 public class TraversalController {
 

@@ -1,12 +1,5 @@
 package com.ds.application.view.components.sidebar;
 
-import com.ds.application.controller.button.huffman.EncodingController;
-import com.ds.application.view.components.elements.ui.ButtonElement;
-import com.ds.application.view.components.elements.ui.LabelElement;
-import com.ds.application.view.components.elements.ui.TextAreaElement;
-import com.ds.application.view.components.visualizers.HuffmanAlgorithmVisualizer;
-import javafx.geometry.Insets;
-import javafx.scene.layout.VBox;
 
 public class HuffmanAlgorithmControlPanel extends VBox {
 

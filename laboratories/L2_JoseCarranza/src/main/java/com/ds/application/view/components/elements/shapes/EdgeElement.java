@@ -1,7 +1,5 @@
 package com.ds.application.view.components.elements.shapes;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 
 public class EdgeElement extends Line {
 

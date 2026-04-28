@@ -1,12 +1,6 @@
 package com.ds.application.core.trees.operations;
 
-import com.ds.application.core.structures.HuffmanNode;
-import com.ds.application.core.trees.HuffmanBinaryTree;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 // Operaciones para construir y usar un árbol Huffman.
 public class HuffmanAlgorithmOperations {

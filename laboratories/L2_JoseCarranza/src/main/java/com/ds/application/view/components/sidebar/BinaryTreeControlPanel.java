@@ -1,19 +1,5 @@
 package com.ds.application.view.components.sidebar;
 
-import com.ds.application.controller.button.binary.DeletionController;
-import com.ds.application.controller.button.binary.NodeInspectorController;
-import com.ds.application.controller.button.binary.TraversalController;
-import com.ds.application.view.components.elements.ui.ButtonElement;
-import com.ds.application.view.components.elements.ui.LabelElement;
-import com.ds.application.view.components.inspector.NodeInspector;
-import com.ds.application.view.components.visualizers.BinaryTreeVisualizer;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 
 public class BinaryTreeControlPanel extends VBox {
 

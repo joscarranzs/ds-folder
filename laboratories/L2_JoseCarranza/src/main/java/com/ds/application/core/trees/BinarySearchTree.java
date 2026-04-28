@@ -1,6 +1,5 @@
 package com.ds.application.core.trees;
 
-import com.ds.application.core.structures.BinaryTreeNode;
 
 public class BinarySearchTree {
     private BinaryTreeNode<Integer> root;

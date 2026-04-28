@@ -1,9 +1,6 @@
 package com.ds.application.core.trees.operations;
 
-import com.ds.application.core.structures.BinaryTreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
 
 // Operaciones específicas del árbol binario de búsqueda.
 public class BinaryTreeOperations {

@@ -1,19 +1,6 @@
 package com.ds.application.view.components.visualizers;
 
-import com.ds.application.core.structures.HuffmanNode;
-import com.ds.application.view.components.elements.shapes.EdgeElement;
-import com.ds.application.view.components.elements.shapes.GraphPane;
-import com.ds.application.view.components.elements.shapes.NodeElement;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
-import java.util.Map;
-import java.util.TreeMap;
 
 public class HuffmanAlgorithmVisualizer extends BorderPane {
 

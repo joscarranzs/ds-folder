@@ -1,6 +1,5 @@
 package com.ds.application.view.components.elements.ui;
 
-import javafx.scene.control.Label;
 
 public class LabelElement {
 
