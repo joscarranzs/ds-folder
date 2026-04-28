@@ -1,6 +1,5 @@
 package com.ds.application.controller.button.binary;
 
-import com.ds.application.core.trees.operations.BinaryTreeOperations;
 import com.ds.application.view.components.inspector.NodeInspector;
 
 public class TraversalController {
@@ -14,21 +13,19 @@ public class TraversalController {
     }
 
     public void preorder() {
-        showTraversal("Pre-orden", nodeController.getOperations().preOrderString());
+        showTraversal("Pre-orden", nodeController.preOrderString());
     }
 
     public void inorder() {
-        showTraversal("In-orden", nodeController.getOperations().inOrderString());
+        showTraversal("In-orden", nodeController.inOrderString());
     }
 
     public void postorder() {
-        showTraversal("Pos-orden", nodeController.getOperations().postOrderString());
+        showTraversal("Pos-orden", nodeController.postOrderString());
     }
 
     private void showTraversal(String name, String result) {
-        BinaryTreeOperations operations = nodeController.getOperations();
-
-        if (operations.size() == 0) {
+        if (nodeController.size() == 0) {
             inspector.updateStatus("Arbol vacio.");
             return;
         }

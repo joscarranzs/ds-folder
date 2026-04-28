@@ -79,14 +79,38 @@ public class BinaryTreeControlPanel extends VBox {
 
         insertBtn.getNode().setOnAction(e -> {
             selectButton(insertBtn);
-            nodeController.insert();
-            updateTreeData(nodeController);
+            javafx.scene.control.TextInputDialog dialog = new javafx.scene.control.TextInputDialog();
+            dialog.setTitle("Insertar nodo");
+            dialog.setHeaderText(null);
+            dialog.setContentText("Valor:");
+
+            dialog.showAndWait().ifPresent(text -> {
+                try {
+                    int value = Integer.parseInt(text.trim());
+                    nodeController.insert(value);
+                    updateTreeData(nodeController);
+                } catch (NumberFormatException ex) {
+                    inspector.updateStatus("Valor invalido.");
+                }
+            });
         });
 
         searchBtn.getNode().setOnAction(e -> {
             selectButton(searchBtn);
-            nodeController.search();
-            updateTreeData(nodeController);
+            javafx.scene.control.TextInputDialog dialog = new javafx.scene.control.TextInputDialog();
+            dialog.setTitle("Buscar nodo");
+            dialog.setHeaderText(null);
+            dialog.setContentText("Valor:");
+
+            dialog.showAndWait().ifPresent(text -> {
+                try {
+                    int value = Integer.parseInt(text.trim());
+                    nodeController.search(value);
+                    updateTreeData(nodeController);
+                } catch (NumberFormatException ex) {
+                    inspector.updateStatus("Valor invalido.");
+                }
+            });
         });
 
         clearBtn.getNode().setOnAction(e -> {
@@ -215,7 +239,7 @@ public class BinaryTreeControlPanel extends VBox {
     private void updateTreeData(NodeInspectorController nodeController) {
         parentNodesValue.setText(nodeController.getParentNodesText());
         leafNodesValue.setText(nodeController.getLeafNodesText());
-        depthValue.setText(nodeController.getDepthText());
+        depthValue.setText(String.valueOf(nodeController.height()));
     }
 
     private void selectButton(ButtonElement selected) {

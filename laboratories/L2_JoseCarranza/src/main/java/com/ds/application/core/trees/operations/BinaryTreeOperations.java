@@ -136,4 +136,74 @@ public class BinaryTreeOperations {
         }
         return builder.toString();
     }
+
+    // Domain helper: get level (depth) of value in the tree, root = 0. Returns -1 if not found.
+    public int getLevel(int value) {
+        return getLevelRec(root, value, 0);
+    }
+
+    private int getLevelRec(BinaryTreeNode<Integer> node, int value, int level) {
+        if (node == null) {
+            return -1;
+        }
+        if (node.getValue() == value) {
+            return level;
+        }
+        if (value < node.getValue()) {
+            return getLevelRec(node.getLeft(), value, level + 1);
+        }
+        return getLevelRec(node.getRight(), value, level + 1);
+    }
+
+    // Collect parent (internal) nodes
+    public List<Integer> collectParentNodes() {
+        List<Integer> parents = new ArrayList<>();
+        collectParentNodesRec(root, parents);
+        return parents;
+    }
+
+    private void collectParentNodesRec(BinaryTreeNode<Integer> node, List<Integer> result) {
+        if (node == null) {
+            return;
+        }
+        if (node.getLeft() != null || node.getRight() != null) {
+            result.add(node.getValue());
+        }
+        collectParentNodesRec(node.getLeft(), result);
+        collectParentNodesRec(node.getRight(), result);
+    }
+
+    // Collect leaf nodes
+    public List<Integer> collectLeafNodes() {
+        List<Integer> leaves = new ArrayList<>();
+        collectLeafNodesRec(root, leaves);
+        return leaves;
+    }
+
+    private void collectLeafNodesRec(BinaryTreeNode<Integer> node, List<Integer> result) {
+        if (node == null) {
+            return;
+        }
+        if (node.getLeft() == null && node.getRight() == null) {
+            result.add(node.getValue());
+            return;
+        }
+        collectLeafNodesRec(node.getLeft(), result);
+        collectLeafNodesRec(node.getRight(), result);
+    }
+
+    // Format list as comma separated string, or '-' when empty.
+    public String formatListAsText(List<Integer> values) {
+        if (values.isEmpty()) {
+            return "-";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int value : values) {
+            if (builder.length() > 0) {
+                builder.append(", ");
+            }
+            builder.append(value);
+        }
+        return builder.toString();
+    }
 }

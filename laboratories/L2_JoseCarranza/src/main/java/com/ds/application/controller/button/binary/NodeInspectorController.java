@@ -5,9 +5,7 @@ import com.ds.application.core.trees.BinarySearchTree;
 import com.ds.application.core.trees.operations.BinaryTreeOperations;
 import com.ds.application.view.components.inspector.NodeInspector;
 import com.ds.application.view.components.visualizers.BinaryTreeVisualizer;
-import javafx.scene.control.TextInputDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NodeInspectorController {
@@ -24,6 +22,7 @@ public class NodeInspectorController {
         this.tree = new BinarySearchTree();
         this.operations = new BinaryTreeOperations(tree.getRoot());
 
+        // Keep visualizer selection wiring. The controller remains the orchestrator between core and UI.
         this.visualizer.setOnNodeSelected(value -> {
             visualizer.highlightValue(value);
             updateInspector(value);
@@ -31,54 +30,28 @@ public class NodeInspectorController {
         });
     }
 
-    public void insert() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Insertar nodo");
-        dialog.setHeaderText(null);
-        dialog.setContentText("Valor:");
+    // Insert a value into the tree. The view is responsible for gathering input.
+    public void insert(int value) {
+        visualizer.clearHighlight();
+        tree.insert(value);
+        operations.setRoot(tree.getRoot());
 
-        dialog.showAndWait().ifPresent(text -> {
-            try {
-                int value = Integer.parseInt(text.trim());
-
-                visualizer.clearHighlight();
-                tree.insert(value);
-                operations.setRoot(tree.getRoot());
-
-                visualizer.drawTree(tree.getRoot());
-                updateInspector(value);
-                inspector.updateStatus("Insertado: " + value);
-
-            } catch (NumberFormatException e) {
-                inspector.updateStatus("Valor invalido.");
-            }
-        });
+        visualizer.drawTree(tree.getRoot());
+        updateInspector(value);
+        inspector.updateStatus("Insertado: " + value);
     }
 
-    public void search() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Buscar nodo");
-        dialog.setHeaderText(null);
-        dialog.setContentText("Valor:");
+    // Search by value and update the UI accordingly
+    public void search(int value) {
+        operations.setRoot(tree.getRoot());
 
-        dialog.showAndWait().ifPresent(text -> {
-            try {
-                int value = Integer.parseInt(text.trim());
-
-                operations.setRoot(tree.getRoot());
-
-                if (operations.contains(value)) {
-                    visualizer.highlightValue(value);
-                    updateInspector(value);
-                    inspector.updateStatus("Encontrado: " + value);
-                } else {
-                    inspector.updateStatus("No encontrado: " + value);
-                }
-
-            } catch (NumberFormatException e) {
-                inspector.updateStatus("Valor invalido.");
-            }
-        });
+        if (operations.contains(value)) {
+            visualizer.highlightValue(value);
+            updateInspector(value);
+            inspector.updateStatus("Encontrado: " + value);
+        } else {
+            inspector.updateStatus("No encontrado: " + value);
+        }
     }
 
     public void deleteSelected(int value) {
@@ -106,26 +79,45 @@ public class NodeInspectorController {
         inspector.clearInfo();
     }
 
-    public BinaryTreeOperations getOperations() {
+    // Provide domain-level traversal and info APIs instead of exposing operations directly.
+    public String preOrderString() {
         operations.setRoot(tree.getRoot());
-        return operations;
+        return operations.preOrderString();
+    }
+
+    public String inOrderString() {
+        operations.setRoot(tree.getRoot());
+        return operations.inOrderString();
+    }
+
+    public String postOrderString() {
+        operations.setRoot(tree.getRoot());
+        return operations.postOrderString();
+    }
+
+    public int size() {
+        operations.setRoot(tree.getRoot());
+        return operations.size();
+    }
+
+    public int height() {
+        operations.setRoot(tree.getRoot());
+        return operations.height();
+    }
+
+    public int getLevel(int value) {
+        operations.setRoot(tree.getRoot());
+        return operations.getLevel(value);
     }
 
     public String getParentNodesText() {
-        List<Integer> parents = new ArrayList<>();
-        collectParentNodes(tree.getRoot(), parents);
-        return formatList(parents);
+        operations.setRoot(tree.getRoot());
+        return operations.formatListAsText(operations.collectParentNodes());
     }
 
     public String getLeafNodesText() {
-        List<Integer> leaves = new ArrayList<>();
-        collectLeafNodes(tree.getRoot(), leaves);
-        return formatList(leaves);
-    }
-
-    public String getDepthText() {
         operations.setRoot(tree.getRoot());
-        return String.valueOf(operations.height());
+        return operations.formatListAsText(operations.collectLeafNodes());
     }
 
     private void updateInspector(int value) {
@@ -133,69 +125,9 @@ public class NodeInspectorController {
 
         inspector.updateNodeInfo(
                 value,
-                getLevel(tree.getRoot(), value, 0),
+                getLevel(value),
                 operations.height(),
                 operations.size()
         );
-    }
-
-    private int getLevel(BinaryTreeNode<Integer> node, int value, int level) {
-        if (node == null) {
-            return -1;
-        }
-
-        if (node.getValue() == value) {
-            return level;
-        }
-
-        if (value < node.getValue()) {
-            return getLevel(node.getLeft(), value, level + 1);
-        }
-
-        return getLevel(node.getRight(), value, level + 1);
-    }
-
-    private void collectParentNodes(BinaryTreeNode<Integer> node, List<Integer> result) {
-        if (node == null) {
-            return;
-        }
-
-        if (node.getLeft() != null || node.getRight() != null) {
-            result.add(node.getValue());
-        }
-
-        collectParentNodes(node.getLeft(), result);
-        collectParentNodes(node.getRight(), result);
-    }
-
-    private void collectLeafNodes(BinaryTreeNode<Integer> node, List<Integer> result) {
-        if (node == null) {
-            return;
-        }
-
-        if (node.getLeft() == null && node.getRight() == null) {
-            result.add(node.getValue());
-            return;
-        }
-
-        collectLeafNodes(node.getLeft(), result);
-        collectLeafNodes(node.getRight(), result);
-    }
-
-    private String formatList(List<Integer> values) {
-        if (values.isEmpty()) {
-            return "-";
-        }
-
-        StringBuilder builder = new StringBuilder();
-
-        for (int value : values) {
-            if (builder.length() > 0) {
-                builder.append(", ");
-            }
-            builder.append(value);
-        }
-
-        return builder.toString();
     }
 }
