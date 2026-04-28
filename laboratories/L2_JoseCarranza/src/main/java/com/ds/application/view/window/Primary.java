@@ -56,16 +56,6 @@ public class Primary {
     public void setRoot(Parent newRoot) {
         Platform.runLater(() -> scene.setRoot(newRoot));
     }
-
-    public Parent getRoot() {
-        return scene.getRoot();
-    }
-
-    public Scene getScene() {
-        return scene;
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
+    // Stage and Scene are intentionally encapsulated. External modules should
+    // not access them directly; use setRoot(...) and show() instead.
 }
