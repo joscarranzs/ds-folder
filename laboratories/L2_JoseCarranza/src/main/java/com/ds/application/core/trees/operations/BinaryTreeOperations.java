@@ -1,137 +1,68 @@
 package com.ds.application.core.trees.operations;
 
 import com.ds.application.core.structures.BinaryTreeNode;
-import com.ds.application.core.structures.aux.SimpleList;
 
-/**
- * Operaciones utilitarias para árboles binarios de búsqueda.
- * Proporciona búsquedas, recorridos (in-order, pre-order, post-order),
- * y utilidades para tamaño y altura del árbol.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+// Operaciones específicas del árbol binario de búsqueda.
 public class BinaryTreeOperations {
     private BinaryTreeNode<Integer> root;
 
-    /**
-     * Crea un objeto de operaciones para el árbol cuyo nodo raíz se pasa.
-     *
-     * @param root nodo raíz del árbol (puede ser null)
-     */
     public BinaryTreeOperations(BinaryTreeNode<Integer> root) {
         this.root = root;
     }
 
-    /**
-     * Devuelve la raíz actual del árbol.
-     *
-     * @return nodo raíz, o null si el árbol está vacío
-     */
     public BinaryTreeNode<Integer> getRoot() {
         return root;
     }
 
-    /**
-     * Establece una nueva raíz para el árbol.
-     *
-     * @param root nuevo nodo raíz
-     */
     public void setRoot(BinaryTreeNode<Integer> root) {
         this.root = root;
     }
 
-    /**
-     * Busca un valor en el árbol.
-     *
-     * @param value valor a buscar
-     * @return el nodo que contiene el valor o null si no se encuentra
-     */
     public BinaryTreeNode<Integer> search(int value) {
         return searchRec(root, value);
     }
 
-    /**
-     * Indica si el árbol contiene el valor dado.
-     *
-     * @param value valor a comprobar
-     * @return true si existe en el árbol, false en caso contrario
-     */
     public boolean contains(int value) {
         return search(value) != null;
     }
 
-    /**
-     * Calcula la altura del árbol.
-     *
-     * @return altura del árbol (número de niveles), 0 si está vacío
-     */
     public int height() {
         return heightRec(root);
     }
 
-    /**
-     * Devuelve el número de nodos del árbol.
-     *
-     * @return tamaño del árbol
-     */
     public int size() {
         return sizeRec(root);
     }
 
-    /**
-     * Realiza un recorrido in-order y devuelve los valores encontrados en orden.
-     *
-     * @return lista con los valores en recorrido in-order
-     */
-    public SimpleList<Integer> inOrder() {
-        SimpleList<Integer> result = new SimpleList<>();
+    public List<Integer> inOrder() {
+        List<Integer> result = new ArrayList<>();
         inOrderRec(root, result);
         return result;
     }
 
-    /**
-     * Realiza un recorrido pre-order y devuelve los valores encontrados.
-     *
-     * @return lista con los valores en recorrido pre-order
-     */
-    public SimpleList<Integer> preOrder() {
-        SimpleList<Integer> result = new SimpleList<>();
+    public List<Integer> preOrder() {
+        List<Integer> result = new ArrayList<>();
         preOrderRec(root, result);
         return result;
     }
 
-    /**
-     * Realiza un recorrido post-order y devuelve los valores encontrados.
-     *
-     * @return lista con los valores en recorrido post-order
-     */
-    public SimpleList<Integer> postOrder() {
-        SimpleList<Integer> result = new SimpleList<>();
+    public List<Integer> postOrder() {
+        List<Integer> result = new ArrayList<>();
         postOrderRec(root, result);
         return result;
     }
 
-    /**
-     * Devuelve una representación en cadena del recorrido in-order.
-     *
-     * @return cadena con valores separados por espacios
-     */
     public String inOrderString() {
         return joinValues(inOrder());
     }
 
-    /**
-     * Devuelve una representación en cadena del recorrido pre-order.
-     *
-     * @return cadena con valores separados por espacios
-     */
     public String preOrderString() {
         return joinValues(preOrder());
     }
 
-    /**
-     * Devuelve una representación en cadena del recorrido post-order.
-     *
-     * @return cadena con valores separados por espacios
-     */
     public String postOrderString() {
         return joinValues(postOrder());
     }
@@ -165,7 +96,7 @@ public class BinaryTreeOperations {
         return 1 + sizeRec(node.getLeft()) + sizeRec(node.getRight());
     }
 
-    private void inOrderRec(BinaryTreeNode<Integer> node, SimpleList<Integer> result) {
+    private void inOrderRec(BinaryTreeNode<Integer> node, List<Integer> result) {
         if (node == null) {
             return;
         }
@@ -174,7 +105,7 @@ public class BinaryTreeOperations {
         inOrderRec(node.getRight(), result);
     }
 
-    private void preOrderRec(BinaryTreeNode<Integer> node, SimpleList<Integer> result) {
+    private void preOrderRec(BinaryTreeNode<Integer> node, List<Integer> result) {
         if (node == null) {
             return;
         }
@@ -183,7 +114,7 @@ public class BinaryTreeOperations {
         preOrderRec(node.getRight(), result);
     }
 
-    private void postOrderRec(BinaryTreeNode<Integer> node, SimpleList<Integer> result) {
+    private void postOrderRec(BinaryTreeNode<Integer> node, List<Integer> result) {
         if (node == null) {
             return;
         }
@@ -192,15 +123,84 @@ public class BinaryTreeOperations {
         result.add(node.getValue());
     }
 
-    private String joinValues(SimpleList<Integer> values) {
-        if (values.size() == 0) {
+    private String joinValues(List<Integer> values) {
+        if (values.isEmpty()) {
             return "";
         }
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < values.size(); i++) {
-            int value = values.get(i);
+        for (int value : values) {
             if (builder.length() > 0) {
                 builder.append(' ');
+            }
+            builder.append(value);
+        }
+        return builder.toString();
+    }
+
+    // Domain helper: get level (depth) of value in the tree, root = 0. Returns -1 if not found.
+    public int getLevel(int value) {
+        return getLevelRec(root, value, 0);
+    }
+
+    private int getLevelRec(BinaryTreeNode<Integer> node, int value, int level) {
+        if (node == null) {
+            return -1;
+        }
+        if (node.getValue() == value) {
+            return level;
+        }
+        if (value < node.getValue()) {
+            return getLevelRec(node.getLeft(), value, level + 1);
+        }
+        return getLevelRec(node.getRight(), value, level + 1);
+    }
+
+    // Collect parent (internal) nodes
+    public List<Integer> collectParentNodes() {
+        List<Integer> parents = new ArrayList<>();
+        collectParentNodesRec(root, parents);
+        return parents;
+    }
+
+    private void collectParentNodesRec(BinaryTreeNode<Integer> node, List<Integer> result) {
+        if (node == null) {
+            return;
+        }
+        if (node.getLeft() != null || node.getRight() != null) {
+            result.add(node.getValue());
+        }
+        collectParentNodesRec(node.getLeft(), result);
+        collectParentNodesRec(node.getRight(), result);
+    }
+
+    // Collect leaf nodes
+    public List<Integer> collectLeafNodes() {
+        List<Integer> leaves = new ArrayList<>();
+        collectLeafNodesRec(root, leaves);
+        return leaves;
+    }
+
+    private void collectLeafNodesRec(BinaryTreeNode<Integer> node, List<Integer> result) {
+        if (node == null) {
+            return;
+        }
+        if (node.getLeft() == null && node.getRight() == null) {
+            result.add(node.getValue());
+            return;
+        }
+        collectLeafNodesRec(node.getLeft(), result);
+        collectLeafNodesRec(node.getRight(), result);
+    }
+
+    // Format list as comma separated string, or '-' when empty.
+    public String formatListAsText(List<Integer> values) {
+        if (values.isEmpty()) {
+            return "-";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int value : values) {
+            if (builder.length() > 0) {
+                builder.append(", ");
             }
             builder.append(value);
         }

@@ -1,7 +1,35 @@
 package com.ds.application.controller.button.binary;
 
-// Al presionar alguno de los botones (Pre-orden, In-orden o Pos-orden),
-// hace una animación de recorrido según el botón seleccionado.
+import com.ds.application.view.components.inspector.NodeInspector;
+
 public class TraversalController {
-    // TODO: implement button controller for traversal actions
+
+    private final NodeInspectorController nodeController;
+    private final NodeInspector inspector;
+
+    public TraversalController(NodeInspectorController nodeController, NodeInspector inspector) {
+        this.nodeController = nodeController;
+        this.inspector = inspector;
+    }
+
+    public void preorder() {
+        showTraversal("Pre-orden", nodeController.preOrderString());
+    }
+
+    public void inorder() {
+        showTraversal("In-orden", nodeController.inOrderString());
+    }
+
+    public void postorder() {
+        showTraversal("Pos-orden", nodeController.postOrderString());
+    }
+
+    private void showTraversal(String name, String result) {
+        if (nodeController.size() == 0) {
+            inspector.updateStatus("Arbol vacio.");
+            return;
+        }
+
+        inspector.updateTraversal(name, result);
+    }
 }

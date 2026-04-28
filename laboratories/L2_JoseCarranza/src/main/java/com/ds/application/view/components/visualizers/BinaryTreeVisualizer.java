@@ -1,119 +1,118 @@
 package com.ds.application.view.components.visualizers;
 
 import com.ds.application.core.structures.BinaryTreeNode;
+import com.ds.application.view.components.elements.shapes.EdgeElement;
+import com.ds.application.view.components.elements.shapes.GraphPane;
+import com.ds.application.view.components.elements.shapes.NodeElement;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
 
-public class BinaryTreeVisualizer extends Pane {
+import java.util.function.Consumer;
+
+public class BinaryTreeVisualizer extends GraphPane {
 
     private Label emptyText;
     private Integer highlightedValue;
+    private BinaryTreeNode<Integer> currentRoot;
+    private Consumer<Integer> onNodeSelected;
 
     public BinaryTreeVisualizer() {
-        setPrefSize(650, 500);
-        setStyle("-fx-background-color: #f8fafc;");
+        super();
 
-        emptyText = new Label("Inserta un nodo para comenzar");
+        emptyText = new Label("Área de visualización del árbol");
         emptyText.setLayoutX(220);
-        emptyText.setLayoutY(220);
+        emptyText.setLayoutY(200);
 
         getChildren().add(emptyText);
     }
 
     public void drawTree(BinaryTreeNode<Integer> root) {
-        getChildren().clear();
+        currentRoot = root;
+        clearGraph();
 
         if (root == null) {
-            clear();
+            getChildren().add(emptyText);
             return;
         }
 
-        drawNodeRec(root, 325, 70, 160);
+        double centerX = getPrefWidth() / 2;
+        drawNode(root, centerX, 60, 170, true);
     }
 
     public void highlightValue(int value) {
         highlightedValue = value;
+        drawTree(currentRoot);
     }
 
-    public void showWaitingMessage() {
-        getChildren().clear();
-        emptyText.setText("Apuren el core >:v");
-        getChildren().add(emptyText);
+    public void clearHighlight() {
+        highlightedValue = null;
+        drawTree(currentRoot);
     }
 
-    public void drawSampleTree() {
-        getChildren().clear();
-
-        drawLine(325, 80, 220, 180);
-        drawLine(325, 80, 430, 180);
-
-        drawNode(325, 80, "Raiz", true);
-        drawNode(220, 180, "Izq", false);
-        drawNode(430, 180, "Der", false);
+    public void setOnNodeSelected(Consumer<Integer> onNodeSelected) {
+        this.onNodeSelected = onNodeSelected;
     }
 
     public void clear() {
-        getChildren().clear();
+        currentRoot = null;
         highlightedValue = null;
-        emptyText.setText("Inserta un nodo para comenzar");
+        clearGraph();
         getChildren().add(emptyText);
     }
 
-    private void drawNodeRec(BinaryTreeNode<Integer> node, double x, double y, double gap) {
-        if (node == null) {
-            return;
-        }
+    private void drawNode(BinaryTreeNode<Integer> node, double x, double y, double gap, boolean isRoot) {
+        if (node == null) return;
 
         if (node.getLeft() != null) {
             double childX = x - gap;
-            double childY = y + 90;
-
-            drawLine(x, y, childX, childY);
-            drawNodeRec(node.getLeft(), childX, childY, gap / 2);
+            double childY = y + 80;
+            addShape(new EdgeElement(x, y, childX, childY));
+            drawNode(node.getLeft(), childX, childY, gap / 1.6, false);
         }
 
         if (node.getRight() != null) {
             double childX = x + gap;
-            double childY = y + 90;
-
-            drawLine(x, y, childX, childY);
-            drawNodeRec(node.getRight(), childX, childY, gap / 2);
+            double childY = y + 80;
+            addShape(new EdgeElement(x, y, childX, childY));
+            drawNode(node.getRight(), childX, childY, gap / 1.6, false);
         }
 
-        boolean active = highlightedValue != null && highlightedValue.equals(node.getValue());
-        drawNode(x, y, String.valueOf(node.getValue()), active);
+        addShape(createNode(node, x, y, isRoot));
     }
 
-    private void drawNode(double x, double y, String value, boolean active) {
-        Circle circle = new Circle(x, y, 25);
+    private NodeElement createNode(BinaryTreeNode<Integer> node, double x, double y, boolean isRoot) {
+        boolean isLeaf = node.getLeft() == null && node.getRight() == null;
+        boolean isHighlighted = highlightedValue != null && highlightedValue.equals(node.getValue());
 
-        if (active) {
-            circle.setFill(Color.web("#2563eb"));
-            circle.setStroke(Color.web("#1d4ed8"));
-        } else {
-            circle.setFill(Color.web("#dbeafe"));
-            circle.setStroke(Color.web("#2563eb"));
+        String text = String.valueOf(node.getValue());
+
+        if (isHighlighted || isRoot) {
+            return createClickableNode(x, y, text, "#0f172a", "#ffffff", "#ffffff", node.getValue());
         }
 
-        circle.setStrokeWidth(2);
+        if (isLeaf) {
+            return createClickableNode(x, y, text, "#ffffff", "#2563eb", "#111827", node.getValue());
+        }
 
-        Text text = new Text(value);
-        text.setFill(active ? Color.WHITE : Color.web("#111827"));
-        text.setX(x - 7);
-        text.setY(y + 5);
-
-        getChildren().addAll(circle, text);
+        return createClickableNode(x, y, text, "#2563eb", "#ffffff", "#ffffff", node.getValue());
     }
 
-    private void drawLine(double startX, double startY, double endX, double endY) {
-        Line line = new Line(startX, startY, endX, endY);
-        line.setStroke(Color.web("#cbd5e1"));
-        line.setStrokeWidth(2);
+    private NodeElement createClickableNode(
+            double x,
+            double y,
+            String text,
+            String fillColor,
+            String strokeColor,
+            String textColor,
+            int value
+    ) {
+        NodeElement nodeElement = new NodeElement(x, y, text, fillColor, strokeColor, textColor);
 
-        getChildren().add(line);
+        nodeElement.setOnMouseClicked(e -> {
+            if (onNodeSelected != null) {
+                onNodeSelected.accept(value);
+            }
+        });
+
+        return nodeElement;
     }
 }

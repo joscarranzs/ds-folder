@@ -1,7 +1,7 @@
 package com.ds.application.view.components.inspector;
 
-import com.ds.application.view.components.elements.ui.ButtonElement;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -16,57 +16,49 @@ public class NodeInspector extends VBox {
     private Label traversalLabel;
     private Label statusLabel;
 
-    private ButtonElement deleteButton;
     private Integer selectedValue;
     private Consumer<Integer> onDelete;
 
     public NodeInspector() {
-        setPadding(new Insets(22));
+        setPadding(new Insets(18));
         setSpacing(12);
-        setPrefWidth(260);
+        setPrefWidth(240);
         setStyle(
                 "-fx-background-color: #ffffff;" +
                 "-fx-border-color: #e5e7eb;" +
-                "-fx-effect: dropshadow(gaussian, rgba(15,23,42,0.10), 18, 0.2, 0, 6);"
+                "-fx-background-radius: 12;" +
+                "-fx-border-radius: 12;"
         );
 
         Label title = new Label("Inspector de nodo");
-        title.setStyle(
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-text-fill: #111827;"
-        );
+        title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #111827;");
 
-        valueLabel = createInfoLabel("Valor: -");
-        levelLabel = createInfoLabel("Nivel: -");
-        heightLabel = createInfoLabel("Altura: -");
-        sizeLabel = createInfoLabel("Nodos: -");
+        valueLabel = createLabel("Valor: -");
+        levelLabel = createLabel("Nivel: -");
+        heightLabel = createLabel("Altura: -");
+        sizeLabel = createLabel("Nodos: -");
 
         Label traversalTitle = new Label("Recorrido");
-        traversalTitle.setStyle(
-                "-fx-font-size: 13px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-text-fill: #374151;"
-        );
+        traversalTitle.setStyle("-fx-font-weight: bold; -fx-text-fill: #374151;");
 
-        traversalLabel = createInfoLabel("-");
+        traversalLabel = createLabel("-");
         traversalLabel.setWrapText(true);
 
-        statusLabel = createInfoLabel("-");
+        statusLabel = createLabel("-");
         statusLabel.setWrapText(true);
 
-        deleteButton = new ButtonElement("Eliminar nodo");
-        deleteButton.getNode().setMaxWidth(Double.MAX_VALUE);
-        deleteButton.getNode().setStyle(
-                "-fx-background-color: #dc2626;" +
+        Button deleteButton = new Button("Eliminar nodo seleccionado");
+        deleteButton.setMaxWidth(Double.MAX_VALUE);
+        deleteButton.setStyle(
+                "-fx-background-color: #ef4444;" +
                 "-fx-text-fill: white;" +
                 "-fx-font-weight: bold;" +
-                "-fx-background-radius: 8;" +
+                "-fx-background-radius: 10;" +
                 "-fx-padding: 9 12;" +
                 "-fx-cursor: hand;"
         );
 
-        deleteButton.getNode().setOnAction(e -> {
+        deleteButton.setOnAction(e -> {
             if (selectedValue != null && onDelete != null) {
                 onDelete.accept(selectedValue);
             } else {
@@ -83,16 +75,13 @@ public class NodeInspector extends VBox {
                 traversalTitle,
                 traversalLabel,
                 statusLabel,
-                deleteButton.getNode()
+                deleteButton
         );
     }
 
-    private Label createInfoLabel(String text) {
+    private Label createLabel(String text) {
         Label label = new Label(text);
-        label.setStyle(
-                "-fx-font-size: 13px;" +
-                "-fx-text-fill: #4b5563;"
-        );
+        label.setStyle("-fx-font-size: 13px; -fx-text-fill: #4b5563;");
         return label;
     }
 
@@ -126,38 +115,5 @@ public class NodeInspector extends VBox {
         sizeLabel.setText("Nodos: -");
         traversalLabel.setText("-");
         statusLabel.setText("-");
-    }
-}
-    }
-
-    public void updateTraversal(String type, String result) {
-        traversalLabel.setText(type + ": " + result);
-    }
-
-<<<<<<< HEAD
-    public void updateStatus(String message) {
-        statusLabel.setText(message);
-    }
-
-    public void setOnDelete(Consumer<Integer> onDelete) {
-        this.onDelete = onDelete;
-    }
-
-    public void clearInfo() {
-        selectedValue = null;
-
-        valueLabel.setText("Valor: -");
-        levelLabel.setText("Nivel: -");
-        heightLabel.setText("Altura: -");
-        sizeLabel.setText("Nodos: -");
-        traversalLabel.setText("-");
-        statusLabel.setText("-");
-=======
-    public void clearInfo() {
-        valueLabel.setText("Valor: -");
-        positionLabel.setText("Posicion: -");
-        levelLabel.setText("Nivel: -");
-        traversalLabel.setText("-");
->>>>>>> origin/main
     }
 }

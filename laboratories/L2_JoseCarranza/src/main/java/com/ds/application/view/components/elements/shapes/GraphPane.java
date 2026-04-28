@@ -1,7 +1,20 @@
-// Elemento de forma usado para visualización de gráficos, como círculos de nodos, aristas y etiquetas.
-
 package com.ds.application.view.components.elements.shapes;
 
-public class GraphPane {
-    // TODO: implement drawing canvas for graph visualization
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+
+public class GraphPane extends Pane {
+
+    public GraphPane() {
+        setPrefSize(680, 430);
+        setStyle("-fx-background-color: #f8fafc;");
+    }
+
+    public void addShape(Node node) {
+        getChildren().add(node);
+    }
+
+    public void clearGraph() {
+        getChildren().clear();
+    }
 }

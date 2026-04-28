@@ -18,12 +18,12 @@ public class Interface {
         root = new BorderPane();
 
         Views header = new Views(
-            this::showBinaryTreeView,
-            this::showHuffmanView
+                this::showBinaryTreeView,
+                this::showHuffmanView
         );
 
         root.setTop(header);
-        root.setStyle("-fx-background-color: #eef2f7;");
+        root.setStyle("-fx-background-color: #f1f5f9;");
 
         showBinaryTreeView();
     }
@@ -31,13 +31,21 @@ public class Interface {
     private void showBinaryTreeView() {
         NodeInspector inspector = new NodeInspector();
         BinaryTreeVisualizer visualizer = new BinaryTreeVisualizer();
-        StackPane inspectorWrap = new StackPane(inspector);
-        inspectorWrap.setPadding(new Insets(28, 28, 28, 0));
-        inspectorWrap.setStyle("-fx-background-color: #f8fafc;");
+        BinaryTreeControlPanel panel = new BinaryTreeControlPanel(visualizer, inspector);
 
-        root.setLeft(new BinaryTreeControlPanel(visualizer, inspector));
-        root.setCenter(visualizer);
-        root.setRight(inspectorWrap);
+        StackPane leftWrap = new StackPane(panel);
+        leftWrap.setPadding(new Insets(18, 10, 18, 18));
+
+        StackPane centerWrap = new StackPane(visualizer);
+        centerWrap.setPadding(new Insets(18, 10, 18, 10));
+        centerWrap.setStyle("-fx-background-color: #f8fafc;");
+
+        StackPane rightWrap = new StackPane(inspector);
+        rightWrap.setPadding(new Insets(18, 18, 18, 10));
+
+        root.setLeft(leftWrap);
+        root.setCenter(centerWrap);
+        root.setRight(rightWrap);
     }
 
     private void showHuffmanView() {

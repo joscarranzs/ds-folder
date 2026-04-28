@@ -1,7 +1,17 @@
-// Elemento de forma usado para visualización de gráficos, como círculos de nodos, aristas y etiquetas.
-
 package com.ds.application.view.components.elements.shapes;
 
-public class NodeLabelElement {
-    // TODO: implement node label element for JavaFX graph visualization
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+
+public class NodeLabelElement extends Text {
+
+    public NodeLabelElement(String value, String color) {
+        super(value);
+        setFill(Color.web(color));
+        setStyle("-fx-font-size: 11px; -fx-font-weight: bold;");
+
+        double offset = value.length() * 3.5;
+        setX(-offset);
+        setY(4);
+    }
 }

@@ -1,13 +1,5 @@
 package com.ds.application.core.structures.aux;
 
-/**
- * Implementación minimalista de una lista dinámica (array-backed).
- *
- * Soporta operaciones básicas: add, get, set, remove y size. Está
- * destinada a ser una estructura auxiliar sencilla para el módulo core.
- *
- * @param <T> tipo de elementos almacenados
- */
 public class SimpleList<T> {
   private T[] elements;
   private int size;
@@ -19,7 +11,6 @@ public class SimpleList<T> {
     this.size = 0;
   }
 
-  /** Añade un elemento al final de la lista, expandiendo la capacidad si es necesario. */
   public void add(T element) {
     if (size == elements.length) {
       resize();
@@ -27,7 +18,6 @@ public class SimpleList<T> {
     elements[size++] = element;
   }
 
-  /** Duplica la capacidad interna cuando se alcanza el límite. */
   public void resize() {
     int newCapacity = elements.length * 2;
     @SuppressWarnings("unchecked")
@@ -36,7 +26,6 @@ public class SimpleList<T> {
     elements = newElements;
   }
 
-  /** Obtiene el elemento en la posición indicada. */
   public T get(int index) {
     if (index < 0 || index >= size) {
       throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
@@ -44,15 +33,6 @@ public class SimpleList<T> {
     return elements[index];
   }
 
-  /** Reemplaza el elemento en la posición indicada. */
-  public void set(int index, T element) {
-    if (index < 0 || index >= size) {
-      throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-    }
-    elements[index] = element;
-  }
-
-  /** Elimina el elemento en la posición indicada y desplaza los elementos siguientes. */
   public void remove(int index) {
     if (index < 0 || index >= size) {
       throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
@@ -63,7 +43,6 @@ public class SimpleList<T> {
     elements[--size] = null;
   }
 
-  /** Devuelve el número de elementos almacenados. */
   public int size() {
     return size;
   }

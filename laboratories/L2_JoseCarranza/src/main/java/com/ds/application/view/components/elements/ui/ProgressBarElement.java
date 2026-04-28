@@ -1,48 +1,27 @@
+// Elemento de UI usado para construir componentes como header, sidebar y controles de formulario.
 package com.ds.application.view.components.elements.ui;
 
 import javafx.scene.control.ProgressBar;
 
-/**
- * Envoltorio para {@link ProgressBar} con estilos básicos y acceso al nodo.
- */
 public class ProgressBarElement {
+    // TODO: implement progress bar element for JavaFX
     private ProgressBar progressBar;
 
-    /**
-     * Crea una ProgressBar y aplica el estilo inicial (inactivo).
-     */
+    public ProgressBarElement(double progress){
+        progressBar = new ProgressBar(progress);
+        applyStyles();
+    }
+
     public ProgressBarElement(){
         progressBar = new ProgressBar();
-        setActive(false);
+        applyStyles();
     }
 
-    /**
-     * Alterna el estilo visual de la barra de progreso.
-     *
-     * @param active true para estilo activo, false para inactivo
-     */
-    public void setActive(boolean active){
-        if(active){
-            progressBar.setStyle(
-                "-fx-background-color: #2563eb;" +
-                "-fx-text-fill: white;" +
-                "-fx-font-weight: bold;" +
-                "-fx-background-radius: 8;" +
-                "-fx-cursor: hand;"
-            );
-        } else {
-            progressBar.setStyle(
-                "-fx-background-color: #ffffff;" +
-                "-fx-border-color: #dbe1ea;"
-            );
-        }
+    public void applyStyles(){
+        //Clase CSS
+        progressBar.getStylesheets();
     }
 
-    /**
-     * Devuelve el nodo {@link ProgressBar} asociado.
-     *
-     * @return ProgressBar creada
-     */
     public ProgressBar getNode(){
         return progressBar;
     }
