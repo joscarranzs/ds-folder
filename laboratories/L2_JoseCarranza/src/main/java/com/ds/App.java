@@ -1,4 +1,4 @@
-package com.ds.application;
+package com.ds;
 
 import com.ds.application.view.window.Primary;
 import javafx.application.Application;
@@ -7,17 +7,17 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
- * Minimal example that uses Primary to show a simple layout and a text label.
+ * Ejemplo mínimo que usa Primary para mostrar un layout sencillo y una etiqueta de texto.
  */
 public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        // create a simple layout and content
+        // crear un layout simple y contenido
         StackPane root = new StackPane();
         root.getChildren().add(new Label("Hello from Primary window manager"));
 
-        // Use Primary to manage Stage/Scene
+        // Usar Primary para gestionar Stage/Scene
         Primary primary = new Primary(stage, root, 1280, 800);
         primary.show();
     }
