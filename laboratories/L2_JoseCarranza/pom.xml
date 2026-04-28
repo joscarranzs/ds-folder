@@ -13,6 +13,8 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <javafx.version>21.0.2</javafx.version>
+    <!-- Set platform classifier for JavaFX native artifacts. Change to 'windows' or 'mac' if needed. -->
+    <javafx.platform>linux</javafx.platform>
   </properties>
 
   <dependencies>
@@ -20,12 +22,14 @@
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
       <version>${javafx.version}</version>
+      <classifier>${javafx.platform}</classifier>
     </dependency>
 
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>${javafx.version}</version>
+      <classifier>${javafx.platform}</classifier>
     </dependency>
 
       <dependency>
