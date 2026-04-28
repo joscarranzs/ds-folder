@@ -1,6 +1,10 @@
 package com.ds.application.core.trees.operations;
 
+import com.ds.application.core.trees.HuffmanBinaryTree;
+import com.ds.application.core.structures.HuffmanNode;
+import junit.framework.TestCase;
 
+import java.util.Map;
 
 public class HuffmanAlgorithmOperationsTest extends TestCase {
 

@@ -1,5 +1,7 @@
 package com.ds.application.view.components.elements.shapes;
 
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class NodeLabelElement extends Text {
 

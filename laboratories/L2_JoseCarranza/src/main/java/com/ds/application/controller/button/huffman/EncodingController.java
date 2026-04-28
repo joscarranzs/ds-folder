@@ -1,6 +1,11 @@
 package com.ds.application.controller.button.huffman;
 
+import com.ds.application.core.structures.HuffmanNode;
+import com.ds.application.core.trees.HuffmanBinaryTree;
+import com.ds.application.core.trees.operations.HuffmanAlgorithmOperations;
+import com.ds.application.view.components.visualizers.HuffmanAlgorithmVisualizer;
 
+import java.util.Map;
 
 public class EncodingController {
 

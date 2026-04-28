@@ -1,6 +1,11 @@
 package com.ds.application.view.components.inspector;
 
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
+import java.util.function.Consumer;
 
 public class NodeInspector extends VBox {
 

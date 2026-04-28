@@ -1,5 +1,6 @@
 package com.ds.application.view.components.elements.ui;
 
+import javafx.scene.control.Button;
 
 public class ButtonElement {
 

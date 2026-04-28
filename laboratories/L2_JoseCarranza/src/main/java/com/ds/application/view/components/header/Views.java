@@ -1,5 +1,8 @@
 package com.ds.application.view.components.header;
 
+import com.ds.application.view.components.elements.ui.ButtonElement;
+import javafx.geometry.Insets;
+import javafx.scene.layout.HBox;
 
 public class Views extends HBox {
 

@@ -1,6 +1,12 @@
 package com.ds.application.view.components.visualizers;
 
+import com.ds.application.core.structures.BinaryTreeNode;
+import com.ds.application.view.components.elements.shapes.EdgeElement;
+import com.ds.application.view.components.elements.shapes.GraphPane;
+import com.ds.application.view.components.elements.shapes.NodeElement;
+import javafx.scene.control.Label;
 
+import java.util.function.Consumer;
 
 public class BinaryTreeVisualizer extends GraphPane {
 

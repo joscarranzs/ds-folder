@@ -1,5 +1,7 @@
 package com.ds.application.view.components.elements.shapes;
 
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 
 public class GraphPane extends Pane {
 

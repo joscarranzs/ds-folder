@@ -2,6 +2,7 @@
 
 package com.ds.application.view.components.elements.ui;
 
+import javafx.scene.control.Tooltip;
 
 public class TooltipElement {
     // TODO: implement tooltip element for JavaFX

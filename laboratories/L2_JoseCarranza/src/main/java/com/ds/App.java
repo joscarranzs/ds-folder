@@ -1,5 +1,9 @@
 package com.ds.application;
 
+import com.ds.application.view.Interface;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class App extends Application {
 

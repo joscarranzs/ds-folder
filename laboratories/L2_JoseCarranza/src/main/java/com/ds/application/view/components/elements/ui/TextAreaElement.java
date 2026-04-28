@@ -1,5 +1,6 @@
 package com.ds.application.view.components.elements.ui;
 
+import javafx.scene.control.TextArea;
 
 public class TextAreaElement {
 
