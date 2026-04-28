@@ -6,10 +6,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Helper that centralises primary window (Stage) and Scene management.
+ * Gestor que centraliza la ventana principal (Stage) y la Scene.
  *
- * It accepts any JavaFX Parent as the layout root (for example BorderPane, StackPane, etc.)
- * and exposes a safe method to replace the scene root at runtime.
+ * Acepta cualquier Parent de JavaFX como raíz de layout (por ejemplo BorderPane,
+ * StackPane, etc.) y proporciona un método seguro para reemplazar la raíz de la
+ * escena en tiempo de ejecución.
  */
 public class Primary {
 
@@ -18,12 +19,12 @@ public class Primary {
     private final String DEFAULT_TITLE = "Visualizador de Árboles";
 
     /**
-     * Create a Primary window manager.
+     * Crea el gestor de ventana principal.
      *
-     * @param stage the JavaFX Stage provided by Application.start
-     * @param initialRoot initial root node (can be any Pane / Parent)
-     * @param width initial scene width
-     * @param height initial scene height
+     * @param stage Stage provisto por Application.start
+     * @param initialRoot nodo raíz inicial (cualquier Pane / Parent)
+     * @param width ancho inicial de la Scene
+     * @param height alto inicial de la Scene
      */
     public Primary(Stage stage, Parent initialRoot, double width, double height) {
         this.stage = stage;
@@ -37,7 +38,7 @@ public class Primary {
         stage.centerOnScreen();
     }
 
-    /** Show the stage (runs on JavaFX thread). */
+    /** Muestra el stage (se ejecuta en el hilo de JavaFX). */
     public void show() {
         Platform.runLater(() -> {
             if (!stage.isShowing()) {
@@ -49,20 +50,20 @@ public class Primary {
     }
 
     /**
-     * Replace the root node of the scene. Use this to switch views at runtime.
-     * This method is safe to call from any thread; the change will be executed
-     * on the JavaFX application thread.
+     * Reemplaza el nodo raíz de la Scene. Usar para cambiar vistas en tiempo de ejecución.
+     * El método es seguro para invocarse desde cualquier hilo; la operación se realizará
+     * en el hilo de la aplicación JavaFX.
      *
-     * @param newRoot new root node (for example a BorderPane, StackPane, VBox...)
+     * @param newRoot nuevo nodo raíz (por ejemplo BorderPane, StackPane, VBox...)
      */
     public void setRoot(Parent newRoot) {
         Platform.runLater(() -> scene.setRoot(newRoot));
     }
 
     /**
-     * Update the window title. Safe to call from any thread.
+     * Actualiza el título de la ventana. Seguro para invocarse desde cualquier hilo.
      *
-     * @param title new window title
+     * @param title nuevo título de la ventana
      */
     public void setTitle(String title) {
         Platform.runLater(() -> stage.setTitle(title));
