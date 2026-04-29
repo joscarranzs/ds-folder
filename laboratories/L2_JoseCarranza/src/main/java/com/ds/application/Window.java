@@ -22,8 +22,8 @@ public class Window {
   /**
    * Crea una nueva ventana con el Pane raíz indicado y tamaño inicial.
    *
-   * @param root  el Pane raíz que contendrá los nodos visuales
-   * @param width ancho inicial de la ventana
+   * @param root   el Pane raíz que contendrá los nodos visuales
+   * @param width  ancho inicial de la ventana
    * @param height alto inicial de la ventana
    */
   public Window(Pane root, double width, double height) {
