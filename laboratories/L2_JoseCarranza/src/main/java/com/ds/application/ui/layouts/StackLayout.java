@@ -15,10 +15,14 @@ import javafx.scene.layout.StackPane;
 public class StackLayout {
   private final StackPane pane;
 
-  public StackLayout() { this.pane = new StackPane(); }
+  public StackLayout() {
+    this.pane = new StackPane();
+  }
 
   /** Retorna el StackPane interno que actúa como layout. */
-  public StackPane getLayout() { return pane; }
+  public StackPane getLayout() {
+    return pane;
+  }
 
   /** Añade un hijo al final (tope) del StackPane. */
   public void add(Node node) {
@@ -39,15 +43,24 @@ public class StackLayout {
   }
 
   /** Elimina todos los hijos. */
-  public void clear() { runOnFx(() -> pane.getChildren().clear()); }
+  public void clear() {
+    runOnFx(() -> pane.getChildren().clear());
+  }
 
   /** Establece padding uniforme. */
-  public void setPadding(double all) { runOnFx(() -> pane.setPadding(new Insets(all))); }
+  public void setPadding(double all) {
+    runOnFx(() -> pane.setPadding(new Insets(all)));
+  }
 
   /** Establece padding individual. */
   public void setPadding(double top, double right, double bottom, double left) {
     runOnFx(() -> pane.setPadding(new Insets(top, right, bottom, left)));
   }
 
-  private void runOnFx(Runnable action) { if (Platform.isFxApplicationThread()) action.run(); else Platform.runLater(action); }
+  private void runOnFx(Runnable action) {
+    if (Platform.isFxApplicationThread())
+      action.run();
+    else
+      Platform.runLater(action);
+  }
 }

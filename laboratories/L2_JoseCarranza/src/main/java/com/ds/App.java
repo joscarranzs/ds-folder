@@ -18,13 +18,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        BorderLayout layout = new BorderLayout();
-        Text text = new Text("Hola mundo - prueba de Window");
-        layout.setCenter(text);
+        // Ejemplo mínimo: solo BorderLayout
+        BorderLayout borderLayout = new BorderLayout();
+        borderLayout.setCenter(new Text("Prueba: solo BorderLayout"));
 
-        // Usamos Window (la clase encapsula su propio Stage)
-        // Pasamos el BorderPane interno como Pane al constructor de Window
-        Window window = new Window(layout.getLayout(), 800, 600);
+        Window window = new Window(borderLayout.getLayout(), 800, 600);
         window.show();
     }
 }
