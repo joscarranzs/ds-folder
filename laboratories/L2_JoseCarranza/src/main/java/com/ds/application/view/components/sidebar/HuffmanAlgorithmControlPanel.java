@@ -76,7 +76,7 @@ public class HuffmanAlgorithmControlPanel extends VBox {
         // Al presionar generar, mando el texto al controlador para aplicar Huffman ya sea txt o weight
         generateButton.getNode().setOnAction(e -> {
             if (weightMode) {
-                //controller.generateWeight(textInput.getValue());
+                controller.generateWeight(textInput.getValue());
             } else {
                 controller.generateText(textInput.getValue());
             }
