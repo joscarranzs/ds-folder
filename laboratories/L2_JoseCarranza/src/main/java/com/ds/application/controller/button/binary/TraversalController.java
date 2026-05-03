@@ -1,15 +1,18 @@
 package com.ds.application.controller.button.binary;
 
+import com.ds.application.view.components.indicators.TreeInfoBar;
 import com.ds.application.view.components.inspector.NodeInspector;
 
 public class TraversalController {
 
     private final NodeInspectorController nodeController;
     private final NodeInspector inspector;
+    private final TreeInfoBar infoBar;
 
-    public TraversalController(NodeInspectorController nodeController, NodeInspector inspector) {
+    public TraversalController(NodeInspectorController nodeController, NodeInspector inspector, TreeInfoBar infoBar) {
         this.nodeController = nodeController;
         this.inspector = inspector;
+        this.infoBar = infoBar;
     }
 
     public void preorder() {
@@ -30,6 +33,7 @@ public class TraversalController {
             return;
         }
 
-        inspector.updateTraversal(name, result);
+        inspector.updateStatus(name + ": " + result);
+        infoBar.updateTraversal(name, result);
     }
 }

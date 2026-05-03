@@ -1,6 +1,7 @@
 package com.ds.application.view;
 
 import com.ds.application.view.components.header.Views;
+import com.ds.application.view.components.indicators.TreeInfoBar;
 import com.ds.application.view.components.inspector.NodeInspector;
 import com.ds.application.view.components.sidebar.BinaryTreeControlPanel;
 import com.ds.application.view.components.sidebar.HuffmanAlgorithmControlPanel;
@@ -21,16 +22,12 @@ import javafx.scene.layout.VBox;
 
 public class Interface {
 
-    // Contenedor principal de toda la aplicación
     private BorderPane root;
-
-    // Header principal de navegación entre vistas
     private Views header;
 
     public Interface() {
         root = new BorderPane();
 
-        // Header superior con las opciones para cambiar de vista
         header = new Views(
                 this::showBinaryTreeView,
                 this::showHuffmanView
@@ -38,18 +35,14 @@ public class Interface {
 
         root.setStyle("-fx-background-color: #f1f5f9;");
 
-        // Al iniciar la app, primero muestro la pantalla de bienvenida
         showWelcomeView();
     }
 
-    // Pantalla inicial tipo portada del laboratorio
     private void showWelcomeView() {
-        // En welcome oculto el header para que parezca una portada limpia
         root.setTop(null);
         root.setLeft(null);
         root.setRight(null);
 
-        // Contenedor principal de la portada
         VBox container = new VBox(24);
         container.setPadding(new Insets(34));
         container.setAlignment(Pos.TOP_LEFT);
@@ -64,15 +57,12 @@ public class Interface {
                 "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 22, 0.25, 0, 8);"
         );
 
-        // Header interno con logos y título
         HBox topRow = createWelcomeHeader();
 
-        // Línea separadora
         Region divider = new Region();
         divider.setPrefHeight(1);
         divider.setStyle("-fx-background-color: #e5e7eb;");
 
-        // Información de asignatura y grupo
         HBox infoRow = new HBox(110);
         infoRow.setAlignment(Pos.CENTER_LEFT);
 
@@ -81,24 +71,20 @@ public class Interface {
 
         infoRow.getChildren().addAll(subjectBox, groupBox);
 
-        // Integrantes del laboratorio
         VBox membersBox = createInfoBlock(
                 "INTEGRANTES",
                 "Jose Carranza · Francisco Arena · Rodolfo Martinez\n" +
                 "Michelle Sánchez · Aniel Benítez"
         );
 
-        // Facilitadora del curso
         VBox teacherBox = createInfoBlock(
                 "FACILITADORA",
                 "Ing. Maria Y. Tejedor de Fernandez"
         );
 
-        // Espaciador para empujar el botón hacia abajo y mejorar la estructura visual
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
-        // Botón de inicio
         Button startButton = new Button("Inicio →");
         startButton.setMaxWidth(Double.MAX_VALUE);
         startButton.setStyle(
@@ -111,10 +97,8 @@ public class Interface {
                 "-fx-cursor: hand;"
         );
 
-        // Al presionar, pasamos a la vista principal del árbol binario
         startButton.setOnAction(e -> showBinaryTreeView());
 
-        // Agrego todo en orden
         container.getChildren().addAll(
                 topRow,
                 divider,
@@ -125,7 +109,6 @@ public class Interface {
                 startButton
         );
 
-        // Wrapper centrado para que la portada no quede pegada a los bordes
         StackPane wrapper = new StackPane(container);
         wrapper.setAlignment(Pos.CENTER);
         wrapper.setPadding(new Insets(32));
@@ -134,15 +117,12 @@ public class Interface {
         root.setCenter(wrapper);
     }
 
-    // Crea el header interno de la pantalla welcome
     private HBox createWelcomeHeader() {
         HBox topRow = new HBox(24);
         topRow.setAlignment(Pos.CENTER);
 
-        // Logo izquierdo UTP
         ImageView leftLogo = createLogo("/images/utp.png");
 
-        // Contenedor central del título
         VBox titleBox = new VBox(8);
         titleBox.setAlignment(Pos.CENTER);
 
@@ -163,14 +143,12 @@ public class Interface {
         titleBox.getChildren().addAll(lab, title);
         HBox.setHgrow(titleBox, Priority.ALWAYS);
 
-        // Logo derecho FISC
         ImageView rightLogo = createLogo("/images/fisc.png");
 
         topRow.getChildren().addAll(leftLogo, titleBox, rightLogo);
         return topRow;
     }
 
-    // Crea un logo desde resources/images
     private ImageView createLogo(String path) {
         java.io.InputStream stream = getClass().getResourceAsStream(path);
         ImageView logo = new ImageView();
@@ -191,7 +169,6 @@ public class Interface {
         return logo;
     }
 
-    // Crea un bloque de información con título pequeño y valor destacado
     private VBox createInfoBlock(String titleText, String valueText) {
         VBox box = new VBox(7);
 
@@ -214,33 +191,90 @@ public class Interface {
         return box;
     }
 
-    // Construye la vista completa del árbol binario
     private void showBinaryTreeView() {
-        // Al entrar a una vista real, vuelvo a mostrar el header
         root.setTop(header);
 
         NodeInspector inspector = new NodeInspector();
         BinaryTreeVisualizer visualizer = new BinaryTreeVisualizer();
-        BinaryTreeControlPanel panel = new BinaryTreeControlPanel(visualizer, inspector);
+        TreeInfoBar infoBar = new TreeInfoBar();
+
+        BinaryTreeControlPanel panel = new BinaryTreeControlPanel(visualizer, inspector, infoBar);
 
         StackPane leftWrap = new StackPane(panel);
         leftWrap.setPadding(new Insets(18, 10, 18, 18));
 
-        StackPane centerWrap = new StackPane(visualizer);
-        centerWrap.setPadding(new Insets(18, 10, 18, 10));
-        centerWrap.setStyle("-fx-background-color: #f8fafc;");
+        StackPane visualizerWrap = new StackPane(visualizer);
+        visualizerWrap.setPadding(new Insets(18, 10, 10, 10));
+        visualizerWrap.setStyle("-fx-background-color: #f8fafc;");
+
+        HBox bottomContent = new HBox(10);
+        bottomContent.setAlignment(Pos.CENTER_LEFT);
+        bottomContent.getChildren().addAll(infoBar, createZoomControls(visualizer));
+        HBox.setHgrow(infoBar, Priority.ALWAYS);
+
+        StackPane bottomWrap = new StackPane(bottomContent);
+        bottomWrap.setPadding(new Insets(0, 10, 18, 10));
+        bottomWrap.setStyle("-fx-background-color: #f8fafc;");
+
+        BorderPane centerLayout = new BorderPane();
+        centerLayout.setCenter(visualizerWrap);
+        centerLayout.setBottom(bottomWrap);
+        centerLayout.setStyle("-fx-background-color: #f8fafc;");
 
         StackPane rightWrap = new StackPane(inspector);
+        rightWrap.setAlignment(Pos.BOTTOM_CENTER);
         rightWrap.setPadding(new Insets(18, 18, 18, 10));
+        rightWrap.setMinHeight(0);
+        rightWrap.setMaxHeight(Double.MAX_VALUE);
+
+        BorderPane.setAlignment(rightWrap, Pos.BOTTOM_CENTER);
 
         root.setLeft(leftWrap);
-        root.setCenter(centerWrap);
+        root.setCenter(centerLayout);
         root.setRight(rightWrap);
     }
 
-    // Construye la vista del algoritmo Huffman
+    // Crea controles pequeños para zoom y centrado del árbol
+    private HBox createZoomControls(BinaryTreeVisualizer visualizer) {
+        HBox controls = new HBox(6);
+        controls.setAlignment(Pos.CENTER);
+        controls.setPadding(new Insets(6));
+        controls.setStyle(
+                "-fx-background-color: #ffffff;" +
+                "-fx-background-radius: 18;" +
+                "-fx-border-color: #e5e7eb;" +
+                "-fx-border-radius: 18;"
+        );
+
+        Button zoomIn = createZoomButton("+");
+        Button zoomOut = createZoomButton("-");
+        Button center = createZoomButton("Centrar");
+
+        zoomIn.setOnAction(e -> visualizer.zoomIn());
+        zoomOut.setOnAction(e -> visualizer.zoomOut());
+        center.setOnAction(e -> visualizer.centerView());
+
+        controls.getChildren().addAll(zoomIn, zoomOut, center);
+        return controls;
+    }
+
+    // Crea botones pequeños para la barra de zoom
+    private Button createZoomButton(String text) {
+        Button button = new Button(text);
+        button.setStyle(
+                "-fx-background-color: #f1f5f9;" +
+                "-fx-text-fill: #111827;" +
+                "-fx-font-size: 11px;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-radius: 10;" +
+                "-fx-padding: 9 12;" +
+                "-fx-cursor: hand;"
+        );
+
+        return button;
+    }
+
     private void showHuffmanView() {
-        // Al entrar a una vista real, vuelvo a mostrar el header
         root.setTop(header);
 
         HuffmanAlgorithmVisualizer visualizer = new HuffmanAlgorithmVisualizer();
@@ -250,7 +284,6 @@ public class Interface {
         root.setRight(null);
     }
 
-    // Devuelve la raíz principal para que App pueda ponerla en la Scene
     public BorderPane getRoot() {
         return root;
     }

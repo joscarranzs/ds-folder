@@ -5,6 +5,7 @@ import com.ds.application.controller.button.binary.NodeInspectorController;
 import com.ds.application.controller.button.binary.TraversalController;
 import com.ds.application.view.components.elements.ui.ButtonElement;
 import com.ds.application.view.components.elements.ui.LabelElement;
+import com.ds.application.view.components.indicators.TreeInfoBar;
 import com.ds.application.view.components.inspector.NodeInspector;
 import com.ds.application.view.components.visualizers.BinaryTreeVisualizer;
 import javafx.geometry.Insets;
@@ -17,11 +18,6 @@ import javafx.scene.layout.VBox;
 
 public class BinaryTreeControlPanel extends VBox {
 
-    // Labels donde voy actualizando los datos generales del árbol
-    private Label parentNodesValue;
-    private Label leafNodesValue;
-    private Label depthValue;
-
     // Botones principales del panel
     private ButtonElement insertBtn;
     private ButtonElement searchBtn;
@@ -30,17 +26,18 @@ public class BinaryTreeControlPanel extends VBox {
     private ButtonElement inorderBtn;
     private ButtonElement postorderBtn;
 
-    public BinaryTreeControlPanel(BinaryTreeVisualizer visualizer, NodeInspector inspector) {
+    public BinaryTreeControlPanel(BinaryTreeVisualizer visualizer, NodeInspector inspector, TreeInfoBar infoBar) {
 
         // Creo los controladores que se encargan de manejar la lógica del árbol
         NodeInspectorController nodeController = new NodeInspectorController(visualizer, inspector);
-        TraversalController traversalController = new TraversalController(nodeController, inspector);
+        TraversalController traversalController = new TraversalController(nodeController, inspector, infoBar);
         DeletionController deletionController = new DeletionController(nodeController);
 
         // Conecto el botón de eliminar del inspector con el controlador de eliminación
         inspector.setOnDelete(value -> {
             deletionController.delete(value);
-            updateTreeData(nodeController);
+            updateTreeData(nodeController, infoBar);
+            infoBar.clearTraversal();
         });
 
         // Configuración visual general del panel lateral
@@ -90,18 +87,17 @@ public class BinaryTreeControlPanel extends VBox {
         insertBtn.getNode().setOnAction(e -> {
             selectButton(insertBtn);
 
-            // Pide el valor al usuario 
             javafx.scene.control.TextInputDialog dialog = new javafx.scene.control.TextInputDialog();
             dialog.setTitle("Insertar nodo");
             dialog.setHeaderText(null);
             dialog.setContentText("Valor:");
 
-            // Si el usuario escribe algo válido, lo mando al controlador
             dialog.showAndWait().ifPresent(text -> {
                 try {
                     int value = Integer.parseInt(text.trim());
                     nodeController.insert(value);
-                    updateTreeData(nodeController);
+                    updateTreeData(nodeController, infoBar);
+                    infoBar.clearTraversal();
                 } catch (NumberFormatException ex) {
                     inspector.updateStatus("Valor invalido.");
                 }
@@ -117,12 +113,12 @@ public class BinaryTreeControlPanel extends VBox {
             dialog.setHeaderText(null);
             dialog.setContentText("Valor:");
 
-            // Busca el valor ingresado y actualizo los datos del árbol
             dialog.showAndWait().ifPresent(text -> {
                 try {
                     int value = Integer.parseInt(text.trim());
                     nodeController.search(value);
-                    updateTreeData(nodeController);
+                    updateTreeData(nodeController, infoBar);
+                    infoBar.clearTraversal();
                 } catch (NumberFormatException ex) {
                     inspector.updateStatus("Valor invalido.");
                 }
@@ -133,7 +129,7 @@ public class BinaryTreeControlPanel extends VBox {
         clearBtn.getNode().setOnAction(e -> {
             selectButton(clearBtn);
             nodeController.clear();
-            updateTreeData(nodeController);
+            infoBar.clear();
         });
 
         // Eventos para mostrar los recorridos
@@ -152,16 +148,15 @@ public class BinaryTreeControlPanel extends VBox {
             traversalController.postorder();
         });
 
-        // Spacer para empujar los datos del árbol hacia abajo
+        // Spacer para mantener la leyenda abajo sin traer de vuelta los datos del árbol
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
-        // Secciones inferiores del panel
-        VBox treeDataBox = createTreeDataBox();
+        // Pill inferior para identificar los tipos de nodo en pantalla
         VBox legendBox = createLegendBox();
 
-        // Inicializo los datos del árbol
-        updateTreeData(nodeController);
+        // Inicializo los datos de la barra inferior
+        updateTreeData(nodeController, infoBar);
 
         // Agrego todos los elementos al panel en orden
         getChildren().addAll(
@@ -176,47 +171,8 @@ public class BinaryTreeControlPanel extends VBox {
                 inorderBtn.getNode(),
                 postorderBtn.getNode(),
                 spacer,
-                treeDataBox,
                 legendBox
         );
-    }
-
-    // Crea la sección donde se muestran datos generales del árbol
-    private VBox createTreeDataBox() {
-        VBox box = new VBox(9);
-
-        Label title = new Label("DATOS DEL ARBOL");
-        title.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;");
-
-        VBox parentsCard = createDataCard("Nodos padre");
-        parentNodesValue = (Label) parentsCard.getChildren().get(1);
-
-        VBox leavesCard = createDataCard("Nodos hoja");
-        leafNodesValue = (Label) leavesCard.getChildren().get(1);
-
-        VBox depthCard = createDataCard("Profundidad");
-        depthValue = (Label) depthCard.getChildren().get(1);
-
-        box.getChildren().addAll(title, parentsCard, leavesCard, depthCard);
-        return box;
-    }
-
-    // Crea una tarjeta para mostrar un dato del árbol
-    private VBox createDataCard(String titleText) {
-        VBox card = new VBox(4);
-        card.setPadding(new Insets(10, 12, 10, 12));
-        card.setMinHeight(56);
-        card.setStyle("-fx-background-color: #f1f5f9; -fx-background-radius: 10;");
-
-        Label title = new Label(titleText);
-        title.setStyle("-fx-font-size: 11px; -fx-text-fill: #64748b; -fx-font-weight: bold;");
-
-        Label value = new Label("-");
-        value.setWrapText(true);
-        value.setStyle("-fx-font-size: 13px; -fx-text-fill: #111827; -fx-font-weight: bold;");
-
-        card.getChildren().addAll(title, value);
-        return card;
     }
 
     // Crea la pill de colores para entender los tipos de nodos
@@ -262,11 +218,14 @@ public class BinaryTreeControlPanel extends VBox {
         return item;
     }
 
-    // Actualiza los datos generales del árbol después de cada operación
-    private void updateTreeData(NodeInspectorController nodeController) {
-        parentNodesValue.setText(nodeController.getParentNodesText());
-        leafNodesValue.setText(nodeController.getLeafNodesText());
-        depthValue.setText(String.valueOf(nodeController.height()));
+    // Actualiza los datos generales del árbol en la barra inferior
+    private void updateTreeData(NodeInspectorController nodeController, TreeInfoBar infoBar) {
+        infoBar.updateTreeData(
+                nodeController.getParentNodesText(),
+                nodeController.getLeafNodesText(),
+                nodeController.height(),
+                nodeController.degree()
+        );
     }
 
     // Cambia visualmente cuál botón está activo

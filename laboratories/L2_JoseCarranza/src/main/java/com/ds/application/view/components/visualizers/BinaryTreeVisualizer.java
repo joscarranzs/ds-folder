@@ -31,6 +31,9 @@ public class BinaryTreeVisualizer extends GraphPane {
     // Timeline que uso para animar recorridos o búsquedas
     private Timeline traversalTimeline;
 
+    // Valor de zoom actual del visualizador
+    private double zoomLevel = 1.0;
+
     public BinaryTreeVisualizer() {
         super();
 
@@ -53,43 +56,74 @@ public class BinaryTreeVisualizer extends GraphPane {
         currentRoot = root;
         clearGraph();
 
-        // Si el árbol está vacío, muestro el mensaje inicial
         if (root == null) {
             getChildren().add(emptyText);
             return;
         }
 
-        // Uso el ancho real del panel para centrar mejor el árbol
         double paneWidth = getWidth() > 0 ? getWidth() : getPrefWidth();
 
-        // Centro el árbol tomando el ancho disponible
-        double centerX = paneWidth / 2;
+        // Muevo un poco el centro hacia la derecha para que ramas izquierdas no se corten
+        double centerX = paneWidth / 2 + 80;
 
-        // Ajusto el espacio inicial para que no se desborde hacia el panel izquierdo
-        double initialGap = Math.min(150, paneWidth / 4);
+        // Espacio más controlado para evitar que el árbol se esconda detrás del panel
+        double initialGap = Math.min(170, paneWidth / 4);
 
-        // Empiezo a dibujar desde la raíz
         drawNode(root, centerX, 70, initialGap, true);
     }
 
-    // Marca un nodo como seleccionado y vuelve a dibujar el árbol
+    // Hace zoom in sobre el árbol
+    public void zoomIn() {
+        zoomLevel += 0.1;
+
+        if (zoomLevel > 1.6) {
+            zoomLevel = 1.6;
+        }
+
+        applyZoom();
+    }
+
+    // Hace zoom out sobre el árbol
+    public void zoomOut() {
+        zoomLevel -= 0.1;
+
+        if (zoomLevel < 0.6) {
+            zoomLevel = 0.6;
+        }
+
+        applyZoom();
+    }
+
+    // Centra la vista y reinicia el zoom
+    public void centerView() {
+        zoomLevel = 1.0;
+        setScaleX(1.0);
+        setScaleY(1.0);
+        setTranslateX(0);
+        setTranslateY(0);
+        drawTree(currentRoot);
+    }
+
+    // Aplica el zoom actual al visualizador
+    private void applyZoom() {
+        setScaleX(zoomLevel);
+        setScaleY(zoomLevel);
+    }
+
     public void highlightValue(int value) {
         highlightedValue = value;
         drawTree(currentRoot);
     }
 
-    // Quita el resaltado del nodo seleccionado
     public void clearHighlight() {
         highlightedValue = null;
         drawTree(currentRoot);
     }
 
-    // Anima un recorrido resaltando los nodos uno por uno
     public void animateTraversal(List<Integer> values) {
         animateValues(values, 0.7);
     }
 
-    // Anima la búsqueda desde la raíz hasta el nodo encontrado
     public boolean animateSearchPath(int targetValue) {
         List<Integer> path = new ArrayList<>();
 
@@ -103,7 +137,6 @@ public class BinaryTreeVisualizer extends GraphPane {
         return true;
     }
 
-    // Busca el camino desde la raíz hasta el valor indicado
     private boolean findPath(BinaryTreeNode node, int targetValue, List<Integer> path) {
         if (node == null) {
             return false;
@@ -128,20 +161,17 @@ public class BinaryTreeVisualizer extends GraphPane {
         return false;
     }
 
-    // Ejecuta la animación de una lista de valores
     private void animateValues(List<Integer> values, double seconds) {
         if (values == null || values.isEmpty()) {
             return;
         }
 
-        // Si ya hay una animación corriendo, la detengo antes de iniciar otra
         if (traversalTimeline != null) {
             traversalTimeline.stop();
         }
 
         traversalTimeline = new Timeline();
 
-        // Creo un frame por cada valor del recorrido o búsqueda
         for (int i = 0; i < values.size(); i++) {
             int value = values.get(i);
 
@@ -153,56 +183,51 @@ public class BinaryTreeVisualizer extends GraphPane {
             traversalTimeline.getKeyFrames().add(frame);
         }
 
-        // Al terminar, queda marcado el último nodo visitado
         traversalTimeline.play();
     }
 
-    // Permite que otro componente reciba el valor del nodo seleccionado
     public void setOnNodeSelected(Consumer<Integer> onNodeSelected) {
         this.onNodeSelected = onNodeSelected;
     }
 
-    // Limpia completamente el visualizador
     public void clear() {
         currentRoot = null;
         highlightedValue = null;
 
-        // También detengo la animación si se limpia el árbol
         if (traversalTimeline != null) {
             traversalTimeline.stop();
         }
 
+        centerView();
         clearGraph();
         getChildren().add(emptyText);
     }
 
-    // Dibuja cada nodo de forma recursiva junto con sus conexiones
     private void drawNode(BinaryTreeNode node, double x, double y, double gap, boolean isRoot) {
         if (node == null) return;
 
-        // Si existe hijo izquierdo, dibujo la línea y luego el nodo hijo
+        // Espacio mínimo más pequeño para que el árbol no se abra demasiado
+        double nextGap = Math.max(gap / 1.45, 55);
+
         if (node.getLeft() != null) {
             double childX = x - gap;
-            double childY = y + 80;
+            double childY = y + 85;
 
             addShape(new EdgeElement(x, y, childX, childY));
-            drawNode(node.getLeft(), childX, childY, gap / 1.6, false);
+            drawNode(node.getLeft(), childX, childY, nextGap, false);
         }
 
-        // Si existe hijo derecho, dibujo la línea y luego el nodo hijo
         if (node.getRight() != null) {
             double childX = x + gap;
-            double childY = y + 80;
+            double childY = y + 85;
 
             addShape(new EdgeElement(x, y, childX, childY));
-            drawNode(node.getRight(), childX, childY, gap / 1.6, false);
+            drawNode(node.getRight(), childX, childY, nextGap, false);
         }
 
-        // Al final dibujo el nodo actual encima de las líneas
         addShape(createNode(node, x, y, isRoot));
     }
 
-    // Define cómo se debe ver cada nodo dependiendo de su tipo
     private NodeElement createNode(BinaryTreeNode node, double x, double y, boolean isRoot) {
         boolean isLeaf = node.getLeft() == null && node.getRight() == null;
         boolean isHighlighted = highlightedValue != null && highlightedValue.equals(node.getValue());
@@ -210,21 +235,17 @@ public class BinaryTreeVisualizer extends GraphPane {
         String text = String.valueOf(node.getValue());
         int value = ((Number) node.getValue()).intValue();
 
-        // La raíz o el nodo seleccionado se muestran oscuros
         if (isHighlighted || isRoot) {
             return createClickableNode(x, y, text, "#0f172a", "#ffffff", "#ffffff", value);
         }
 
-        // Los nodos hoja se muestran blancos con borde azul
         if (isLeaf) {
             return createClickableNode(x, y, text, "#ffffff", "#2563eb", "#111827", value);
         }
 
-        // Los nodos internos se muestran azules
         return createClickableNode(x, y, text, "#2563eb", "#ffffff", "#ffffff", value);
     }
 
-    // Crea un nodo visual y le agrega el evento de click
     private NodeElement createClickableNode(
             double x,
             double y,
@@ -236,7 +257,6 @@ public class BinaryTreeVisualizer extends GraphPane {
     ) {
         NodeElement nodeElement = new NodeElement(x, y, text, fillColor, strokeColor, textColor);
 
-        // Cuando el usuario hace click, aviso qué valor fue seleccionado
         nodeElement.setOnMouseClicked(e -> {
             if (onNodeSelected != null) {
                 onNodeSelected.accept(value);
