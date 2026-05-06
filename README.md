@@ -104,36 +104,28 @@ Esta sección describe las convenciones de commits (los commits deben ir en ingl
 
 Este proceso es el flujo de trabajo que se debe repetir cada vez que trabajes:
 
-- a) Asegurarse de que estas en la rama local y traer los cambios del remoto `main` al local.
+- a) Asegurarse de estar en la rama local.
 
   ```bash
-  git fetch origin
   git switch local/<nombre-colega>
-  git rebase origin/main
-  # (alternativa a rebase) git merge origin/main
   ```
 
-- b) Empezar a trabajar en la rama local (edita archivos, anade pruebas, etc.).
+- b) Empezar a trabajar en su tarea correspondiente.
 
   ```bash
   # ejemplo: editar archivos y/o ejecutar pruebas
   mvn test
   ```
 
-- c) Agregar los cambios al indice (staging).
+- c) Agregar cambios y crear commit.
 
   ```bash
   git add <ruta/al/archivo>
   # o para todo: git add .
-  ```
-
-- d) Crear un commit en ingles siguiendo las convenciones.
-
-  ```bash
   git commit -m "feat(module): short description" -m "Why this change, how to test."
   ```
 
-- e) Cambiarse a `main` y asegurarse de traer los cambios del remoto antes de subir.
+- d) Cambiarse a `main` (revisar si hay cambios en remoto antes de fusionar y subir).
 
   ```bash
   git switch main
@@ -141,20 +133,21 @@ Este proceso es el flujo de trabajo que se debe repetir cada vez que trabajes:
   git pull origin main
   ```
 
-- f) Fusionar la rama local con `main`.
+- e) Fusionar el local con `main`.
 
   ```bash
   git merge --no-ff local/<nombre-colega>
   ```
 
-- g) Subir los cambios al remoto.
+- f) Subir los cambios a `main`.
 
   ```bash
   git push origin main
   ```
 
-- h) Cambiarse nuevamente a la rama local.
+- g) Eliminar la rama local y volver a empezar desde el punto 1.
 
   ```bash
-  git switch local/<nombre-colega>
+  git branch -d local/<nombre-colega>
+  git switch -c local/<nombre-colega>
   ```
