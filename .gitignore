@@ -1,0 +1,16 @@
+# Ignore Maven build output
+/laboratories/**/target/
+
+# Ignore compiled classes and generated artifacts
+**/target/
+
+# Ignore IDE and editor metadata
+**/.settings/
+*.classpath
+*.project
+**/.vscode/
+**/.idea/
+*.iml
+.DS_Store
+/laboratories/L2_JoseCarranza/laboratories/
+/laboratories/L2_JoseCarranza/target/
