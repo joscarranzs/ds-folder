@@ -3,6 +3,7 @@
 
 # Ignore compiled classes and generated artifacts
 **/target/
+**/bin/
 
 # Ignore IDE and editor metadata
 **/.settings/
