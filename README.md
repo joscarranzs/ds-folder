@@ -145,7 +145,7 @@ Este proceso es el flujo de trabajo que se debe repetir cada vez que trabajes:
   git push origin main
   ```
 
-- g) Eliminar la rama local y volver a empezar desde el punto 1.
+- g) Eliminar la rama local y volver a empezar desde el punto 2.
 
   ```bash
   git branch -d local/<nombre-colega>
