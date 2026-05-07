@@ -29,8 +29,10 @@ public class App extends Application {
     double defaultHeight = 830;
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
-    double windowWidth = Math.min(defaultWidth, screenWidth - 40);
-    double windowHeight = Math.min(defaultHeight, screenHeight - 80);
+    double maxWidth = Math.max(800, screenWidth - 40);
+    double maxHeight = Math.max(600, screenHeight - 80);
+    double windowWidth = Math.min(defaultWidth, maxWidth);
+    double windowHeight = Math.min(defaultHeight, maxHeight);
 
     Scene scene = new Scene(ui.getRoot(), windowWidth, windowHeight);
 
@@ -43,8 +45,10 @@ public class App extends Application {
     stage.setHeight(windowHeight);
 
     // Tamaño mínimo para evitar que se rompa el layout
-    stage.setMinWidth(1180);
-    stage.setMinHeight(680);
+    double minWidth = Math.min(1180, maxWidth);
+    double minHeight = Math.min(680, maxHeight);
+    stage.setMinWidth(minWidth);
+    stage.setMinHeight(minHeight);
 
     // Centrar ventana en pantalla
     stage.centerOnScreen();
