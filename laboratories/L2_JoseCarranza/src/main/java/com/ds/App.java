@@ -4,7 +4,6 @@ import com.ds.application.view.Interface;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -24,31 +23,20 @@ public class App extends Application {
     // Crear la interfaz de usuario
     Interface ui = new Interface();
 
-    // Tamaño inicial basado en pantalla
-    double defaultWidth = 1723;
-    double defaultHeight = 830;
-    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
-    double maxWidth = Math.max(800, screenWidth - 40);
-    double maxHeight = Math.max(600, screenHeight - 80);
-    double windowWidth = Math.min(defaultWidth, maxWidth);
-    double windowHeight = Math.min(defaultHeight, maxHeight);
-
-    Scene scene = new Scene(ui.getRoot(), windowWidth, windowHeight);
+    // Tamaño inicial correcto
+    Scene scene = new Scene(ui.getRoot(), 1952, 834);
 
     // Configurar el escenario
     stage.setTitle("Visualizador de Árboles");
     stage.setScene(scene);
 
     // Tamaño inicial de la ventana
-    stage.setWidth(windowWidth);
-    stage.setHeight(windowHeight);
+    stage.setWidth(1952);
+    stage.setHeight(834);
 
     // Tamaño mínimo para evitar que se rompa el layout
-    double minWidth = Math.min(1180, maxWidth);
-    double minHeight = Math.min(680, maxHeight);
-    stage.setMinWidth(minWidth);
-    stage.setMinHeight(minHeight);
+    stage.setMinWidth(1952);
+    stage.setMinHeight(834);
 
     // Centrar ventana en pantalla
     stage.centerOnScreen();
