@@ -18,6 +18,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class BinaryTreeControlPanel extends VBox {
 
     private final ToastNotification toast;
@@ -76,7 +81,7 @@ public class BinaryTreeControlPanel extends VBox {
         );
 
         valueInput = new TextField();
-        valueInput.setPromptText("Ej: 50");
+        valueInput.setPromptText("Ej: 20 40 60 o (20)(40)(60)");
         valueInput.setPrefHeight(40);
         valueInput.setStyle(
                 "-fx-background-color: #DCE8DA;" +
@@ -117,17 +122,24 @@ public class BinaryTreeControlPanel extends VBox {
         insertBtn.getNode().setOnAction(e -> {
             selectButton(insertBtn);
 
-            Integer value = readInputValue(inspector);
-            if (value == null) {
+            List<Integer> values = readInputValues(inspector);
+            if (values.isEmpty()) {
                 return;
             }
 
-            nodeController.insert(value);
+            for (int value : values) {
+                nodeController.insert(value);
+            }
+
             updateTreeData(nodeController, infoBar);
             infoBar.clearTraversal();
             valueInput.clear();
 
-            toast.showSuccess("Nodo " + value + " insertado correctamente.");
+            if (values.size() == 1) {
+                toast.showSuccess("Nodo " + values.get(0) + " insertado correctamente.");
+            } else {
+                toast.showSuccess(values.size() + " nodos insertados correctamente.");
+            }
         });
 
         searchBtn.getNode().setOnAction(e -> {
@@ -229,21 +241,41 @@ public class BinaryTreeControlPanel extends VBox {
     }
 
     private Integer readInputValue(NodeInspector inspector) {
-        try {
-            String text = valueInput.getText().trim();
+        List<Integer> values = readInputValues(inspector);
 
-            if (text.isEmpty()) {
-                inspector.updateStatus("Ingrese un valor.");
-                toast.showWarning("Ingrese un valor antes de continuar.");
-                return null;
-            }
-
-            return Integer.parseInt(text);
-        } catch (NumberFormatException ex) {
-            inspector.updateStatus("Valor invalido.");
-            toast.showError("Valor inválido. Ingrese solo números enteros.");
+        if (values.isEmpty()) {
             return null;
         }
+
+        return values.get(0);
+    }
+
+    private List<Integer> readInputValues(NodeInspector inspector) {
+        List<Integer> values = new ArrayList<>();
+        String text = valueInput.getText().trim();
+
+        if (text.isEmpty()) {
+            inspector.updateStatus("Ingrese un valor.");
+            toast.showWarning("Ingrese uno o varios valores antes de continuar.");
+            return values;
+        }
+
+        Matcher matcher = Pattern.compile("-?\\d+").matcher(text);
+
+        while (matcher.find()) {
+            try {
+                values.add(Integer.parseInt(matcher.group()));
+            } catch (NumberFormatException ignored) {
+                // Si un número no cabe como entero, se ignora.
+            }
+        }
+
+        if (values.isEmpty()) {
+            inspector.updateStatus("Valor invalido.");
+            toast.showError("Ingrese solo números reconocibles.");
+        }
+
+        return values;
     }
 
     private void resizeButton(ButtonElement button) {
@@ -300,6 +332,8 @@ public class BinaryTreeControlPanel extends VBox {
                 nodeController.getLeafNodesText(),
                 nodeController.height(),
                 nodeController.degree(),
+                nodeController.internalPathLength(),
+                nodeController.averageInternalPathLength(),
                 structure
         );
     }

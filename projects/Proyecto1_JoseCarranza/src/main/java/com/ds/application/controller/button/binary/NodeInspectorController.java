@@ -259,6 +259,26 @@ public class NodeInspectorController {
     return operations.degree();
   }
 
+    /**
+   * Devuelve la longitud de camino interno del árbol.
+   *
+   * @return LCI del árbol.
+   */
+  public long internalPathLength() {
+    operations.setRoot(tree.getRoot());
+    return operations.internalPathLength();
+  }
+
+  /**
+   * Devuelve la longitud de camino interno media del árbol.
+   *
+   * @return LCIM del árbol.
+   */
+  public double averageInternalPathLength() {
+    operations.setRoot(tree.getRoot());
+    return operations.averageInternalPathLength();
+  }
+
   /**
    * Actualiza la información del inspector para un nodo específico.
    *
