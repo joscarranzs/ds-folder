@@ -447,6 +447,23 @@ public class BinaryTreeVisualizer extends GraphPane {
         this.onNodeSelected = onNodeSelected;
     }
 
+    /**
+     * Indica si un valor actualmente está resaltado o en animación.
+     * Usado por controladores para decidir si deben re-animar búsquedas antes de
+     * operar (por ejemplo, al eliminar).
+     */
+    public boolean isHighlighted(int value) {
+        if (selectedValue != null && selectedValue.equals(value)) {
+            return true;
+        }
+
+        if (animatedValue != null && animatedValue.equals(value)) {
+            return true;
+        }
+
+        return false;
+    }
+
     // Limpia completamente el visualizador
     public void clear() {
         currentRoot = null;

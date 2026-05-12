@@ -107,11 +107,14 @@ public class NodeInspectorController {
       inspector.updateStatus("No encontrado: " + value);
       return;
     }
+    // Si el visualizador ya tiene ese valor resaltado/animado, evitamos iniciar
+    // otra animación redundante y procedemos a eliminar directamente.
+    if (!visualizer.isHighlighted(value)) {
+      // Primero animo el camino de búsqueda para llegar al nodo a eliminar, así el
+      // usuario ve el proceso de eliminación.
+      visualizer.animateSearchPath(value);
+    }
 
-    // Primero animo el camino de búsqueda para llegar al nodo a eliminar, así el
-    // usuario ve el proceso de eliminación. Si el nodo ya estaba resaltado por otra
-    // búsqueda, lo resalto directamente.
-    boolean animated = visualizer.animateSearchPath(value);
     tree.delete(value);
     operations.setRoot(tree.getRoot());
 
