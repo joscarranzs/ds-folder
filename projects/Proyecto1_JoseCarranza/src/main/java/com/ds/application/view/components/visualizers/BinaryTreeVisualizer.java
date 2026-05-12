@@ -70,6 +70,9 @@ public class BinaryTreeVisualizer extends GraphPane {
         clip.heightProperty().bind(heightProperty());
         setClip(clip);
 
+        widthProperty().addListener((obs, oldVal, newVal) -> requestLayoutUpdate());
+        heightProperty().addListener((obs, oldVal, newVal) -> requestLayoutUpdate());
+
         // Mensaje inicial del área de visualización
         emptyText = new Label("Área de visualización del árbol");
 
@@ -83,6 +86,14 @@ public class BinaryTreeVisualizer extends GraphPane {
         emptyText.layoutXProperty().bind(widthProperty().divide(2).subtract(emptyText.widthProperty().divide(2)));
         emptyText.layoutYProperty().bind(heightProperty().divide(2).subtract(emptyText.heightProperty().divide(2)));
         getChildren().add(emptyText);
+    }
+
+    private void requestLayoutUpdate() {
+        if (currentRoot == null) {
+            return;
+        }
+
+        drawTree(currentRoot);
     }
 
     // Dibuja el árbol completo desde la raíz
@@ -109,6 +120,7 @@ public class BinaryTreeVisualizer extends GraphPane {
         collectInOrder(root, orderedNodes);
 
         double paneWidth = getWidth() > 0 ? getWidth() : getPrefWidth();
+        double paneHeight = getHeight() > 0 ? getHeight() : getPrefHeight();
 
         // Separación horizontal controlada por zoom, sin escalar el panel completo
         double horizontalSpacing = 90 * zoomLevel;
@@ -125,6 +137,47 @@ public class BinaryTreeVisualizer extends GraphPane {
             double y = 70 + ((level - 1) * verticalSpacing);
 
             positions.put(node, new Point2D(x, y));
+        }
+
+        double minX = Double.MAX_VALUE;
+        double maxX = -Double.MAX_VALUE;
+        double maxY = 0;
+
+        for (Point2D point : positions.values()) {
+            minX = Math.min(minX, point.getX());
+            maxX = Math.max(maxX, point.getX());
+            maxY = Math.max(maxY, point.getY());
+        }
+
+        if (!positions.isEmpty()) {
+            double leftMargin = 45;
+            double rightMargin = 45;
+            double topMargin = 50;
+            double bottomMargin = 60;
+
+            double offsetX = 0;
+
+            if (minX < leftMargin) {
+                offsetX += leftMargin - minX;
+            }
+
+            if (maxX + offsetX > paneWidth - rightMargin) {
+                offsetX -= (maxX + offsetX) - (paneWidth - rightMargin);
+            }
+
+            double availableHeight = paneHeight - topMargin - bottomMargin;
+            double heightOffset = 0;
+
+            if (maxY > 0 && maxY > availableHeight) {
+                heightOffset = topMargin - 70;
+            }
+
+            if (offsetX != 0 || heightOffset != 0) {
+                for (Map.Entry<BinaryTreeNode, Point2D> entry : positions.entrySet()) {
+                    Point2D point = entry.getValue();
+                    entry.setValue(new Point2D(point.getX() + offsetX, point.getY() + heightOffset));
+                }
+            }
         }
 
         return positions;

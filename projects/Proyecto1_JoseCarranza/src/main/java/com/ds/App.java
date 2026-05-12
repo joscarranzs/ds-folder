@@ -3,7 +3,9 @@ package com.ds;
 import com.ds.application.view.Interface;
 
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -23,24 +25,20 @@ public class App extends Application {
     // Crear la interfaz de usuario
     Interface ui = new Interface();
 
-    // Tamaño inicial correcto
-    Scene scene = new Scene(ui.getRoot(), 1200, 720);
+    Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+    double targetWidth = visualBounds.getWidth() * 0.92;
+    double targetHeight = visualBounds.getHeight() * 0.92;
 
-    // Configurar el escenario
+    Scene scene = new Scene(ui.getRoot(), targetWidth, targetHeight);
+
     stage.setTitle("Visualizador de Árboles");
     stage.setScene(scene);
 
-    // Tamaño inicial de la ventana
-    stage.setWidth(1952);
-    stage.setHeight(834);
-
     // Tamaño mínimo para evitar que se rompa el layout
-    stage.setMinWidth(1952);
-    stage.setMinHeight(834);
+    stage.setMinWidth(1080);
+    stage.setMinHeight(680);
 
-    // Centrar ventana en pantalla
     stage.centerOnScreen();
-
     // Opcional: permite redimensionar
     stage.setResizable(true);
 
