@@ -47,10 +47,16 @@ public class App extends Application {
   }
 
   /** Método principal que lanza la aplicación JavaFX.
-   *
-   * @param args argumentos de línea de comandos (no utilizados)
-   */
+    *
+    * @param args argumentos de línea de comandos (no utilizados)
+    */
   public static void main(String[] args) {
+    // Desabilitar el escalado DPI automático de JavaFX en Windows para evitar
+    // problemas con el tamaño de componentes a 125% DPI. Esto fuerza a JavaFX a
+    // reportar tamaños en píxeles lógicos en lugar de físicos.
+    System.setProperty("glass.win.uiScale", "100%");
+    System.setProperty("prism.allowHiDPIScaling", "false");
+    
     launch();
   }
 }

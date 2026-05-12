@@ -58,7 +58,8 @@ public class BinaryTreeControlPanel extends VBox {
         setPadding(new Insets(18));
         setSpacing(12);
         setPrefWidth(240);
-        setMinWidth(200);
+        setMinWidth(180);
+        setMaxWidth(Double.MAX_VALUE);
         setStyle(
                 "-fx-background-color: #BFCFBB;" +
                 "-fx-border-color: #8EA58C;" +

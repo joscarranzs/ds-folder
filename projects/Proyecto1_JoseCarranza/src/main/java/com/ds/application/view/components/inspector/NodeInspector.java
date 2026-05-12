@@ -37,6 +37,7 @@ public class NodeInspector extends VBox {
         setSpacing(14);
         setPrefWidth(240);
         setMinWidth(180);
+        setMaxWidth(Double.MAX_VALUE);
         setMaxHeight(400);
         setStyle(
                 "-fx-background-color: " + BG + ";" +

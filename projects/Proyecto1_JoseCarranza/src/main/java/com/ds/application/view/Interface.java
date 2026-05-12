@@ -218,9 +218,11 @@ public class Interface {
 
         StackPane leftWrap = new StackPane(leftScroll);
         leftWrap.setPadding(new Insets(18, 10, 18, 18));
-        // Allow side panel to shrink on high-DPI displays; set sensible max width
-        leftWrap.setMaxWidth(360);
-        leftWrap.setMinWidth(120);
+        // Don't set MaxWidth/MinWidth on wrapper; let BorderPane handle distribution
+        leftWrap.setPrefWidth(280);
+        leftWrap.setMinWidth(200);
+        // Allow unlimited growth if needed
+        leftWrap.setMaxWidth(Double.MAX_VALUE);
 
         StackPane visualizerWrap = new StackPane(visualizer);
         visualizerWrap.setPadding(new Insets(18, 10, 10, 10));
@@ -255,8 +257,10 @@ public class Interface {
         rightWrap.setPadding(new Insets(18, 18, 18, 10));
         rightWrap.setMinHeight(0);
         rightWrap.setMaxHeight(Double.MAX_VALUE);
-        rightWrap.setMaxWidth(360);
-        rightWrap.setMinWidth(120);
+        // Set preferred width but allow flexible growth
+        rightWrap.setPrefWidth(280);
+        rightWrap.setMinWidth(200);
+        rightWrap.setMaxWidth(Double.MAX_VALUE);
 
         BorderPane.setAlignment(rightWrap, Pos.BOTTOM_CENTER);
 
