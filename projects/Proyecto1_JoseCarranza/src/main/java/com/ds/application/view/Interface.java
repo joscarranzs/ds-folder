@@ -218,10 +218,17 @@ public class Interface {
 
         StackPane leftWrap = new StackPane(leftScroll);
         leftWrap.setPadding(new Insets(18, 10, 18, 18));
+        // Allow side panel to shrink on high-DPI displays; set sensible max width
+        leftWrap.setMaxWidth(360);
+        leftWrap.setMinWidth(120);
 
         StackPane visualizerWrap = new StackPane(visualizer);
         visualizerWrap.setPadding(new Insets(18, 10, 10, 10));
         visualizerWrap.setStyle("-fx-background-color: #DBE8D9;");
+
+        // Ensure center area expands to take available space
+        javafx.scene.layout.HBox centerContainer = new javafx.scene.layout.HBox(centerLayout);
+        javafx.scene.layout.HBox.setHgrow(centerLayout, javafx.scene.layout.Priority.ALWAYS);
 
         HBox bottomContent = new HBox(10);
         bottomContent.setAlignment(Pos.CENTER_LEFT);
@@ -248,11 +255,13 @@ public class Interface {
         rightWrap.setPadding(new Insets(18, 18, 18, 10));
         rightWrap.setMinHeight(0);
         rightWrap.setMaxHeight(Double.MAX_VALUE);
+        rightWrap.setMaxWidth(360);
+        rightWrap.setMinWidth(120);
 
         BorderPane.setAlignment(rightWrap, Pos.BOTTOM_CENTER);
 
         root.setLeft(leftWrap);
-        root.setCenter(centerLayout);
+        root.setCenter(centerContainer);
         root.setRight(rightWrap);
     }
 
