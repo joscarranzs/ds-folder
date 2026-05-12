@@ -24,7 +24,7 @@ public class App extends Application {
     Interface ui = new Interface();
 
     // Tamaño inicial correcto
-    Scene scene = new Scene(ui.getRoot(), 1952, 834);
+    Scene scene = new Scene(ui.getRoot(), 1200, 720);
 
     // Configurar el escenario
     stage.setTitle("Visualizador de Árboles");

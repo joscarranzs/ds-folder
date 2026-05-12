@@ -1,6 +1,7 @@
 package com.ds.application.view.components.header;
 
 import com.ds.application.view.components.elements.ui.ButtonElement;
+
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 
@@ -35,10 +36,10 @@ public class Views extends HBox {
         maxHeapButton = new ButtonElement("", "MONTON MAXIMO");
 
         // Tamaños individuales para que el texto quede cómodo
-        resizeTab(binaryButton, 210);
-        resizeTab(huffmanButton, 290);
-        resizeTab(minHeapButton, 240);
-        resizeTab(maxHeapButton, 240);
+        resizeTab(binaryButton, 155);
+resizeTab(huffmanButton, 235);
+resizeTab(minHeapButton, 175);
+resizeTab(maxHeapButton, 175);
 
         // Eventos de navegación
         binaryButton.getNode().setOnAction(e -> {
