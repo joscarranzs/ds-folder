@@ -35,8 +35,9 @@ public class NodeInspector extends VBox {
     public NodeInspector() {
         setPadding(new Insets(18));
         setSpacing(14);
-        setPrefWidth(260);
-        setMaxHeight(360);
+        setPrefWidth(240);
+        setMinWidth(180);
+        setMaxHeight(400);
         setStyle(
                 "-fx-background-color: " + BG + ";" +
                 "-fx-border-color: " + BORDER + ";" +

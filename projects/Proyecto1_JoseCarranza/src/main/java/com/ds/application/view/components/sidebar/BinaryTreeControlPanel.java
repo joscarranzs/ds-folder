@@ -57,7 +57,8 @@ public class BinaryTreeControlPanel extends VBox {
 
         setPadding(new Insets(18));
         setSpacing(12);
-        setPrefWidth(260);
+        setPrefWidth(240);
+        setMinWidth(200);
         setStyle(
                 "-fx-background-color: #BFCFBB;" +
                 "-fx-border-color: #8EA58C;" +
@@ -83,6 +84,7 @@ public class BinaryTreeControlPanel extends VBox {
         valueInput = new TextField();
         valueInput.setPromptText("Ej: 20 40 60 o (20)(40)(60)");
         valueInput.setPrefHeight(40);
+        valueInput.setMaxWidth(Double.MAX_VALUE);
         valueInput.setStyle(
                 "-fx-background-color: #DCE8DA;" +
                 "-fx-background-radius: 12;" +

@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -209,7 +210,13 @@ public class Interface {
 
         BinaryTreeControlPanel panel = new BinaryTreeControlPanel(visualizer, inspector, infoBar, toast);
 
-        StackPane leftWrap = new StackPane(panel);
+        ScrollPane leftScroll = new ScrollPane(panel);
+        leftScroll.setFitToWidth(true);
+        leftScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        leftScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        leftScroll.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+
+        StackPane leftWrap = new StackPane(leftScroll);
         leftWrap.setPadding(new Insets(18, 10, 18, 18));
 
         StackPane visualizerWrap = new StackPane(visualizer);
@@ -230,7 +237,13 @@ public class Interface {
         centerLayout.setBottom(bottomWrap);
         centerLayout.setStyle("-fx-background-color: #DBE8D9;");
 
-        StackPane rightWrap = new StackPane(inspector);
+        ScrollPane rightScroll = new ScrollPane(inspector);
+        rightScroll.setFitToWidth(true);
+        rightScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        rightScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        rightScroll.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+
+        StackPane rightWrap = new StackPane(rightScroll);
         rightWrap.setAlignment(Pos.BOTTOM_CENTER);
         rightWrap.setPadding(new Insets(18, 18, 18, 10));
         rightWrap.setMinHeight(0);
