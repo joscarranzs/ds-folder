@@ -226,10 +226,6 @@ public class Interface {
         visualizerWrap.setPadding(new Insets(18, 10, 10, 10));
         visualizerWrap.setStyle("-fx-background-color: #DBE8D9;");
 
-        // Ensure center area expands to take available space
-        javafx.scene.layout.HBox centerContainer = new javafx.scene.layout.HBox(centerLayout);
-        javafx.scene.layout.HBox.setHgrow(centerLayout, javafx.scene.layout.Priority.ALWAYS);
-
         HBox bottomContent = new HBox(10);
         bottomContent.setAlignment(Pos.CENTER_LEFT);
         bottomContent.getChildren().addAll(infoBar, createZoomControls(visualizer));
@@ -243,6 +239,10 @@ public class Interface {
         centerLayout.setCenter(visualizerWrap);
         centerLayout.setBottom(bottomWrap);
         centerLayout.setStyle("-fx-background-color: #DBE8D9;");
+
+        // Ensure center area expands to take available space
+        javafx.scene.layout.HBox centerContainer = new javafx.scene.layout.HBox(centerLayout);
+        javafx.scene.layout.HBox.setHgrow(centerLayout, javafx.scene.layout.Priority.ALWAYS);
 
         ScrollPane rightScroll = new ScrollPane(inspector);
         rightScroll.setFitToWidth(true);
